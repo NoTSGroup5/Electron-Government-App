@@ -1,6 +1,7 @@
 <template>
   <div>
     <links></links>
+    <h1>Patienten</h1>
     <PatientsList></PatientsList>
   </div>
 </template>
