@@ -1,14 +1,13 @@
 <template>
   <div>
-    <links></links>
+    <h1>Nationaal EPD systeem</h1>
+    <p>Maar dan met de blockchain</p>
   </div>
 </template>
 
 <script>
-  import Links from './Shared/Links'
   export default {
     components: {
-      Links
     },
     name: 'landing-page'
   }

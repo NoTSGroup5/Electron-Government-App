@@ -1,10 +1,7 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-md-12">
-                <OrganizationList></OrganizationList>
-            </div>
-        </div>
+        <h1>Organisaties</h1>
+        <OrganizationList></OrganizationList>
     </div>
 </template>
 

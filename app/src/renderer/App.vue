@@ -21,6 +21,8 @@
         </div>
       </div>
     </nav>
+    <Links></Links>
+
     <div class="container">
       <router-view></router-view>
     </div>
@@ -29,9 +31,10 @@
 
 <script>
   import store from 'renderer/vuex/store';
-
+  import Links from 'renderer/components/Shared/Links'
   export default {
     store,
+    Links
   }
 </script>
 
