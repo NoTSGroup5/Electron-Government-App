@@ -38,6 +38,10 @@ let mainConfig = {
     path: path.join(__dirname, 'app/dist')
   },
   plugins: [
+      new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
