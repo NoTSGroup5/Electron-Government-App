@@ -1,15 +1,38 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">EPD</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><router-link to="/">Home</router-link></li>
+            <li><router-link to="patients">Patients</router-link></li>
+            <li><router-link to="organisations">Organisaties</router-link></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-  import store from 'renderer/vuex/store'
-  
+  import store from 'renderer/vuex/store';
+
   export default {
-    store
-  } 
+    store,
+  }
 </script>
 
 <style>
@@ -21,20 +44,7 @@
   }
 
   html,
-  body { height: 100%; }
+  body { height: 100%; width:100% }
 
-  body {
-    align-items: center;
-    background:
-      radial-gradient(
-        ellipse at center,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(229, 229, 229, .85) 100%
-      );
-    background-position: center;
-    display: flex;
-    font-family: Lato, Helvetica, sans-serif;
-    justify-content: center;
-    text-align: center;
-  }
+
 </style>
