@@ -2,6 +2,10 @@ import Vue from 'vue'
 import Electron from 'vue-electron'
 import Resource from 'vue-resource'
 import Router from 'vue-router'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'jquery'
+import 'bootstrap/dist/js/bootstrap.min.js'
+
 
 import App from './App'
 import routes from './routes'
