@@ -20,18 +20,13 @@
             
             <patient v-for="patient in patients" v-bind="patient"></patient>
             
-            <div class="row tablefooter">
-                <div class="cell cell-allign-center">
-                    Footer
-                </div>
-            </div>
-
         </div>
     </div>
     
     <div v-if="patients.length == 0">
         something went wrong with getting patients from the database
     </div>
+    
   </div>
 </template>
 
@@ -40,6 +35,9 @@
 
   import patient from './Patient'
   
+  import {ApiService} from './../services/ApiService';
+  var api = new ApiService();
+
   export default {
     components: {
       patient
@@ -50,11 +48,11 @@
       }
     },
     beforeCreate: function(){
-         fetch('/api/patients')
-        .then(res=>{
+        api.fetchData('patients')
+           .then( res =>{
             // if(res.ok)
                 this.patients = [{name: 'henk'}, {name: 'harry'}];
-        })
+        });
     },
     methods: {
       test: (event) => { debugger },
