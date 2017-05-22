@@ -8,6 +8,10 @@ export default [
     name: 'patientsOverview',
     component: require('components/patientsOverview')
   }, {
+    path: '/patientsInfo',
+    name: 'patientinfo',
+    component: require('components/PatientsInfoPage')
+  }, {
     path: '*',
     redirect: '/'
   }
