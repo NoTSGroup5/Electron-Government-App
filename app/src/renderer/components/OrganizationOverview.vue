@@ -1,6 +1,5 @@
 <template>
     <div>
-        <links></links>
         <div class="row">
             <div class="col-md-12">
                 <OrganizationList></OrganizationList>
