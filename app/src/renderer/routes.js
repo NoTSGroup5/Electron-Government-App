@@ -10,7 +10,7 @@ export default [
   }, {
     path: '/organisations',
     name: 'Organisatie Overzicht',
-    component: require('./components/OrganisationOverview')
+    component: require('./components/OrganizationOverview')
   }, {
     path: '*',
     redirect: '/'

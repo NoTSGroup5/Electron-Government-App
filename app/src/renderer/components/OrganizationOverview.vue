@@ -3,7 +3,7 @@
         <links></links>
         <div class="row">
             <div class="col-md-12">
-                <OrganisationList></OrganisationList>
+                <OrganizationList></OrganizationList>
             </div>
         </div>
     </div>
@@ -11,12 +11,12 @@
 
 <script>
   import Links from './Shared/Links'
-  import OrganisationList from './OrganisationOverview/OrganisationList.vue'
+  import OrganizationList from './OrganizationOverview/OrganizationList.vue'
   export default {
     components: {
       Links,
-      OrganisationList
+      OrganizationList
     },
-    name: 'organisationOverview'
+    name: 'organizationOverview'
   }
 </script>
