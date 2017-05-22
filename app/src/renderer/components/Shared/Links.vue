@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li><router-link to="patients">Patients</router-link></li> |
-    <li><router-link to="patients">Patients</router-link></li> | 
+    <li><router-link to="organisations">Organisaties</router-link></li> |
     <li><router-link to="patients">Patients</router-link></li> 
   </ul>
 </template>

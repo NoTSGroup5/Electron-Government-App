@@ -35,32 +35,32 @@
 
     import patient from './Patient'
 
-    import {ApiService} from './../services/ApiService';
-    var api = new ApiService();
+    import {ApiService} from './../services/ApiService'
+var api = new ApiService()
 
-    export default {
-        components: {
-            patient
-        },
-        data () {
-            return {
-                patients: patients
-            }
-        },
+export default {
+      components: {
+        patient
+      },
+      data () {
+        return {
+          patients: patients
+        }
+      },
 
-        beforeCreate: function () {
-            api.fetchData('patients')
+      beforeCreate: function () {
+        api.fetchData('patients')
                 .then(res => {
                     // if(res.ok)
-                    this.patients = [{name: 'henk'}, {name: 'harry'}];
-                });
-        },
-        methods: {
-            test: (event) => {
-                debugger
-            }
-        },
-        name: 'patientsList'
+                  this.patients = [{name: 'henk'}, {name: 'harry'}]
+                })
+      },
+      methods: {
+        test: (event) => {
+          debugger
+        }
+      },
+      name: 'patientsList'
     }
 </script>
 
