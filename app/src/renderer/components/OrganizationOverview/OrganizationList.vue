@@ -23,7 +23,7 @@
         Organisation
       },
 
-      data () {
+      data: () => {
         return {
           organizations: organizations
         }

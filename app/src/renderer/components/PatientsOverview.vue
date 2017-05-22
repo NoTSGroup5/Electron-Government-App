@@ -6,11 +6,9 @@
 </template>
 
 <script>
-  import Links from './Shared/Links'
   import PatientsList from './PatientsOverview/PatientsList'
   export default {
     components: {
-      Links,
       PatientsList
     },
     name: 'patientsOverview'
