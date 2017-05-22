@@ -69,17 +69,3 @@
      </div>
 </div>
 </template>
-
-
-<script>
- 
-  import Links from './Shared/Links'
-
-  export default {
-    components: {
-
-      Links
-    }
-  
-  }
-</script>
