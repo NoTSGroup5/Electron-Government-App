@@ -1,8 +1,7 @@
 <template>
 <div class="container">
-  <Links></Links>   
-  <div class="row justify-content-md-center">
-        <form class="col col-lg-2" >
+     <div class="row">
+        <form class="col-4" >
             <div class="form-group row">
             <label for="inputName3" class="col-sm-4 col-form-label">Naam</label>
             <div class="col-sm-10">
@@ -60,26 +59,12 @@
             </div>
             </div>    
         </form>
-        
-        <div class="col col-lg-2">
-            <div>
-            asd
-            </div>
+        <div class="col-5">
+                <div>
+                asd
+                </div>
         </div>
      </div>
-</div>
+    </div>
 </template>
 
-
-<script>
- 
-  import Links from './Shared/Links'
-
-  export default {
-    components: {
-
-      Links
-    }
-  
-  }
-</script>
