@@ -36,9 +36,9 @@
 </template>
 
 <script>
-  var patients = [];
+  var patients = []
 
-  import patient from './Patient'
+import patient from './Patient'
   
   export default {
     components: {
@@ -49,15 +49,15 @@
         patients: patients
       }
     },
-    beforeCreate: function(){
-         fetch('/api/patients')
-        .then(res=>{
+    beforeCreate: function () {
+      fetch('/api/patients')
+        .then(res => {
             // if(res.ok)
-                this.patients = [{name: 'henk'}, {name: 'harry'}];
+          this.patients = [{name: 'henk'}, {name: 'harry'}]
         })
     },
     methods: {
-      test: (event) => { debugger },
+      test: (event) => { debugger }
     },
     name: 'patientsList'
   }

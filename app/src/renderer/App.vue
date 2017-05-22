@@ -9,7 +9,7 @@
   
   export default {
     store
-  } 
+  }
 </script>
 
 <style>
