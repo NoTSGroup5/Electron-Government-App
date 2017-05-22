@@ -9,11 +9,9 @@
 </template>
 
 <script>
-  import Links from './Shared/Links'
   import OrganizationList from './OrganizationOverview/OrganizationList.vue'
   export default {
     components: {
-      Links,
       OrganizationList
     },
     name: 'organizationOverview'
