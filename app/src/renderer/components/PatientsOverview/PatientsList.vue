@@ -1,33 +1,25 @@
 <template>
-    <div>
-        <div v-if="patients.length">
-            <div class="grid">
+  <div>
 
-                <div class="row tablehead">
-                    <div class="cell">
-                        BSN
-                    </div>
-                    <div class="cell">
-                        Naam
-                    </div>
-                    <div class="cell">
-                        Edit
-                    </div>
-                    <div class="cell">
-                        Dossier
-                    </div>
-                </div>
+    <table class="table table-striped"  v-if="patients.length">
+      <thead>
+        <tr>
+          <td>BSN</td>
+          <td>Naam</td>
+          <td>Bewerken</td>
+          <td>Inzien</td>
+        </tr>
+      </thead>
+      <tbody>
+        <patient v-for="patient in patients" v-bind="patient"></patient>
+      </tbody>
+    </table>
 
-                <patient v-for="patient in patients" v-bind="patient"></patient>
-
-            </div>
-        </div>
-
-        <div v-if="patients.length == 0">
-            something went wrong with getting patients from the database
-        </div>
-
+    <div v-if="patients.length == 0">
+              something went wrong with getting patients from the database
     </div>
+
+  </div>
 </template>
 
 <script>

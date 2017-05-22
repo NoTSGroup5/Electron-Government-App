@@ -1,18 +1,10 @@
 <template>
-    <div class="row">
-        <div class="cell small">
-            {{}} bsn komt hier
-        </div>
-        <div class="cell">
-            {{name}}
-        </div>
-        <div class="cell">
-            Edit {{name}}
-        </div>
-        <div class="cell">
-            Dossier of {{name}}
-        </div>
-    </div>
+  <tr>
+    <td>{{}} bsn komt hier</td>
+    <td>{{name}}</td>
+    <td> Edit {{name}}</td>
+    <td>Dossier van {{name}}</td>
+  </tr>
 </template>
 
 <script>
