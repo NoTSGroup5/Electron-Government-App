@@ -144,7 +144,7 @@
 </template>
 
 <script>
-  import Organisation from '../Organization/OrganisationOverview/Organization';
+  import Organisation from '../Organisation/OrganisationOverview/Organisation';
   import Mentor from '../Mentor/MentorsOverview/Mentor';
   import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput';
   import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput';

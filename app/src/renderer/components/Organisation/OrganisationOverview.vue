@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import OrganizationList from './OrganisationOverview/OrganizationList.vue'
+  import OrganizationList from './OrganisationOverview/OrganisationList.vue'
 
   export default {
     name: 'organizationOverview',

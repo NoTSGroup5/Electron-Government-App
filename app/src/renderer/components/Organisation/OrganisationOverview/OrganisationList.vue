@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import Organisation from './Organization';
+    import Organisation from './Organisation';
 
     let organizations = [];
 

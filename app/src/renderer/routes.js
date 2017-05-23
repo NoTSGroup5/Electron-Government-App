@@ -10,11 +10,11 @@ export default [
   }, {
     path: '/organisations',
     name: 'Organisatie Overzicht',
-    component: require('./components/Organization/OrganisationOverview')
+    component: require('./components/Organisation/OrganisationOverview')
   }, {
     path: '/organisation/create',
     name: 'createOrganization',
-    component: require('./components/Organization/AddOrganization')
+    component: require('./components/Organisation/AddOrganization')
   }, {
     path: '/patientsInfo',
     name: 'patientinfo',
