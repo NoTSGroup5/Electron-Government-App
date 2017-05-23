@@ -16,7 +16,7 @@
     "pack:main": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack.renderer.config.js",
     "rest": "composer-rest-server -n epd -p defaultProfile -i admin -s adminpw -N never -P 3000",
-    "postinstall": "npm run lint:fix && cd app && npm install"
+    "postinstall": "cd app && npm install"
   },
   "author": "Niek te Grootenhuis <ntegro@hotmail.com>",
   "license": "MIT",
