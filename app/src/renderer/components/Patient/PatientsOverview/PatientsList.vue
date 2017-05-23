@@ -27,31 +27,27 @@
 
   import patient from './Patient'
   import HttpOrganisationTypeService from '../../../../services/httpOrganisationTypeService'
-  import {ApiService} from '../../../../services/ApiService'
-
-  let api = new ApiService()
-
+  import HttpPatientsService from '../../../../services/httpPatientsService'
+  
   export default {
     components: {
       patient
     },
     data () {
       return {
-        patients: []
+        patients: patients
       }
     },
     beforeCreate: function () {
-      let httpOrganisationTypeService = new HttpOrganisationTypeService();
-
-      httpOrganisationTypeService.fetch().then((organisationTypes) => {
-        console.log(organisationTypes);
-      }).catch(console.error);
-
-     /* api.fetchData('patients')
+      let httpPatientsService = new HttpPatientsService();
+      
+      httpPatientsService.getPatients()
         .then(res => {
-          // if(res.ok)
-          this.patients = [{name: 'henk'}, {name: 'harry'}]
-        })*/
+          if(!res.length > 0) return
+          res.forEach(patient =>{
+            patients.push(patient);
+          })
+        })
     },
     methods: {
       test: (event) => {

@@ -9,14 +9,14 @@ export default [
     component: require('./components/Patient/PatientsOverview')
   }, {
     path: '/organisations',
-    name: 'Organisatie Overzicht',
+    name: 'OrganisatieOverzicht',
     component: require('./components/Organisation/OrganisationOverview')
   }, {
     path: '/organisation/create',
     name: 'createorganisation',
     component: require('./components/Organisation/AddOrganisation')
   }, {
-    path: '/patientsInfo',
+    path: '/patientsInfo/:bsn',
     name: 'patientinfo',
     component: require('components/Patient/PatientsInfoPage')
   }, {

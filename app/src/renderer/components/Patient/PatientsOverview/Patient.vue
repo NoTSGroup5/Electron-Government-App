@@ -1,15 +1,29 @@
 <template>
   <tr>
     <td>{{bsn}}</td>
-    <td>{{name}}</td>
-    <td><router-link class="btn btn-default" to="/patientsInfo"> Bewerk {{name}}</router-link></td>
-    <td>Dossier van {{name}}</td>
+    <td>{{firstName}} {{lastName}}</td>
+    <td><router-link class="btn btn-default" :to="{ name: 'patientinfo', params: { bsn: 123 }}"> Bewerk {{firstName}} {{lastName}}</router-link></td>
+    <td><router-link class="btn btn-default" to="/">Dossier van {{firstName}} {{lastName}}</router-link></td>
   </tr>
 </template>
 
 <script>
   export default {
-    props: ['name', 'bsn']
+    props: [
+      "bsn",
+      "firstName",
+      "namePrefix",
+      "lastName",
+      "email",
+      "telephoneNumber",
+      "birthday",
+      "gender",
+      "city",
+      "zipCode",
+      "street",
+      "houseNumber",
+      "houseNumberExtra"
+    ],
   }
 </script>
 
