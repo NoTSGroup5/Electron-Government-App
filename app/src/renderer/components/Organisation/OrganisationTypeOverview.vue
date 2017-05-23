@@ -22,23 +22,23 @@
 </template>
 
 <script>
-  import Uuid from 'uuid/v1';
-  import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService';
+  import Uuid from 'uuid/v1'
+import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
 
-  let httpOrganisationTypeService = new HttpOrganisationTypeService();
+let httpOrganisationTypeService = new HttpOrganisationTypeService()
 
-  export default {
+export default {
     data: () => {
       return {
         organisationTypes: []
-      };
+      }
     },
-    created() {
+    created () {
       httpOrganisationTypeService.fetch().then((items) => {
-        this.organisationTypes = items;
+        this.organisationTypes = items
       }).catch(() => {
-        alert('Het laden van de organisatie types zijn mislukt.');
-      });
+        alert('Het laden van de organisatie types zijn mislukt.')
+      })
     },
     methods: {}
   }

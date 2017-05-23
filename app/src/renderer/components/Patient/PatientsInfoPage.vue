@@ -49,7 +49,6 @@
 
                   
                     <div id="organisatietoevoegen" class="modal fade" role="dialog">
-                        <OrganisatieSelecteren></OrganisatieSelecteren>
                     </div>
                 </tr>
                 </thead>
@@ -108,15 +107,14 @@
 </template>
 
 <script>
-  import Organisation from '../Organization/OrganizationOverview/Organization'
+  import Organisation from '../Organisation/OrganisationOverview/Organisation'
 import Mentor from '../Mentor/MentorsOverview/Mentor'
 import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
 import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
 import MentorToevoegenModal from '../Mentor/MentorsOverview/MentorToevoegenModal'
-import OrganisatieSelecteren from '../Organization/OrganizationOverview/OrganisatieSelecteren'
   import BootstrapModal from '../Shared/Bootstrap/BootstrapModal';
 
-let organizations = []
+let Organisations = []
 let mentoren = []
 
 export default {
@@ -124,9 +122,8 @@ export default {
       Organisation,
       Mentor,
       BootstrapTextInput,
-      BootstrapModal
+      BootstrapModal,
       MentorToevoegenModal,
-      OrganisatieSelecteren,
       BootstrapSelectInput
 
     },
@@ -141,7 +138,7 @@ export default {
     beforeCreate: () => {
       // TODO: Add actual API endpoint here, simulate async call for now
       setTimeout(() => {
-        organizations.push({
+        Organisations.push({
           name: 'Ziekenhuis Zevenaar',
           location: 'Zevenaar'
         })
@@ -151,7 +148,7 @@ export default {
           naam: 'Kees, J'
         })
 
-        organizations.push({
+        Organisations.push({
           name: 'Rijnstate',
           location: 'Arnhem'
         })
@@ -164,7 +161,7 @@ export default {
     },
 
     beforeDestroy: () => {
-      organizations = []
+      Organisations = []
       mentoren = []
     }
   }

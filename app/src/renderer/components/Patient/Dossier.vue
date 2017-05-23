@@ -30,7 +30,6 @@
                                        <BootstrapTextInput :type="'text'" :name="'Ondernomen acties'" :value="'Ondernomen acties'"></BootstrapTextInput> 
                                     
                                        
-                                    <Datepicker placeholder="Select Date"></Datepicker>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Toevoegen</button>
@@ -114,7 +113,6 @@
 <script>
   import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
   import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
-  import Datepicker from 'vuejs-datepicker'
 
 var state = {
     date: new Date(2016, 9, 16)
@@ -124,7 +122,6 @@ var state = {
 
 export default {
     components: {
-      Datepicker,
       BootstrapTextInput,
       BootstrapSelectInput
     },

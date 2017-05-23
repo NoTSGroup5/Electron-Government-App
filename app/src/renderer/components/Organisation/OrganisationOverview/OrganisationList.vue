@@ -14,9 +14,9 @@
 </template>
 
 <script>
-    import Organisation from './Organisation';
+    import Organisation from './Organisation'
 
-    let organisations = [];
+let organisations = []
 
 export default {
       components: {
@@ -33,20 +33,20 @@ export default {
         // TODO: Add actual API endpoint here, simulate async call for now
         setTimeout(() => {
           organisations.push({
-            name: "Ziekenhuis Zevenaar",
-            location: "Zevenaar"
-          });
+            name: 'Ziekenhuis Zevenaar',
+            location: 'Zevenaar'
+          })
 
           organisations.push({
-            name: "Rijnstate",
-            location: "Arnhem"
-          });
-        }, 100);
-      },
+            name: 'Rijnstate',
+            location: 'Arnhem'
+          })
+        }, 100)
+  },
 
       beforeDestroy: () => {
-        organisations = [];
-      }
+        organisations = []
+  }
     }
 </script>
 

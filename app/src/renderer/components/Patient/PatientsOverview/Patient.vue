@@ -10,20 +10,20 @@
 <script>
   export default {
     props: [
-      "bsn",
-      "firstName",
-      "namePrefix",
-      "lastName",
-      "email",
-      "telephoneNumber",
-      "birthday",
-      "gender",
-      "city",
-      "zipCode",
-      "street",
-      "houseNumber",
-      "houseNumberExtra"
-    ],
+      'bsn',
+      'firstName',
+      'namePrefix',
+      'lastName',
+      'email',
+      'telephoneNumber',
+      'birthday',
+      'gender',
+      'city',
+      'zipCode',
+      'street',
+      'houseNumber',
+      'houseNumberExtra'
+    ]
   }
 </script>
 

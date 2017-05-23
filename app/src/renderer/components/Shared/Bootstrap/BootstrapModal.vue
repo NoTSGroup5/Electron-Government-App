@@ -30,7 +30,7 @@
         },
         modalId: {
           type: String,
-          required: true,
+          required: true
         },
         ariaLabel: {
           type: String,

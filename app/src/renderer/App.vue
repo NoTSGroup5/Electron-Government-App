@@ -33,8 +33,8 @@
   import store from 'renderer/vuex/store'
   export default {
     store,
-    created(){
-      console.log('created');
+    created () {
+      console.log('created')
     }
   }
 </script>

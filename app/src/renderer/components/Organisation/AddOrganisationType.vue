@@ -22,29 +22,29 @@
 </template>
 
 <script>
-  import Uuid from 'uuid/v1';
-  import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService';
+  import Uuid from 'uuid/v1'
+import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
 
-  export default {
+export default {
     data: () => {
       return {
-        model : {
-          name  : null,
-          description : null
+        model: {
+          name: null,
+          description: null
         }
-      };
+      }
     },
-    methods : {
-      validateForm() {
+    methods: {
+      validateForm () {
         this.$validator.validateAll().then(() => {
-          let httpOrganisationTypeService = new HttpOrganisationTypeService();
+          let httpOrganisationTypeService = new HttpOrganisationTypeService()
 
           httpOrganisationTypeService.add(Uuid(), this.model.name, this.model.description).then(() => {
-            this.$router.push({path : '/organisation-types'});
+            this.$router.push({path: '/organisation-types'})
           }).catch(() => {
-            alert('An error occurred while adding the organisation type');
-          });
-        });
+            alert('An error occurred while adding the organisation type')
+          })
+        })
       }
     }
   }

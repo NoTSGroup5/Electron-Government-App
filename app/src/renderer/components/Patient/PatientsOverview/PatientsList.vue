@@ -39,13 +39,13 @@
       }
     },
     beforeCreate: function () {
-      let httpPatientsService = new HttpPatientsService();
-      
+      let httpPatientsService = new HttpPatientsService()
+  
       httpPatientsService.getPatients()
         .then(res => {
-          if(!res.length > 0) return
-          res.forEach(patient =>{
-            patients.push(patient);
+          if (!res.length > 0) return
+          res.forEach(patient => {
+            patients.push(patient)
           })
         })
     },
