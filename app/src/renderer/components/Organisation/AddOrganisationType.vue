@@ -37,14 +37,14 @@ export default {
     methods: {
       validateForm () {
         this.$validator.validateAll().then(() => {
-          let httpOrganisationTypeService = new HttpOrganisationTypeService()
+          let httpOrganisationTypeService = new HttpOrganisationTypeService();
 
           httpOrganisationTypeService.add(Uuid(), this.model.name, this.model.description).then(() => {
             this.$router.push({path: '/organisation-types'})
           }).catch(() => {
             alert('An error occurred while adding the organisation type')
           })
-        })
+        }).catch(() => {});
       }
     }
   }
