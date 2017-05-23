@@ -14,6 +14,8 @@ let config = {
   // webpack-dev-server port
   port: 9080,
 
+  apiUrl: 'http://localhost:3000/api/',
+
   // electron-packager options
   // Docs: https://simulatedgreg.gitbooks.io/electron-vue/content/en/building_your_app.html
   building: {
