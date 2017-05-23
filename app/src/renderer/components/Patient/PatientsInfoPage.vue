@@ -68,7 +68,6 @@
                             <Mentor v-for="mentor in mentoren" v-bind="mentor"></Mentor>
                         </tbody>
                     </table>
-                    <hr>
                 </div>
             </div>
         </BootstrapModal>
@@ -92,7 +91,6 @@
                             <Organisation v-for="organisation in organisations" v-bind="organisation"></Organisation>
                         </tbody>
                     </table>
-                    <hr>
                 </div>
             </div>
         </BootstrapModal>
