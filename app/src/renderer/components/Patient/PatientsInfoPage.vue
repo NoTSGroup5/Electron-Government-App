@@ -25,12 +25,13 @@
                         <th>BSN</th>
                         <th>Naam</th>
                         <th>
-                        <td><span class="glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal"></span>
-                        </td>
+                       <span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#myModal"></span>
+                    
                         </th> 
                         <div id="myModal" class="modal fade" role="dialog">
                         <MentorToevoegenModal></MentorToevoegenModal>
                         </div>
+                        
                     </tr>
                     </thead>
                     <tbody>
@@ -43,53 +44,13 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Organisatie naam</th>
+                    <th>Naam organisatie</th>
                     <th>Locatie</th>
-                    <th><span class="glyphicon glyphicon-plus" type="button" data-toggle="modal"
-                              data-target="#organisatietoevoegen"> </span></th>
+                    <th><span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#organisatietoevoegen"> </span></th>
 
-                    <!-- Modal -->
+                  
                     <div id="organisatietoevoegen" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Organisaties toevoegen</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-4 ">
-                                            <input type="search" id="search" value="" class="form-control"
-                                                   placeholder="Zoeken op naam organisatie">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <table class="table" id="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Naam</th>
-                                                    <th>Locatie</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <Organisation v-for="organization in organizations"
-                                                              v-bind="organization"></Organisation>
-                                                </tbody>
-                                            </table>
-                                            <hr>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Opslaan</button>
-                                </div>
-                            </div>
-                        </div>
+                        <OrganisatieSelecteren></OrganisatieSelecteren>
                     </div>
                 </tr>
                 </thead>
@@ -107,6 +68,7 @@ import Mentor from '../Mentor/MentorsOverview/Mentor'
 import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
 import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
 import MentorToevoegenModal from '../Mentor/MentorsOverview/MentorToevoegenModal'
+import OrganisatieSelecteren from '../Organization/OrganizationOverview/OrganisatieSelecteren'
 
 let organizations = []
 let mentoren = []
@@ -117,7 +79,9 @@ export default {
       Mentor,
       BootstrapTextInput,
       MentorToevoegenModal,
+      OrganisatieSelecteren,
       BootstrapSelectInput
+
     },
 
     data: () => {

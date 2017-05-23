@@ -1,9 +1,6 @@
 <template>
-
 <!-- Modal -->
-
     <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -44,3 +41,39 @@
 
     </div>
 </template>
+
+<script>
+import Mentor from './Mentor'
+let mentoren = []
+
+export default {
+    components: {
+      Mentor
+    },
+    data: () => {
+      return {
+        mentoren: mentoren
+      }
+    }   ,
+
+    beforeCreate: () => {
+      // TODO: Add actual API endpoint here, simulate async call for now
+      setTimeout(() => {
+      
+        mentoren.push({
+          BSN: '2736498',
+          naam: 'Kees, J'
+        })
+        mentoren.push({
+          BSN: '3243243',
+          naam: 'Hans, S'
+        })
+      }, 100)
+    },
+
+    beforeDestroy: () => {
+      mentoren = []
+    }
+}
+
+</script>
