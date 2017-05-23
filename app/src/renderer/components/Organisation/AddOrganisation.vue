@@ -6,7 +6,7 @@
         <BootstrapTextInput :type="'text'" :name="'city'" :value="'Plaats'"></BootstrapTextInput>
         <BootstrapTextInput :type="'number'" :name="'phone'" :value="'Telefoonnummer'"></BootstrapTextInput>
 
-        <BootstrapSelectInput :name="'organization_type'" :value="'Soort Organisatie'" :options="organizationOptions"></BootstrapSelectInput>
+        <BootstrapSelectInput :name="'organisation_type'" :value="'Soort Organisatie'" :options="organisationOptions"></BootstrapSelectInput>
 
         <button class="btn btn-success pull-right">Opslaan</button>
     </div>
@@ -16,7 +16,7 @@
   import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
   import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
 
-  let organizationOptions = [];
+  let organisationOptions = [];
 
   export default {
     components: {
@@ -26,14 +26,14 @@
 
     data: () => {
       return {
-        organizationOptions
+        organisationOptions
       };
     },
 
     beforeCreate: () => {
-      organizationOptions.push({ name: 'Ziekenhuis', value: 'hospital' });
-      organizationOptions.push({ name: 'Fysiotherapeut', value: 'fysio' });
-      organizationOptions.push({ name: 'Huisarts', value: 'house_doctor' });
+      organisationOptions.push({ name: 'Ziekenhuis', value: 'hospital' });
+      organisationOptions.push({ name: 'Fysiotherapeut', value: 'fysio' });
+      organisationOptions.push({ name: 'Huisarts', value: 'house_doctor' });
     }
   }
 </script>

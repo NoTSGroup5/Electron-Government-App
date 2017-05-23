@@ -23,9 +23,13 @@
 </template>
 
 <script>
-    import patient from './Patient'
+  let patients = []
 
+  import patient from './Patient'
   import HttpOrganisationTypeService from '../../../../services/httpOrganisationTypeService'
+  import {ApiService} from '../../../../services/ApiService'
+
+  let api = new ApiService()
 
   export default {
     components: {
