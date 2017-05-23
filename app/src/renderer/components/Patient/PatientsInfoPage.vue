@@ -24,12 +24,12 @@
                         <th>BSN</th>
                         <th>Naam</th>
                         <th>
-                            <span class="glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal"></span>
+                            <span class="glyphicon glyphicon-plus" data-toggle="modal" data-target="#addMentor"></span>
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <Mentor v-for="mentor in mentoren" v-bind="mentor"></Mentor>
+                        <Mentor v-for="mentor in mentoren" v-bind="mentor"></Mentor>
                     </tbody>
                 </table>
             </div>
@@ -49,91 +49,51 @@
             </table>
         </div>
 
-        <!-- Mentor Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Mentoren toevoegen</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <input type="search" id="search" value="" class="form-control"
-                                       placeholder="Zoeken op BSN">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <table class="table" id="table">
-                                    <thead>
-                                    <tr>
-                                        <th>BSN</th>
-                                        <th>Naam</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <Mentor v-for="mentor in mentoren" v-bind="mentor"></Mentor>
-                                    </tbody>
-                                </table>
-                                <hr>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Opslaan
-                        </button>
-                    </div>
+        <BootstrapModal title="Mentoren toevoegen" modalId="addMentor" :large="true">
+            <div class="row">
+                <div class="col-lg-4">
+                    <input type="search" id="search" value="" class="form-control" placeholder="Zoeken op BSN">
                 </div>
             </div>
-        </div>
-
-        <!-- Organisation Modal -->
-        <div id="addOrganisation" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Organisaties toevoegen</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 ">
-                                <input type="search" id="organisation_search" value="" class="form-control" placeholder="Zoeken op naam organisatie">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Naam</th>
-                                        <th>Locatie</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <Organisation v-for="organisation in organisations" v-bind="organisation"></Organisation>
-                                    </tbody>
-                                </table>
-                                <hr>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Opslaan</button>
-                    </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table" id="table">
+                        <thead>
+                        <tr>
+                            <th>BSN</th>
+                            <th>Naam</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <Mentor v-for="mentor in mentoren" v-bind="mentor"></Mentor>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
+        </BootstrapModal>
+
+        <BootstrapModal :title="'Organisaties toevoegen'" modalId="addOrganisation" :large="true">
+            <div class="row">
+                <div class="col-lg-4 ">
+                    <input type="search" id="organisation_search" value="" class="form-control" placeholder="Zoeken op naam organisatie">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Locatie</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <Organisation v-for="organisation in organisations" v-bind="organisation"></Organisation>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </BootstrapModal>
     </div>
 </template>
 
@@ -142,6 +102,7 @@
   import Mentor from '../Mentor/MentorsOverview/Mentor';
   import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput';
   import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput';
+  import BootstrapModal from '../Shared/Bootstrap/BootstrapModal';
 
   let organisations = [];
   let mentoren = [];
@@ -151,7 +112,8 @@
       Organisation,
       Mentor,
       BootstrapTextInput,
-      BootstrapSelectInput
+      BootstrapSelectInput,
+      BootstrapModal
     },
 
     data: () => {
