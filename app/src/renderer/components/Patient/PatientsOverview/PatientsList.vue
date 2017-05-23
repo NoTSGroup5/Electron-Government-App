@@ -26,10 +26,8 @@
   let patients = []
 
   import patient from './Patient'
-
-  import {ApiService} from '../../../../services/ApiService'
-  import patient from './Patient'
   import HttpOrganisationTypeService from '../../../../services/httpOrganisationTypeService'
+  import {ApiService} from '../../../../services/ApiService'
 
   let api = new ApiService()
 
