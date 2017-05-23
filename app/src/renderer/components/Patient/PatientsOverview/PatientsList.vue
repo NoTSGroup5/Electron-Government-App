@@ -1,59 +1,61 @@
 <template>
-  <div>
+    <div>
 
-    <table class="table table-striped"  v-if="patients.length">
-      <thead>
-        <tr>
-          <td>BSN</td>
-          <td>Naam</td>
-          <td>Bewerken</td>
-          <td>Inzien</td>
-        </tr>
-      </thead>
-      <tbody>
-        <patient v-for="patient in patients" v-bind="patient"></patient>
-      </tbody>
-    </table>
+        <table class="table table-striped" v-if="patients.length">
+            <thead>
+            <tr>
+                <td>BSN</td>
+                <td>Naam</td>
+                <td>Bewerken</td>
+                <td>Inzien</td>
+            </tr>
+            </thead>
+            <tbody>
+            <patient v-for="patient in patients" v-bind="patient"></patient>
+            </tbody>
+        </table>
 
-    <div v-if="patients.length == 0">
-              something went wrong with getting patients from the database
+        <div v-if="patients.length == 0">
+            something went wrong with getting patients from the database
+        </div>
+
     </div>
-
-  </div>
 </template>
 
 <script>
-    var patients = []
+  import patient from './Patient'
 
-    import patient from './Patient'
+  import HttpOrganisationTypeService from '../../../../services/httpOrganisationTypeService'
 
-    import {ApiService} from '../../../../services/ApiService'
-var api = new ApiService()
+  export default {
+    components: {
+      patient
+    },
+    data () {
+      return {
+        patients: []
+      }
+    },
+    beforeCreate: function () {
+      let httpOrganisationTypeService = new HttpOrganisationTypeService();
 
-export default {
-      components: {
-        patient
-      },
-      data () {
-        return {
-          patients: patients
-        }
-      },
+      httpOrganisationTypeService.fetch().then((organisationTypes) => {
+        console.log(organisationTypes);
+      }).catch(console.error);
 
-      beforeCreate: function () {
-        api.fetchData('patients')
-                .then(res => {
-                    // if(res.ok)
-                  this.patients = [{name: 'henk'}, {name: 'harry'}]
-                })
-      },
-      methods: {
-        test: (event) => {
-          debugger
-        }
-      },
-      name: 'patientsList'
-    }
+     /* api.fetchData('patients')
+        .then(res => {
+          // if(res.ok)
+          this.patients = [{name: 'henk'}, {name: 'harry'}]
+        })*/
+    },
+    methods: {
+      test: (event) => {
+        debugger
+      }
+    },
+    name: 'patientsList'
+  }
 </script>
 
 <style scoped>

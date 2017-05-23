@@ -80,13 +80,13 @@
 </template>
 
 <script>
-    import Organisation from '../Organization/OrganizationOverview/Organization';
-    import Mentor from '../Mentor/MentorsOverview/Mentor';
+    import Organisation from '../Organization/OrganizationOverview/Organization'
+import Mentor from '../Mentor/MentorsOverview/Mentor'
 
-    let organizations = [];
-    let mentoren = [];
+let organizations = []
+let mentoren = []
 
-    export default {
+export default {
       components: {
         Organisation,
         Mentor
@@ -94,7 +94,7 @@
 
       data: () => {
         return {
-          organizations: organizations, 
+          organizations: organizations,
           mentoren: mentoren
         }
       },
@@ -103,31 +103,30 @@
         // TODO: Add actual API endpoint here, simulate async call for now
         setTimeout(() => {
           organizations.push({
-            name: "Ziekenhuis Zevenaar",
-            location: "Zevenaar"
-          });
+            name: 'Ziekenhuis Zevenaar',
+            location: 'Zevenaar'
+          })
 
-           mentoren.push({
-            BSN: "2736498",
-            naam: "Kees, J"
-          });
-
+          mentoren.push({
+            BSN: '2736498',
+            naam: 'Kees, J'
+          })
 
           organizations.push({
-            name: "Rijnstate",
-            location: "Arnhem"
-          });
+            name: 'Rijnstate',
+            location: 'Arnhem'
+          })
 
-           mentoren.push({
-            BSN: "3243243",
-            naam: "Hans, S"
-          });
-        }, 100);
-      },
+          mentoren.push({
+            BSN: '3243243',
+            naam: 'Hans, S'
+          })
+        }, 100)
+  },
 
       beforeDestroy: () => {
-        organizations = [];
-         mentoren = [];
-      }
+        organizations = []
+        mentoren = []
+  }
     }
 </script>
