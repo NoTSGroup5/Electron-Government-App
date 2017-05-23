@@ -1,5 +1,5 @@
 <template>
-    <div>
+  <div>
 
         <table class="table table-striped" v-if="patients.length">
             <thead>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  import patient from './Patient'
+    import patient from './Patient'
 
   import HttpOrganisationTypeService from '../../../../services/httpOrganisationTypeService'
 
@@ -59,49 +59,5 @@
 </script>
 
 <style scoped>
-    .row {
-        box-sizing: border-box;
-        display: table;
-        table-layout: fixed;
-        width: 100%;
-    }
 
-    .tablehead,
-    .tablefooter {
-        background: red;
-    }
-
-    .cell {
-        display: table-cell;
-        flex: 1;
-        flex-direction: column;
-        position: relative;
-    }
-
-    @supports (display: flex) {
-        .row {
-            display: flex;
-
-        }
-
-    // display: block is needed to allow inline-block content inside a cell, if there is vertical alignment, we need display: flex
-    .cell {
-           display: block;
-       }
-
-        .cell-valign-middle,
-        .cell-valign-bottom {
-            display: flex;
-        }
-    }
-
-    .cell-min {
-        width: 1%;
-        flex: none auto;
-    }
-
-    .cell-max {
-        width: 100%;
-        flex: 1 100%;
-    }
 </style>

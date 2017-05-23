@@ -2,7 +2,7 @@
     <tr>
         <td>{{ name }}</td>
         <td>{{ location }}</td>
-        <td><button class="btn btn-default">Bewerk</button></td>
+        <td><span class="glyphicon glyphicon-pencil"></span></td>
     </tr>
 </template>
 
