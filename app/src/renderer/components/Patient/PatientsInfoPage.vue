@@ -112,7 +112,7 @@ import Mentor from '../Mentor/MentorsOverview/Mentor'
 import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
 import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
 import MentorToevoegenModal from '../Mentor/MentorsOverview/MentorToevoegenModal'
-  import BootstrapModal from '../Shared/Bootstrap/BootstrapModal';
+  import BootstrapModal from '../Shared/Bootstrap/BootstrapModal'
 
 let Organisations = []
 let mentoren = []
