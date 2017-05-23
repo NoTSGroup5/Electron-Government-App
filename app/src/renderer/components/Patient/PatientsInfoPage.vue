@@ -46,7 +46,7 @@
                 </div>
             </form>
 
-            <button type="button" class="btn btn-danger">Opslaan</button>
+            <button type="button" class="btn btn-danger pull-right">Opslaan</button>
         </div>
         
         <div class="col-xs-12 form-group">
