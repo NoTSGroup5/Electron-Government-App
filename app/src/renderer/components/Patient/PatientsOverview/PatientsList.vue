@@ -23,12 +23,12 @@
 </template>
 
 <script>
-  var patients = []
+  let patients = []
 
   import patient from './Patient'
 
   import {ApiService} from '../../../../services/ApiService'
-  var api = new ApiService()
+  let api = new ApiService()
 
   export default {
     components: {
