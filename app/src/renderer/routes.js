@@ -31,6 +31,10 @@ export default [
     name: 'patientinfo',
     component: require('components/Patient/PatientsInfoPage')
   }, {
+    path: '/patientDossier',
+    name: 'patientdossier',
+    component: require('components/Patient/Dossier')
+  }, {
     path: '*',
     redirect: '/'
   }

@@ -2,7 +2,7 @@
     <tr>
         <td>{{ name }}</td>
         <td>{{ location }}</td>
-        <td><span class="glyphicon glyphicon-pencil"></span></td>
+        <td><span class="glyphicon glyphicon-pencil pull-right"></span></td>
     </tr>
 </template>
 

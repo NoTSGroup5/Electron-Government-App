@@ -43,15 +43,14 @@
     beforeCreate: function () {
       let httpOrganisationTypeService = new HttpOrganisationTypeService();
 
-      httpOrganisationTypeService.fetch().then((organisationTypes) => {
-        console.log(organisationTypes);
-      }).catch(console.error);
-
-     /* api.fetchData('patients')
-        .then(res => {
-          // if(res.ok)
-          this.patients = [{name: 'henk'}, {name: 'harry'}]
-        })*/
+    beforeCreate: () => {
+      if (patients && patients.length) return
+      api.getPatients()
+         .then(res => {
+           // we push instead of set the variable, otherwise we'll overwrite the observable and never get data
+           patients.push({name: 'henk', bsn: 987654321})
+           patients.push({name: 'harry', bsn: 123456789})
+         })
     },
     methods: {
       test: (event) => {
