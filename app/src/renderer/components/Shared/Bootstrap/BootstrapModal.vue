@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" :id="modalId" tabindex="-1" role="dialog" :aria-labelledby="ariaLabel">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" :class="modalClass" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -33,6 +33,28 @@
         ariaLabel: {
           type: String,
           default: 'myModal'
+        },
+        small: {
+          type: Boolean,
+          default: false
+        },
+        large: {
+          type: Boolean,
+          default: false
+        },
+        full: {
+          type: Boolean,
+          default: false
+        }
+      },
+
+      computed: {
+        modalClass () {
+          return {
+            'modal-lg': this.large,
+            'modal-sm': this.small,
+            'modal-full': this.full
+          }
         }
       }
     }

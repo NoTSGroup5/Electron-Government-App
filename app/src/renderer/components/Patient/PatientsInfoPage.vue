@@ -49,7 +49,7 @@
             </table>
         </div>
 
-        <BootstrapModal :title="'Mentoren toevoegen'" modalId="addMentor">
+        <BootstrapModal title="Mentoren toevoegen" modalId="addMentor" :large="true">
             <div class="row">
                 <div class="col-lg-4">
                     <input type="search" id="search" value="" class="form-control" placeholder="Zoeken op BSN">
@@ -73,7 +73,7 @@
             </div>
         </BootstrapModal>
 
-        <BootstrapModal :title="'Organisaties toevoegen'" modalId="addOrganisation">
+        <BootstrapModal :title="'Organisaties toevoegen'" modalId="addOrganisation" :large="true">
             <div class="row">
                 <div class="col-lg-4 ">
                     <input type="search" id="organisation_search" value="" class="form-control" placeholder="Zoeken op naam organisatie">
