@@ -23,83 +23,41 @@
 </template>
 
 <script>
-    var patients = []
+  var patients = []
 
-    import patient from './Patient'
+  import patient from './Patient'
 
-    import {ApiService} from '../../../../services/ApiService'
-var api = new ApiService()
+  import {ApiService} from '../../../../services/ApiService'
+  var api = new ApiService()
 
-export default {
-      components: {
-        patient
-      },
-      data () {
-        return {
-          patients: patients
-        }
-      },
+  export default {
+    components: {
+      patient
+    },
+    data () {
+      return {
+        patients: patients
+      }
+    },
 
-      beforeCreate: function () {
-        api.fetchData('patients')
-                .then(res => {
-                    // if(res.ok)
-                  this.patients = [{name: 'henk'}, {name: 'harry'}]
-                })
-      },
-      methods: {
-        test: (event) => {
-          debugger
-        }
-      },
-      name: 'patientsList'
-    }
+    beforeCreate: () => {
+      if(patients && patients.length) return
+      api.getPatients()
+         .then(res => {
+           //we push instead of set the variable, otherwise we'll overwrite the observable and never get data
+           patients.push({name: 'henk', bsn: 987654321})
+           patients.push({name: 'harry', bsn: 123456789})
+         })
+    },
+    methods: {
+      test: (event) => {
+        debugger
+      }
+    },
+    name: 'patientsList'
+  }
 </script>
 
 <style scoped>
-    .row {
-        box-sizing: border-box;
-        display: table;
-        table-layout: fixed;
-        width: 100%;
-    }
-
-    .tablehead,
-    .tablefooter {
-        background: red;
-    }
-
-    .cell {
-        display: table-cell;
-        flex: 1;
-        flex-direction: column;
-        position: relative;
-    }
-
-    @supports (display: flex) {
-        .row {
-            display: flex;
-
-        }
-
-    // display: block is needed to allow inline-block content inside a cell, if there is vertical alignment, we need display: flex
-    .cell {
-           display: block;
-       }
-
-        .cell-valign-middle,
-        .cell-valign-bottom {
-            display: flex;
-        }
-    }
-
-    .cell-min {
-        width: 1%;
-        flex: none auto;
-    }
-
-    .cell-max {
-        width: 100%;
-        flex: 1 100%;
-    }
+  
 </style>
