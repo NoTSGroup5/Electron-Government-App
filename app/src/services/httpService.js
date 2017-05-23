@@ -9,4 +9,8 @@ export default class HttpService {
       });
   }
 
+  post(url, data){
+    return Vue.http.post(Config.apiUrl + url, data);
+  }
+
 }
