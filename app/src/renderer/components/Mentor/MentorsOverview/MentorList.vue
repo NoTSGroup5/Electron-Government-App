@@ -14,11 +14,11 @@
 </template>
 
 <script>
-    import Mentor from './Mentor';
+    import Mentor from './Mentor'
 
-    let mentoren = [];
+let mentoren = []
 
-    export default {
+export default {
       components: {
         Mentor
       },
@@ -33,20 +33,20 @@
         // TODO: Add actual API endpoint here, simulate async call for now
         setTimeout(() => {
           mentoren.push({
-            BSN: "2736498",
-            naam: "Kees, J"
-          });
+            BSN: '2736498',
+            naam: 'Kees, J'
+          })
 
           mentoren.push({
-            name: "3243243",
-            location: "Hans, S"
-          });
-        }, 100);
-      },
+            name: '3243243',
+            location: 'Hans, S'
+          })
+        }, 100)
+  },
 
       beforeDestroy: () => {
-        mentoren = [];
-      }
+        mentoren = []
+  }
     }
 </script>
 

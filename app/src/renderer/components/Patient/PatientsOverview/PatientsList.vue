@@ -41,10 +41,10 @@
     },
 
     beforeCreate: () => {
-      if(patients && patients.length) return
+      if (patients && patients.length) return
       api.getPatients()
          .then(res => {
-           //we push instead of set the variable, otherwise we'll overwrite the observable and never get data
+           // we push instead of set the variable, otherwise we'll overwrite the observable and never get data
            patients.push({name: 'henk', bsn: 987654321})
            patients.push({name: 'harry', bsn: 123456789})
          })

@@ -27,51 +27,9 @@
                         <th>
                         <td><span class="glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal"></span>
                         </td>
-                        </th>
-
-                        <!-- Modal -->
+                        </th> 
                         <div id="myModal" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
-
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Mentoren toevoegen</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <input type="search" id="search" value="" class="form-control"
-                                                       placeholder="Zoeken op BSN">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <table class="table" id="table">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>BSN</th>
-                                                        <th>Naam</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <Mentor v-for="mentor in mentoren" v-bind="mentor"></Mentor>
-                                                    </tbody>
-                                                </table>
-                                                <hr>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Opslaan
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
+                        <MentorToevoegenModal></MentorToevoegenModal>
                         </div>
                     </tr>
                     </thead>
@@ -144,20 +102,21 @@
 </template>
 
 <script>
-  import Organisation from '../Organization/OrganizationOverview/Organization';
-  import Mentor from '../Mentor/MentorsOverview/Mentor';
-  import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput';
-  import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput';
+  import Organisation from '../Organization/OrganizationOverview/Organization'
+import Mentor from '../Mentor/MentorsOverview/Mentor'
+import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
+import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
+import MentorToevoegenModal from '../Mentor/MentorsOverview/MentorToevoegenModal'
 
+let organizations = []
+let mentoren = []
 
-  let organizations = [];
-  let mentoren = [];
-
-  export default {
+export default {
     components: {
       Organisation,
       Mentor,
       BootstrapTextInput,
+      MentorToevoegenModal,
       BootstrapSelectInput
     },
 
@@ -172,30 +131,30 @@
       // TODO: Add actual API endpoint here, simulate async call for now
       setTimeout(() => {
         organizations.push({
-          name: "Ziekenhuis Zevenaar",
-          location: "Zevenaar"
-        });
+          name: 'Ziekenhuis Zevenaar',
+          location: 'Zevenaar'
+        })
 
         mentoren.push({
-          BSN: "2736498",
-          naam: "Kees, J"
-        });
+          BSN: '2736498',
+          naam: 'Kees, J'
+        })
 
         organizations.push({
-          name: "Rijnstate",
-          location: "Arnhem"
-        });
+          name: 'Rijnstate',
+          location: 'Arnhem'
+        })
 
         mentoren.push({
-          BSN: "3243243",
-          naam: "Hans, S"
-        });
-      }, 100);
+          BSN: '3243243',
+          naam: 'Hans, S'
+        })
+      }, 100)
     },
 
     beforeDestroy: () => {
-      organizations = [];
-      mentoren = [];
+      organizations = []
+      mentoren = []
     }
   }
 </script>

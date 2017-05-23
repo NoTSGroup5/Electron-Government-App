@@ -16,9 +16,9 @@
   import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
   import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
 
-  let organizationOptions = [];
+  let organizationOptions = []
 
-  export default {
+export default {
     components: {
       BootstrapTextInput,
       BootstrapSelectInput
@@ -27,13 +27,13 @@
     data: () => {
       return {
         organizationOptions
-      };
+      }
     },
 
     beforeCreate: () => {
-      organizationOptions.push({ name: 'Ziekenhuis', value: 'hospital' });
-      organizationOptions.push({ name: 'Fysiotherapeut', value: 'fysio' });
-      organizationOptions.push({ name: 'Huisarts', value: 'house_doctor' });
+      organizationOptions.push({ name: 'Ziekenhuis', value: 'hospital' })
+      organizationOptions.push({ name: 'Fysiotherapeut', value: 'fysio' })
+      organizationOptions.push({ name: 'Huisarts', value: 'house_doctor' })
     }
   }
 </script>

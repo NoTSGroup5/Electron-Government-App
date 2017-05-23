@@ -14,11 +14,11 @@
 </template>
 
 <script>
-    import Organisation from './Organization';
+    import Organisation from './Organization'
 
-    let organizations = [];
+let organizations = []
 
-    export default {
+export default {
       components: {
         Organisation
       },
@@ -33,20 +33,20 @@
         // TODO: Add actual API endpoint here, simulate async call for now
         setTimeout(() => {
           organizations.push({
-            name: "Ziekenhuis Zevenaar",
-            location: "Zevenaar"
-          });
+            name: 'Ziekenhuis Zevenaar',
+            location: 'Zevenaar'
+          })
 
           organizations.push({
-            name: "Rijnstate",
-            location: "Arnhem"
-          });
-        }, 100);
-      },
+            name: 'Rijnstate',
+            location: 'Arnhem'
+          })
+        }, 100)
+  },
 
       beforeDestroy: () => {
-        organizations = [];
-      }
+        organizations = []
+  }
     }
 </script>
 
