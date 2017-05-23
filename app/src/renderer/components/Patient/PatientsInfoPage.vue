@@ -1,54 +1,19 @@
 <template>
     <div class="row">
         <div class="col-xs-6 form-group">
-            <form class="col-4">
+            <div>
+                <BootstrapTextInput :type="'text'" :name="'name'" :value="'Naam'"></BootstrapTextInput>
+                 <BootstrapTextInput :type="'text'" :name="'bsn'" :value="'BSN'"></BootstrapTextInput>
+                <BootstrapTextInput :type="'text'" :name="'address'" :value="'Adres'"></BootstrapTextInput>
+                <BootstrapTextInput :type="'text'" :name="'zip_code'" :value="'Postcode'"></BootstrapTextInput>
+                <BootstrapTextInput :type="'text'" :name="'city'" :value="'Plaats'"></BootstrapTextInput>
+                <BootstrapTextInput :type="'number'" :name="'phone'" :value="'Telefoonnummer'"></BootstrapTextInput>
+                <BootstrapTextInput :type="'number'" :name="'mobile phone'" :value="'Mobiel nummer'"></BootstrapTextInput>
+                <BootstrapTextInput :type="'text'" :name="'email'" :value="'email'"></BootstrapTextInput>
 
-                <div class="form-group">
-                    <label for="inputName3">Naam</label>
-                    <input type="naam" class="form-control" id="inputName3" placeholder="Naam">
-                </div>
-
-                <div class="form-group">
-                    <label for="inputBSN3">BSN</label>
-                    <input type="bsn" class="form-control" id="inputBSN3" placeholder="BSN">
-                </div>
-
-                <div class="form-group">
-                    <label for="inputAddress3">Address</label>
-                    <input type="address" class="form-control" id="inputAddress3" placeholder="Address">
-                </div>
-
-                <div class="form-group">
-                    <label for="inputZipCode3">Postcode</label>
-                    <input type="postcode" class="form-control" id="inputZipCode3" placeholder="Postcode">
-                </div>
-
-
-                <div class="form-group">
-                    <label for="inputPlace3">Plaats</label>
-                    <input type="plaats" class="form-control" id="inputPlace3" placeholder="Plaats">
-                </div>
-
-
-                <div class="form-group">
-                    <label for="inputPhoneNumber3">Telefoonnummer</label>
-                    <input type="telefoonnummer" class="form-control" id="inputPhoneNumber3"
-                           placeholder="Telefoonnummer">
-                </div>
-
-                <div class="form-group">
-                    <label for="inputMobilePhoneNumber3">Mobiele nummer</label>
-                    <input type="mobiel" class="form-control" id="inputMobilePhoneNumber3" placeholder="Mobiele nummer">
-                </div>
-
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                           placeholder="Enter email">
-                </div>
-            </form>
-
-            <button type="button" class="btn btn-success pull-right">Opslaan</button>
+               
+                <button class="btn btn-success pull-right">Opslaan</button>
+            </div>
         </div>
 
         <div class="col-xs-6 form-group">
@@ -181,6 +146,9 @@
 <script>
   import Organisation from '../Organization/OrganizationOverview/Organization';
   import Mentor from '../Mentor/MentorsOverview/Mentor';
+  import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput';
+  import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput';
+
 
   let organizations = [];
   let mentoren = [];
@@ -188,7 +156,9 @@
   export default {
     components: {
       Organisation,
-      Mentor
+      Mentor,
+      BootstrapTextInput,
+      BootstrapSelectInput
     },
 
     data: () => {
