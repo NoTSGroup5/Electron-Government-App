@@ -18,7 +18,7 @@
 
     let organisations = [];
 
-    export default {
+export default {
       components: {
         Organisation
       },

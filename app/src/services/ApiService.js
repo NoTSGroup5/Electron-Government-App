@@ -47,7 +47,7 @@ export class ApiService {
         })
   }
 
-    delete(url){
+  delete(url){
       return fetch(url, {
           method: "DELETE"
         })
