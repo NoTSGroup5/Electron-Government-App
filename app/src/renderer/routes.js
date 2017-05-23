@@ -13,8 +13,8 @@ export default [
     component: require('./components/Organisation/OrganisationOverview')
   }, {
     path: '/organisation/create',
-    name: 'createOrganization',
-    component: require('./components/Organisation/AddOrganization')
+    name: 'createorganisation',
+    component: require('./components/Organisation/AddOrganisation')
   }, {
     path: '/patientsInfo',
     name: 'patientinfo',

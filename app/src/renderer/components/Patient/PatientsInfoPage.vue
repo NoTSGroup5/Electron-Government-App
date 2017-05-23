@@ -119,8 +119,8 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <Organisation v-for="organization in organizations"
-                                                              v-bind="organization"></Organisation>
+                                                <Organisation v-for="organisation in organisations"
+                                                              v-bind="organisation"></Organisation>
                                                 </tbody>
                                             </table>
                                             <hr>
@@ -136,7 +136,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <Organisation v-for="organization in organizations" v-bind="organization"></Organisation>
+                    <Organisation v-for="organisation in organisations" v-bind="organisation"></Organisation>
                 </tbody>
             </table>
         </div>
@@ -150,7 +150,7 @@
   import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput';
 
 
-  let organizations = [];
+  let organisations = [];
   let mentoren = [];
 
   export default {
@@ -163,7 +163,7 @@
 
     data: () => {
       return {
-        organizations: organizations,
+        organisations: organisations,
         mentoren: mentoren
       }
     },
@@ -171,7 +171,7 @@
     beforeCreate: () => {
       // TODO: Add actual API endpoint here, simulate async call for now
       setTimeout(() => {
-        organizations.push({
+        organisations.push({
           name: "Ziekenhuis Zevenaar",
           location: "Zevenaar"
         });
@@ -181,7 +181,7 @@
           naam: "Kees, J"
         });
 
-        organizations.push({
+        organisations.push({
           name: "Rijnstate",
           location: "Arnhem"
         });
@@ -194,7 +194,7 @@
     },
 
     beforeDestroy: () => {
-      organizations = [];
+      organisations = [];
       mentoren = [];
     }
   }

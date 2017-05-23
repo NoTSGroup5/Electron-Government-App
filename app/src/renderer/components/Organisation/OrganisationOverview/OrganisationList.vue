@@ -8,7 +8,7 @@
             </tr>
         </thead>
         <tbody>
-            <Organisation v-for="organization in organizations" v-bind="organization"></Organisation>
+            <Organisation v-for="organisation in organisations" v-bind="organisation"></Organisation>
         </tbody>
     </table>
 </template>
@@ -16,7 +16,7 @@
 <script>
     import Organisation from './Organisation';
 
-    let organizations = [];
+    let organisations = [];
 
     export default {
       components: {
@@ -25,19 +25,19 @@
 
       data: () => {
         return {
-          organizations: organizations
+          organisations: organisations
         }
       },
 
       beforeCreate: () => {
         // TODO: Add actual API endpoint here, simulate async call for now
         setTimeout(() => {
-          organizations.push({
+          organisations.push({
             name: "Ziekenhuis Zevenaar",
             location: "Zevenaar"
           });
 
-          organizations.push({
+          organisations.push({
             name: "Rijnstate",
             location: "Arnhem"
           });
@@ -45,7 +45,7 @@
       },
 
       beforeDestroy: () => {
-        organizations = [];
+        organisations = [];
       }
     }
 </script>

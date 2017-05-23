@@ -10,20 +10,20 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <OrganizationList></OrganizationList>
+                <organisationList></organisationList>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-  import OrganizationList from './OrganisationOverview/OrganisationList.vue'
+  import organisationList from './OrganisationOverview/OrganisationList.vue'
 
   export default {
-    name: 'organizationOverview',
+    name: 'organisationOverview',
 
     components: {
-      OrganizationList
+      organisationList
     }
   }
 </script>
