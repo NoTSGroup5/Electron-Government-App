@@ -10,7 +10,7 @@ export default [
   }, {
     path: '/organisations',
     name: 'Organisatie Overzicht',
-    component: require('./components/Organization/OrganizationOverview')
+    component: require('./components/Organization/OrganisationOverview')
   }, {
     path: '/organisation/create',
     name: 'createOrganization',
