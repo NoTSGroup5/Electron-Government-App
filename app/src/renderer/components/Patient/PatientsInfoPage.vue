@@ -24,8 +24,13 @@
                         <th>BSN</th>
                         <th>Naam</th>
                         <th>
-                            <span class="glyphicon glyphicon-plus" data-toggle="modal" data-target="#addMentor"></span>
-                        </th>
+                       <span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#myModal"></span>
+                    
+                        </th> 
+                        <div id="myModal" class="modal fade" role="dialog">
+                        <MentorToevoegenModal></MentorToevoegenModal>
+                        </div>
+                        
                     </tr>
                     </thead>
                     <tbody>
@@ -37,11 +42,16 @@
             <label>Organisaties</label>
             <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th>Organisatie naam</th>
-                        <th>Locatie</th>
-                        <th><span class="glyphicon glyphicon-plus" data-toggle="modal" data-target="#addOrganisation"> </span></th>
-                    </tr>
+                <tr>
+                    <th>Naam organisatie</th>
+                    <th>Locatie</th>
+                    <th><span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#organisatietoevoegen"> </span></th>
+
+                  
+                    <div id="organisatietoevoegen" class="modal fade" role="dialog">
+                        <OrganisatieSelecteren></OrganisatieSelecteren>
+                    </div>
+                </tr>
                 </thead>
                 <tbody>
                     <Organisation v-for="organisation in organisations" v-bind="organisation"></Organisation>
@@ -98,22 +108,27 @@
 </template>
 
 <script>
-  import Organisation from '../Organisation/OrganisationOverview/Organisation';
-  import Mentor from '../Mentor/MentorsOverview/Mentor';
-  import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput';
-  import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput';
+  import Organisation from '../Organization/OrganizationOverview/Organization'
+import Mentor from '../Mentor/MentorsOverview/Mentor'
+import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
+import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
+import MentorToevoegenModal from '../Mentor/MentorsOverview/MentorToevoegenModal'
+import OrganisatieSelecteren from '../Organization/OrganizationOverview/OrganisatieSelecteren'
   import BootstrapModal from '../Shared/Bootstrap/BootstrapModal';
 
-  let organisations = [];
-  let mentoren = [];
+let organizations = []
+let mentoren = []
 
-  export default {
+export default {
     components: {
       Organisation,
       Mentor,
       BootstrapTextInput,
-      BootstrapSelectInput,
       BootstrapModal
+      MentorToevoegenModal,
+      OrganisatieSelecteren,
+      BootstrapSelectInput
+
     },
 
     data: () => {
@@ -126,31 +141,31 @@
     beforeCreate: () => {
       // TODO: Add actual API endpoint here, simulate async call for now
       setTimeout(() => {
-        organisations.push({
-          name: "Ziekenhuis Zevenaar",
-          location: "Zevenaar"
-        });
+        organizations.push({
+          name: 'Ziekenhuis Zevenaar',
+          location: 'Zevenaar'
+        })
 
         mentoren.push({
-          BSN: "2736498",
-          naam: "Kees, J"
-        });
+          BSN: '2736498',
+          naam: 'Kees, J'
+        })
 
-        organisations.push({
-          name: "Rijnstate",
-          location: "Arnhem"
-        });
+        organizations.push({
+          name: 'Rijnstate',
+          location: 'Arnhem'
+        })
 
         mentoren.push({
-          BSN: "3243243",
-          naam: "Hans, S"
-        });
-      }, 100);
+          BSN: '3243243',
+          naam: 'Hans, S'
+        })
+      }, 100)
     },
 
     beforeDestroy: () => {
-      organisations = [];
-      mentoren = [];
+      organizations = []
+      mentoren = []
     }
   }
 </script>
