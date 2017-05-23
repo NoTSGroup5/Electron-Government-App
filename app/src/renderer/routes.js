@@ -2,19 +2,19 @@ export default [
   {
     path: '/',
     name: 'landing-page',
-    component: require('./components/LandingPageView')
+    component: require('./components/Home/LandingPageView')
   }, {
     path: '/patients',
     name: 'patientsOverview',
-    component: require('./components/PatientsOverview')
+    component: require('./components/Patient/PatientsOverview')
   }, {
     path: '/organisations',
     name: 'Organisatie Overzicht',
-    component: require('./components/OrganizationOverview')
+    component: require('./components/Organization/OrganizationOverview')
   }, {
     path: '/patientsInfo',
     name: 'patientinfo',
-    component: require('components/PatientsInfoPage')
+    component: require('components/Patient/PatientsInfoPage')
   }, {
     path: '*',
     redirect: '/'
