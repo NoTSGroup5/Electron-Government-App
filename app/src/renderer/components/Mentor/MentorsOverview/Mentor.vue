@@ -1,13 +1,13 @@
 <template>
     <tr>
-        <td>{{ name }}</td>
-        <td>{{ location }}</td>
+        <td>{{ BSN }}</td>
+        <td>{{ Naam }}</td>
         <td><span class="glyphicon glyphicon-pencil"></span></td>
     </tr>
 </template>
 
 <script>
   export default {
-    props: ['name', 'location']
+    props: ['BSN', 'Naam']
   }
 </script>
