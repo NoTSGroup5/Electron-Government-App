@@ -27,7 +27,7 @@
 
     import patient from './Patient'
 
-    import {ApiService} from './../services/ApiService'
+    import {ApiService} from '../../../../services/ApiService'
 var api = new ApiService()
 
 export default {
