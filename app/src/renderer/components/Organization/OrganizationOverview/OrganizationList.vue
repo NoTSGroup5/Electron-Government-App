@@ -2,50 +2,50 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>BSN</th>
                 <th>Naam</th>
+                <th>Locatie</th>
                 <th>Bewerk</th>
             </tr>
         </thead>
         <tbody>
-            <Mentor v-for="mentor in mentoren" v-bind="mentor"></Mentor>
+            <Organisation v-for="organization in organizations" v-bind="organization"></Organisation>
         </tbody>
     </table>
 </template>
 
 <script>
-    import Mentor from './Mentor'
+    import Organisation from './Organization'
 
-let mentoren = []
+let organizations = []
 
 export default {
       components: {
-        Mentor
+        Organisation
       },
 
       data: () => {
         return {
-          mentoren: mentoren
+          organizations: organizations
         }
       },
 
       beforeCreate: () => {
         // TODO: Add actual API endpoint here, simulate async call for now
         setTimeout(() => {
-          mentoren.push({
-            BSN: '2736498',
-            naam: 'Kees, J'
+          organizations.push({
+            name: 'Ziekenhuis Zevenaar',
+            location: 'Zevenaar'
           })
 
-          mentoren.push({
-            name: '3243243',
-            location: 'Hans, S'
+          organizations.push({
+            name: 'Rijnstate',
+            location: 'Arnhem'
           })
         }, 100)
   },
 
       beforeDestroy: () => {
-        mentoren = []
+        organizations = []
   }
     }
 </script>

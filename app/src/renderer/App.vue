@@ -17,6 +17,7 @@
             <li><router-link to="/">Home</router-link></li>
             <li><router-link to="patients">Patients</router-link></li>
             <li><router-link to="organisations">Organisaties</router-link></li>
+            <li><router-link to="organisation-types">Organisatie Types</router-link></li>
           </ul>
         </div>
       </div>
@@ -30,8 +31,11 @@
 
 <script>
   import store from 'renderer/vuex/store'
-export default {
-    store
+  export default {
+    store,
+    created(){
+      console.log('created');
+    }
   }
 </script>
 
