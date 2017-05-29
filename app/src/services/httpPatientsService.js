@@ -21,12 +21,17 @@ export default class httpPatientsService {
   }
 
   _stripRestrictedValues (patients) {
+    if (patients === undefined) return patients
+
     if (patients.length > 0) {
       patients.forEach(patient => {
         this.restrictedFields.forEach(field => delete patient[field])
       })
-      return patients
     }
+    else
+      this.restrictedFields.forEach(field => delete patients[field])
+      
+    return patients
   }
 
 }

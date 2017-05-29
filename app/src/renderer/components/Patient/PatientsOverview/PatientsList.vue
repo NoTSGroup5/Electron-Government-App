@@ -26,7 +26,6 @@
   let patients = []
 
   import patient from './Patient'
-  import HttpOrganisationTypeService from '../../../../services/httpOrganisationTypeService'
   import HttpPatientsService from '../../../../services/httpPatientsService'
   
   export default {
@@ -48,6 +47,9 @@
             patients.push(patient)
           })
         })
+    },
+    destroyed: function(){
+       patients = [];
     },
     methods: {
       test: (event) => {

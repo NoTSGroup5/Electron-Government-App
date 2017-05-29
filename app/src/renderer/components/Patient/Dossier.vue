@@ -1,10 +1,10 @@
 <template>
     <div class="row">
-    <div class="col-sm-9">
-       <h2>Dossier {{name}} Kees </h2>
+    <div class="col-sm-9" v-if="patient.firstName != null">
+       <h2>Dossier {{patient.firstName}} {{patient.lastName}}</h2>
       
       <div class="row">
-       <h4>Doktersbezoeken  </h4>
+       <h4>Doktersbezoeken</h4>
          <table class="table table-striped">
             <thead>
             <tr>
@@ -41,7 +41,7 @@
             </tr>
             </thead>
             <tbody>
-                <Organisation v-for="organization in organizations" v-bind="organization"></Organisation>
+                <Visit v-for="Visit in patient.Visits" v-bind="Visit"></Visit>
             </tbody>
          </table>
       </div>
@@ -58,7 +58,7 @@
             </tr>
             </thead>
             <tbody>
-                <Organisation v-for="organization in organizations" v-bind="organization"></Organisation>
+                <Allergy v-for="Allergy in patient.Allergies" v-bind="Allergy"></Allergy>
             </tbody>
          </table>
       </div>
@@ -75,7 +75,7 @@
             </tr>
             </thead>
             <tbody>
-                <Organisation v-for="organization in organizations" v-bind="organization"></Organisation>
+                <Medicine v-for="Medicine in patient.Medication" v-bind="Medicine"></Medicine>
             </tbody>
          </table>
       </div>
@@ -94,7 +94,7 @@
             </tr>
             </thead>
             <tbody>
-                <Organisation v-for="organization in organizations" v-bind="organization"></Organisation>
+                <Treatment v-for="Treatment in patient.Treatments" v-bind="Treatment"></Treatment>
             </tbody>
          </table>
       </div>
@@ -111,22 +111,53 @@
  
 
 <script>
+  import Vue from 'vue'
   import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
   import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
+
+  import HttpPatientsService from '../../../services/httpPatientsService'
+
+  import Treatment from './Dossier/Treatment'
+  import Allergy from './Dossier/Allergy'
+  import Visit from './Dossier/Visit'
+  import Medicine from './Dossier/Medicine'
 
 var state = {
     date: new Date(2016, 9, 16)
 }
 
-  let organizationOptions = []
+  var patient = {};
 
 export default {
     components: {
       BootstrapTextInput,
-      BootstrapSelectInput
+      BootstrapSelectInput,
+      Treatment,
+      Allergy,
+      Visit,
+      Medicine
     },
+    data () {
+      return {
+        patient: patient
+      }
+    },
+    beforeCreate: function () {
+      let httpPatientsService = new HttpPatientsService()
+      var bsn = this.$route.params.bsn
 
-    props: ['name']
+      httpPatientsService.getPatientbyBsn(bsn)
+        .then(function(res){
+            for(var key in res)
+                this.$set(this.patient, key, res[key])
+                //mocked for now
+                this.$set(this.patient, "Allergies", {allergy: "pollen"})
+                
+        }.bind(this))
+    },
+    destroyed: function(){
+       patient = [];
+    }
   
   }
 </script>
