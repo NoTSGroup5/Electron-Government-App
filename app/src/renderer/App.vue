@@ -1,10 +1,10 @@
 <template>
     <div id="app">
         <Navbar title="EPD">
-            <NavbarLink to="/">Home</NavbarLink>
-            <NavbarLink to="/patients">Patients</NavbarLink>
-            <NavbarLink to="/organisations">Organisaties</NavbarLink>
-            <NavbarLink to="/organisation-types">Organisatie Types</NavbarLink>
+            <NavbarLink to="/" :active="$route.path === '/'">Home</NavbarLink>
+            <NavbarLink to="/patients" :active="isPatientsPageActive()">Patients</NavbarLink>
+            <NavbarLink to="/organisations" :active="isOrganisationPageActive()">Organisaties</NavbarLink>
+            <NavbarLink to="/organisation-types" :active="isOrganisationTypePageActive()">Organisatie Types</NavbarLink>
         </Navbar>
 
         <div class="container">
@@ -14,9 +14,9 @@
 </template>
 
 <script>
-    import store from 'renderer/vuex/store'
+    import store from 'renderer/vuex/store';
     import Navbar from './components/Shared/Bootstrap/Navbar/Navbar';
-    import NavbarLink from './components/Shared/Bootstrap/Navbar/NavbarLink'
+    import NavbarLink from './components/Shared/Bootstrap/Navbar/NavbarLink';
 
     export default {
         store,
@@ -26,11 +26,24 @@
             NavbarLink
         },
 
-        created () {
-            console.log('created')
+        methods: {
+            isOrganisationPageActive() {
+                let pages = ['/organisations', '/organisation/create'];
+
+                return pages.indexOf(this.$route.path) > -1;
+            },
+            isOrganisationTypePageActive(){
+                let pages = ['/organisation-types', '/organisation-type/create'];
+
+                return pages.indexOf(this.$route.path) > -1;
+            },
+            isPatientsPageActive(){
+                let pages = ['/patients', '/patientsInfo/:bsn', '/patientDossier/:bsn'];
+
+                return pages.indexOf(this.$route.path) > -1;
+            }
         }
     }
-
 </script>
 
 <style>
@@ -46,6 +59,4 @@
         height: 100%;
         width: 100%
     }
-
-
 </style>
