@@ -1,7 +1,7 @@
 <template>
-  <div>
+    <div>
 
-      <table class="table table-striped" v-if="patients.length">
+        <table class="table table-striped" v-if="patients.length">
             <thead>
             <tr>
                 <td>BSN</td>
@@ -23,28 +23,28 @@
 </template>
 
 <script>
-  import patient from './Patient';
-  import HttpPatientsService from '../../../../services/httpPatientsService';
-  let httpPatientService = new HttpPatientsService();
-  
-  export default {
-    components: {
-      patient
-    },
-      data: () => {
-          return {
-              patients: []
-          }
-      },
-      created () {
-          httpPatientService.fetch().then((items) => {
-              this.patients = items;
-          }).catch(() => {
-              alert('Het laden van de patients is mislukt.')
-          });
-      },
-    name: 'patientsList'
-  }
+    import patient from './Patient';
+    import HttpPatientsService from '../../../../services/httpPatientsService';
+    let httpPatientService = new HttpPatientsService();
+
+    export default {
+        components: {
+            patient
+        },
+        data: () => {
+            return {
+                patients: []
+            }
+        },
+        created () {
+            httpPatientService.fetch().then((items) => {
+                this.patients = items;
+            }).catch(() => {
+                alert('Het laden van de patients is mislukt.')
+            });
+        },
+        name: 'patientsList'
+    }
 </script>
 
 <style scoped>

@@ -8,7 +8,8 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-error': errors.has('first_name') }">
                         <label for="patientscreate-first_name" class="control-label required">Naam</label>
-                        <input v-model="model.firstName" name="first_name" v-validate="'required'" class="form-control" id="patientscreate-first_name">
+                        <input v-model="model.firstName" name="first_name" v-validate="'required'" class="form-control"
+                               id="patientscreate-first_name">
                         <p class="text-danger" v-show="errors.has('first_name')">Een voornaam is verplicht.</p>
                     </div>
                 </div>
@@ -21,7 +22,8 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-error': errors.has('last_name') }">
                         <label for="name_prefix" class="control-label required">Achternaam</label>
-                        <input v-model="model.lastName" name="last_name" v-validate="'required'" class="form-control" id="last_name">
+                        <input v-model="model.lastName" name="last_name" v-validate="'required'" class="form-control"
+                               id="last_name">
                         <p class="text-danger" v-show="errors.has('last_name')">Een achternaam is verplicht.</p>
                     </div>
                 </div>
@@ -31,7 +33,8 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-error': errors.has('birthday_day') }">
                         <label for="patientscreate-birthday-day" class="control-label required">Dag</label>
-                        <select id="patientscreate-birthday-day" name="birthday_day" v-validate="'required'" class="form-control">
+                        <select id="patientscreate-birthday-day" name="birthday_day" v-validate="'required'"
+                                class="form-control">
                             <option hidden value="" selected>Kies een dag</option>
                             <option v-for="day in getDays()" :value="day">{{day}}</option>
                         </select>
@@ -41,7 +44,8 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-error': errors.has('birthday_month') }">
                         <label for="patientscreate-birthday_month" class="control-label required">Maand</label>
-                        <select id="patientscreate-birthday_month" name="birthday_month" v-validate="'required'" class="form-control">
+                        <select id="patientscreate-birthday_month" name="birthday_month" v-validate="'required'"
+                                class="form-control">
                             <option hidden value="" selected>Kies een maand</option>
                             <option v-for="month in getMonths()" :value="month.id">{{month.name}}</option>
                         </select>
@@ -51,7 +55,8 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-error': errors.has('birthday_year') }">
                         <label for="patientscreate-birthday_year" class="control-label required">Jaar</label>
-                        <select id="patientscreate-birthday_year" name="birthday_year" v-validate="'required'" class="form-control">
+                        <select id="patientscreate-birthday_year" name="birthday_year" v-validate="'required'"
+                                class="form-control">
                             <option hidden value="" selected>Kies een jaar</option>
                             <option v-for="year in getYears()" :value="year">{{year}}</option>
                         </select>
@@ -62,7 +67,8 @@
 
             <div class="form-group" :class="{'has-error': errors.has('bsn') }">
                 <label for="patientcreate-bsn" class="control-label required">Burgerservicenummer</label>
-                <input v-model="model.bsn" name="bsn" v-validate="'required'" class="form-control" id="patientcreate-bsn">
+                <input v-model="model.bsn" name="bsn" v-validate="'required'" class="form-control"
+                       id="patientcreate-bsn">
                 <p class="text-danger" v-show="errors.has('bsn')">Een Burgerservicenummer is verplicht.</p>
             </div>
 
@@ -79,46 +85,53 @@
                 <div class="col-md-8">
                     <div class="form-group" :class="{'has-error': errors.has('street') }">
                         <label for="patientcreate-street" class="control-label required">Straatnaam</label>
-                        <input v-model="model.streetName" name="street" v-validate="'required'" class="form-control" id="patientcreate-street">
+                        <input v-model="model.streetName" name="street" v-validate="'required'" class="form-control"
+                               id="patientcreate-street">
                         <p class="text-danger" v-show="errors.has('street')">Een straatnaam is verplicht.</p>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group" :class="{'has-error': errors.has('street_number') }">
                         <label for="patientcreate-street_number" class="control-label required">Huisnummer</label>
-                        <input v-model="model.streetNumber" name="street_number" v-validate="'required'" class="form-control" id="patientcreate-street_number">
+                        <input v-model="model.streetNumber" name="street_number" v-validate="'required'"
+                               class="form-control" id="patientcreate-street_number">
                         <p class="text-danger" v-show="errors.has('street_number')">Een huisnummer is verplicht.</p>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group" :class="{'has-error': errors.has('street_number_extra') }">
                         <label for="patientcreate-street_number_extra" class="control-label">Toevoeging</label>
-                        <input v-model="model.streetNumberExtra" name="street_number_extra"  class="form-control" id="patientcreate-street_number_extra">
+                        <input v-model="model.streetNumberExtra" name="street_number_extra" class="form-control"
+                               id="patientcreate-street_number_extra">
                     </div>
                 </div>
             </div>
 
             <div class="form-group" :class="{'has-error': errors.has('zip_code') }">
                 <label for="patientcreate-zip_code" class="control-label required">Postcode</label>
-                <input v-model="model.zipCode" name="zip_code" v-validate="'required'" class="form-control" id="patientcreate-zip_code">
+                <input v-model="model.zipCode" name="zip_code" v-validate="'required'" class="form-control"
+                       id="patientcreate-zip_code">
                 <p class="text-danger" v-show="errors.has('zip_code')">Een postcode is verplicht.</p>
             </div>
 
             <div class="form-group" :class="{'has-error': errors.has('residence') }">
                 <label for="patientcreate-residence" class="control-label required">Woonplaats</label>
-                <input v-model="model.residence" name="residence" v-validate="'required'" class="form-control" id="patientcreate-residence">
+                <input v-model="model.residence" name="residence" v-validate="'required'" class="form-control"
+                       id="patientcreate-residence">
                 <p class="text-danger" v-show="errors.has('residence')">Een woonplaats is verplicht.</p>
             </div>
 
             <div class="form-group" :class="{'has-error': errors.has('telephone_number') }">
                 <label for="patientcreate-telephone_number" class="control-label required">Telefoonnummer</label>
-                <input v-model="model.telephoneNumber" name="telephone_number" v-validate="'required'" class="form-control" id="patientcreate-telephone_number">
+                <input v-model="model.telephoneNumber" name="telephone_number" v-validate="'required'"
+                       class="form-control" id="patientcreate-telephone_number">
                 <p class="text-danger" v-show="errors.has('telephone_number')">Een telefoonnummer is verplicht.</p>
             </div>
 
             <div class="form-group" :class="{'has-error': errors.has('email') }">
                 <label for="patientcreate-email" class="control-label required">Email</label>
-                <input v-model="model.email" name="email" v-validate="'required'" class="form-control" id="patientcreate-email">
+                <input v-model="model.email" name="email" v-validate="'required'" class="form-control"
+                       id="patientcreate-email">
                 <p class="text-danger" v-show="errors.has('email')">Een email is verplicht.</p>
             </div>
 
@@ -134,7 +147,7 @@
     }
 
     .required:before {
-        content : "*";
+        content: "*";
         color: red;
         margin-right: 5px;
     }
@@ -149,27 +162,27 @@
         data: () => {
             return {
                 model: {
-                    bsn : "",
-                    gender : "",
-                    firstName : "",
-                    namePrefix : "",
-                    lastName : "",
-                    streetName : "",
-                    streetNumber : "",
-                    streetNumberExtra : "",
-                    zipCode : "",
-                    residence : "",
-                    telephoneNumber : "",
-                    email : "",
-                    birthday : {
-                        day : "",
-                        month : "",
-                        year : ""
+                    bsn: "",
+                    gender: "",
+                    firstName: "",
+                    namePrefix: "",
+                    lastName: "",
+                    streetName: "",
+                    streetNumber: "",
+                    streetNumberExtra: "",
+                    zipCode: "",
+                    residence: "",
+                    telephoneNumber: "",
+                    email: "",
+                    birthday: {
+                        day: "",
+                        month: "",
+                        year: ""
                     }
                 }
             }
         },
-        methods : {
+        methods: {
             validateForm(){
                 this.$validator.validateAll().then(() => {
                     let birthdayTimestamp = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
@@ -178,7 +191,9 @@
                     }).catch(() => {
                         alert('An error occurred while adding the patient')
                     })
-                }).catch((err) => {console.log(err)});
+                }).catch((err) => {
+                    console.log(err)
+                });
             },
             getGenders(){
                 return ['Man', 'Vrouw', 'Apache Helicopter']
@@ -188,16 +203,16 @@
                 let yearNow = new Date().getFullYear();
                 let yearTo = yearNow - 200;
 
-                for(let year = yearNow; year >= yearTo; year--){
+                for (let year = yearNow; year >= yearTo; year--) {
                     years.push(year);
                 }
 
                 return years;
             },
-            getDays : function () {
+            getDays: function () {
                 let days = [];
 
-                for(let day = 1; 31 >= day; day++){
+                for (let day = 1; 31 >= day; day++) {
                     days.push(day);
                 }
 
@@ -206,52 +221,52 @@
             getMonths(){
                 return [
                     {
-                        id : 0,
-                        name :'Januari'
+                        id: 0,
+                        name: 'Januari'
                     },
                     {
-                        id : 1,
-                        name :'Februari'
+                        id: 1,
+                        name: 'Februari'
                     },
                     {
-                        id : 2,
-                        name :'Maart'
+                        id: 2,
+                        name: 'Maart'
                     },
                     {
-                        id : 3,
-                        name :'April'
+                        id: 3,
+                        name: 'April'
                     },
                     {
-                        id : 4,
-                        name :'Mei'
+                        id: 4,
+                        name: 'Mei'
                     },
                     {
-                        id : 5,
-                        name :'Juni'
+                        id: 5,
+                        name: 'Juni'
                     },
                     {
-                        id : 6,
-                        name :'Juli'
+                        id: 6,
+                        name: 'Juli'
                     },
                     {
-                        id : 7,
-                        name :'Augustus'
+                        id: 7,
+                        name: 'Augustus'
                     },
                     {
-                        id : 8,
-                        name :'September'
+                        id: 8,
+                        name: 'September'
                     },
                     {
-                        id : 9,
-                        name :'Oktober'
+                        id: 9,
+                        name: 'Oktober'
                     },
                     {
-                        id : 10,
-                        name :'November'
+                        id: 10,
+                        name: 'November'
                     },
                     {
-                        id : 11,
-                        name :'December'
+                        id: 11,
+                        name: 'December'
                     }
                 ]
             },

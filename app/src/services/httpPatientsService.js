@@ -20,22 +20,7 @@ export default class HttpPatientsService {
                  .then(this._stripRestrictedValues.bind(this))
   }
 
-  addPatient(bsn, firstName, namePrefix, lastName, gender, birthday, streetName, streetNumber, streetNumberExtra, zipCode, residence, telephoneNumber, email){
-
-     /* o String bsn
-      o String firstName
-      o String namePrefix optional
-      o String lastName
-      o String email
-      o String telephoneNumber
-      o String birthday
-      o String gender
-      o String city
-      o String zipCode
-      o String street
-      o String houseNumber
-      o String houseNumberExtra optional*/
-
+  addPatient(bsn, firstName, namePrefix, lastName, gender, birthday, streetName, streetNumber, streetNumberExtra, zipCode, residence, telephoneNumber, email) {
     return this.httpService.post('Patient', {
       bsn : bsn,
       firstName : firstName,
@@ -58,7 +43,7 @@ export default class HttpPatientsService {
         this.restrictedFields.forEach(field => delete patient[field])
       });
 
-      return patients
+      return patients;
   }
 
 }
