@@ -1,6 +1,6 @@
 import HttpService from './httpService'
 
-export default class httpPatientsService {
+export default class HttpPatientsService {
 
   constructor () {
     this.httpService = new HttpService()
@@ -10,7 +10,7 @@ export default class httpPatientsService {
     return ['$class']
   }
 
-  getPatients () {
+  fetch () {
     return this.httpService.get('Patient')
                  .then(this._stripRestrictedValues.bind(this))
   }
@@ -20,18 +20,30 @@ export default class httpPatientsService {
                  .then(this._stripRestrictedValues.bind(this))
   }
 
-  _stripRestrictedValues (patients) {
-    if (patients === undefined) return patients
+  addPatient(bsn, firstName, namePrefix, lastName, gender, birthday, streetName, streetNumber, streetNumberExtra, zipCode, residence, telephoneNumber, email) {
+    return this.httpService.post('Patient', {
+      bsn : bsn,
+      firstName : firstName,
+      namePrefix : namePrefix,
+      lastName : lastName,
+      email : email,
+      telephoneNumber : telephoneNumber,
+      birthday : birthday,
+      gender : gender,
+      city : residence,
+      street : streetName,
+      houseNumber : streetNumber,
+      houseNumberExtra : streetNumberExtra,
+      zipCode : zipCode
+    });
+  }
 
-    if (patients.length > 0) {
+  _stripRestrictedValues (patients) {
       patients.forEach(patient => {
         this.restrictedFields.forEach(field => delete patient[field])
-      })
-    }
-    else
-      this.restrictedFields.forEach(field => delete patients[field])
-      
-    return patients
+      });
+
+      return patients;
   }
 
 }

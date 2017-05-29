@@ -25,7 +25,7 @@
   import Uuid from 'uuid/v1'
 import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
 
-let httpOrganisationTypeService = new HttpOrganisationTypeService()
+let httpOrganisationTypeService = new HttpOrganisationTypeService();
 
 export default {
     data: () => {

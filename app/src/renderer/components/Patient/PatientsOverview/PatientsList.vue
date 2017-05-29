@@ -1,5 +1,5 @@
 <template>
-  <div>
+    <div>
 
         <table class="table table-striped" v-if="patients.length">
             <thead>
@@ -15,49 +15,36 @@
             </tbody>
         </table>
 
-        <div v-if="patients.length == 0">
-            something went wrong with getting patients from the database
+        <div v-show="patients.length == 0">
+            Geen patiënten gevonden.
         </div>
 
     </div>
 </template>
 
 <script>
-  let patients = []
+    import patient from './Patient';
+    import HttpPatientsService from '../../../../services/httpPatientsService';
+    let httpPatientService = new HttpPatientsService();
 
-  import patient from './Patient'
-  import HttpPatientsService from '../../../../services/httpPatientsService'
-  
-  export default {
-    components: {
-      patient
-    },
-    data () {
-      return {
-        patients: patients
-      }
-    },
-    beforeCreate: function () {
-      let httpPatientsService = new HttpPatientsService()
-  
-      httpPatientsService.getPatients()
-        .then(res => {
-          if (!res.length > 0) return
-          res.forEach(patient => {
-            patients.push(patient)
-          })
-        })
-    },
-    destroyed: function(){
-       patients = [];
-    },
-    methods: {
-      test: (event) => {
-        debugger
-      }
-    },
-    name: 'patientsList'
-  }
+    export default {
+        components: {
+            patient
+        },
+        data: () => {
+            return {
+                patients: []
+            }
+        },
+        created () {
+            httpPatientService.fetch().then((items) => {
+                this.patients = items;
+            }).catch(() => {
+                alert('Het laden van de patients is mislukt.')
+            });
+        },
+        name: 'patientsList'
+    }
 </script>
 
 <style scoped>
