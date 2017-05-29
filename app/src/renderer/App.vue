@@ -54,7 +54,7 @@
                 return pages.indexOf(this.$route.path) > -1;
             },
             isPatientsPageActive(){
-                let pages = ['/patients', '/patientsInfo/:bsn', '/patientDossier/:bsn'];
+                let pages = ['/patients', '/patients/create', '/patientsInfo/:bsn', '/patientDossier/:bsn'];
 
                 return pages.indexOf(this.$route.path) > -1;
             }

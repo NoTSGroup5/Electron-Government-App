@@ -1,7 +1,7 @@
 <template>
   <div>
 
-        <table class="table table-striped" v-if="patients.length">
+      <table class="table table-striped" v-if="patients.length">
             <thead>
             <tr>
                 <td>BSN</td>
@@ -15,45 +15,34 @@
             </tbody>
         </table>
 
-        <div v-if="patients.length == 0">
-            something went wrong with getting patients from the database
+        <div v-show="patients.length == 0">
+            Geen patiënten gevonden.
         </div>
 
     </div>
 </template>
 
 <script>
-  let patients = []
-
-  import patient from './Patient'
-  import HttpOrganisationTypeService from '../../../../services/httpOrganisationTypeService'
-  import HttpPatientsService from '../../../../services/httpPatientsService'
+  import patient from './Patient';
+  import HttpPatientsService from '../../../../services/httpPatientsService';
+  let httpPatientService = new HttpPatientsService();
   
   export default {
     components: {
       patient
     },
-    data () {
-      return {
-        patients: patients
-      }
-    },
-    beforeCreate: function () {
-      let httpPatientsService = new HttpPatientsService()
-  
-      httpPatientsService.getPatients()
-        .then(res => {
-          if (!res.length > 0) return
-          res.forEach(patient => {
-            patients.push(patient)
-          })
-        })
-    },
-    methods: {
-      test: (event) => {
-        debugger
-      }
-    },
+      data: () => {
+          return {
+              patients: []
+          }
+      },
+      created () {
+          httpPatientService.fetch().then((items) => {
+              this.patients = items;
+          }).catch(() => {
+              alert('Het laden van de patients is mislukt.')
+          });
+      },
     name: 'patientsList'
   }
 </script>

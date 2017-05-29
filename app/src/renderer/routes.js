@@ -3,15 +3,23 @@ export default [
     path: '/',
     name: 'landing-page',
     component: require('./components/Home/LandingPageView')
-  }, {
+  },
+  {
     path: '/patients',
     name: 'patientsOverview',
     component: require('./components/Patient/PatientsOverview')
-  }, {
+  },
+  {
+    path: '/patients/create',
+    name: 'patientsCreate',
+    component: require('./components/Patient/PatientCreate')
+  },
+  {
     path: '/organisations',
     name: 'OrganisatieOverzicht',
     component: require('./components/Organisation/OrganisationOverview')
-  }, {
+  },
+  {
     path: '/organisation/create',
     name: 'createorganisation',
     component: require('./components/Organisation/AddOrganisation')
