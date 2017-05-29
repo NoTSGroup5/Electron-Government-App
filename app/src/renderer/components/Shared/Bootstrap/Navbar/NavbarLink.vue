@@ -14,7 +14,7 @@
                 required: true
             },
             active: {
-                type: boolean,
+                type: Boolean,
                 required: false,
                 default: false
             }
