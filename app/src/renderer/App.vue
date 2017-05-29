@@ -1,36 +1,11 @@
 <template>
     <div id="app">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">EPD</a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li :class="{'active' : $route.path === '/'}">
-                            <router-link to="/">Home</router-link>
-                        </li>
-                        <li :class="{'active' : isPatientsPageActive()}">
-                            <router-link to="patients">Patients</router-link>
-                        </li>
-                        <li :class="{'active' : isOrganisationPageActive()}">
-                            <router-link to="organisations">Organisaties</router-link>
-                        </li>
-                        <li :class="{'active' : isOrganisationTypePageActive()}">
-                            <router-link to="organisation-types">Organisatie Types</router-link>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <Navbar title="EPD">
+            <NavbarLink to="/" :active="$route.path === '/'">Home</NavbarLink>
+            <NavbarLink to="/patients" :active="isPatientsPageActive()">Patients</NavbarLink>
+            <NavbarLink to="/organisations" :active="isOrganisationPageActive()">Organisaties</NavbarLink>
+            <NavbarLink to="/organisation-types" :active="isOrganisationTypePageActive()">Organisatie Types</NavbarLink>
+        </Navbar>
 
         <div class="container">
             <router-view></router-view>
@@ -39,9 +14,18 @@
 </template>
 
 <script>
-    import store from 'renderer/vuex/store'
+    import store from 'renderer/vuex/store';
+    import Navbar from './components/Shared/Bootstrap/Navbar/Navbar';
+    import NavbarLink from './components/Shared/Bootstrap/Navbar/NavbarLink';
+
     export default {
         store,
+
+        components: {
+            Navbar,
+            NavbarLink
+        },
+
         methods: {
             isOrganisationPageActive() {
                 let pages = ['/organisations', '/organisation/create'];
@@ -75,6 +59,4 @@
         height: 100%;
         width: 100%
     }
-
-
 </style>
