@@ -133,7 +133,7 @@
                                 <th>BSN</th>
                                 <th>Naam</th>
                                 <th>
-                                    <span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#myModal"></span>
+                                    <span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#addMentorModal"></span>
                                 </th>
                             </tr>
                         </thead>
@@ -161,7 +161,7 @@
             </div>
         </div>
 
-        <div id="myModal" class="modal fade" role="dialog">
+        <div id="addMentorModal" class="modal fade" role="dialog">
             <MentorToevoegenModal></MentorToevoegenModal>
         </div>
     </div>
