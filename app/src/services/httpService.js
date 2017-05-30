@@ -12,5 +12,9 @@ export default class HttpService {
   post (url, data) {
     return Vue.http.post(Config.apiUrl + url, data)
   }
+  
+  put (url,  data) {
+    return Vue.http.put(Config.apiUrl + url , data)
+  }
 
 }
