@@ -16,7 +16,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <Visit v-for="visit in patient.visits" :visit="visit"></Visit>
+                            <Visit v-for="visit in medicalFile.visits" :visit="visit"></Visit>
                         </tbody>
                     </table>
                 </div>
@@ -32,7 +32,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <Allergy v-for="allergy in medicalFile.allergies" :allergy="allergy"></Allergy>
+                            <Allergy v-for="allergy in medicalFile.allergies" :allergy="allergy"></Allergy>
                         </tbody>
                     </table>
                 </div>
@@ -49,7 +49,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <Medicine v-for="medicine in patient.medication" :medicine="medicine"></Medicine>
+                            <Medicine v-for="medicine in medicalFile.medication" :medicine="medicine"></Medicine>
                         </tbody>
                     </table>
                 </div>
@@ -68,7 +68,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <Treatment v-for="treatment in patient.treatments" :treatment="treatment"></Treatment>
+                            <Treatment v-for="treatment in medicalFile.treatments" :treatment="treatment"></Treatment>
                         </tbody>
                     </table>
                 </div>
