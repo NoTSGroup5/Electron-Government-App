@@ -1,26 +1,23 @@
 <template>
   <tr>
-   <p>WE STILL NEED TO CHANGE THIS!</p>
+   <td>{{ description }} DESCRIPTION </td>
+   <td>{{ date }} DATE</td>
+    <td><span class="glyphicon glyphicon-pencil pull-right" v-on:click="EditTreatment"></span></td>
   </tr>
 </template>
 
 <script>
   export default {
     props: [
-      'bsn',
-      'firstName',
-      'namePrefix',
-      'lastName',
-      'email',
-      'telephoneNumber',
-      'birthday',
-      'gender',
-      'city',
-      'zipCode',
-      'street',
-      'houseNumber',
-      'houseNumberExtra'
-    ]
+      "description",
+      "date",
+    ],
+    methods: {
+            EditTreatment() {
+              debugger
+              this.$emit('remove');
+            }
+        }
   }
 </script>
 

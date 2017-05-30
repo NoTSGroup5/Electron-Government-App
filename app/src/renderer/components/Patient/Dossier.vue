@@ -136,13 +136,7 @@
             </div>
         </div>
 
-// {
-//       "$class": "nl.epd.blockchain.Visit",
-//       "id": "string",
-//       "date": 0,
-//       "description": "string",
-//       "organisation": "string"
-//     }
+
                 <!-- Treatment modal -->
         <div id="AddTreatment" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -155,7 +149,7 @@
                         <div class="form-group row">
                             <label for="reason" class="col-sm-4 col-form-label" aria-describedby="reason">Allergie</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="reason" placeholder="beschrijving" v-model="AddtreatmentInfo.reason">
+                                <input type="text" class="form-control" id="reason" placeholder="beschrijving" v-model="AddtreatmentInfo.description">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -216,7 +210,7 @@
                 medicalFile: {},
                 allergyValue: "",
                 AddtreatmentInfo: {
-                    reason : "",
+                    description : "",
                     startDate: "",
                     endDate : ""
                 }
@@ -224,17 +218,14 @@
         },
 
         created: function () {
-            let httpPatientsService = new HttpPatientsService();
-            
-            let bsn = this.$route.params.bsn;
+            this.patient.bsn = this.$route.params.bsn;
 
-
-            httpPatientsService.getPatientbyBsn(bsn).then((patient) => {
+            HttpPatientsService.getPatientbyBsn(this.patient.bsn).then((patient) => {
                 this.patient = patient;
             });
 
-            HttpMedicalFileService.getMedicalFile(bsn).then(medicalFile => {
-                this.medicalFile = medicalFile[0];
+            HttpMedicalFileService.getMedicalFile(this.patient.bsn).then(medicalFile => {
+                    this.medicalFile = medicalFile[0];
             });
         },
 
@@ -258,8 +249,20 @@
             },
 
             addTreatment(){
-                if(this.AddtreatmentInfo.startDate !== "" && this.AddtreatmentInfo.reason !== "") {
+                if(this.AddtreatmentInfo.startDate !== "" && this.AddtreatmentInfo.description !== "") {
                     debugger
+                    this.medicalFile.treatments.push({
+                        description: this.AddtreatmentInfo.description,
+                        date: this.AddtreatmentInfo.startDate
+                    })
+
+                    // {
+//       "$class": "nl.epd.blockchain.Visit",
+//       "id": "string",
+//       "date": 0,
+//       "description": "string",
+//       "organisation": "string"
+//     }
                 }
             }
         }
