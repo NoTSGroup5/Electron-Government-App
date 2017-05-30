@@ -3,12 +3,12 @@
 
         <table class="table table-striped" v-if="patients.length">
             <thead>
-            <tr>
-                <td><strong>BSN</strong></td>
-                <td><strong>Naam</strong></td>
-                <td><strong>Bewerken</strong></td>
-                <td><strong>Inzien</strong></td>
-            </tr>
+                <tr>
+                    <td><strong>BSN</strong></td>
+                    <td><strong>Naam</strong></td>
+                    <td><strong>Bewerken</strong></td>
+                    <td><strong>Inzien</strong></td>
+                </tr>
             </thead>
             <tbody>
             <patient v-for="patient in patients" v-bind="patient"></patient>
