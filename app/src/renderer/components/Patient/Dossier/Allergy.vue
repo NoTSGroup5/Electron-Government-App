@@ -11,7 +11,7 @@
     export default {
         props: {
             allergy: {
-                type: String,
+                organisationType: String,
                 required: true
             }
         },

@@ -28,13 +28,11 @@
 </template>
 
 <script>
-    import Organisation from './Organisation'
-    import HttpOrganisationService from '../../../../services/httpOrganisationService'
-    import BootstrapSyncModal from '../../../components/Shared/Bootstrap/BootstrapSyncModal.vue'
-    import EventHub from '../../../../services/eventHub'
+    import Organisation from './Organisation';
+    import HttpOrganisationService from '../../../../services/httpOrganisationService';
+    import BootstrapSyncModal from '../../../components/Shared/Bootstrap/BootstrapSyncModal.vue';
+    import EventHub from '../../../../services/eventHub';
     import _ from 'lodash';
-
-    let httpOrganisationService = new HttpOrganisationService();
 
     export default {
         components: {
@@ -49,7 +47,7 @@
         },
         methods : {
             removeOrganisation(){
-                httpOrganisationService.del(this.deleteOrganisationModel.id).then(() => {
+                HttpOrganisationService.del(this.deleteOrganisationModel.id).then(() => {
                     let index = _.findIndex(this.organisations, {id : this.deleteOrganisationModel.id});
                     this.organisations.splice(index, 1);
                     this.deleteOrganisationModel = {};
@@ -60,7 +58,7 @@
             EventHub.$on('ShowConfirmDeleteModal', (organisation) => {
                 this.deleteOrganisationModel = organisation;
             });
-            httpOrganisationService.fetch().then((items) => {
+            HttpOrganisationService.fetch().then((items) => {
                 this.organisations = items;
             });
         }

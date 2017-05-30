@@ -24,11 +24,11 @@
     export default {
       props: {
         title: {
-          type: String,
+          organisationType: String,
           required: true
         },
         baseUrl: {
-          type: String,
+          organisationType: String,
           default: '#'
         }
       }

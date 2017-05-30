@@ -27,27 +27,27 @@
     export default {
         props: {
             title: {
-                type: String,
+                organisationType: String,
                 default: 'Modal'
             },
             modalId: {
-                type: String,
+                organisationType: String,
                 required: true
             },
             event : {
-                type : String,
+                organisationType : String,
                 required : true
             },
             small: {
-                type: Boolean,
+                organisationType: Boolean,
                 default: false
             },
             large: {
-                type: Boolean,
+                organisationType: Boolean,
                 default: false
             },
             full: {
-                type: Boolean,
+                organisationType: Boolean,
                 default: false
             }
         },

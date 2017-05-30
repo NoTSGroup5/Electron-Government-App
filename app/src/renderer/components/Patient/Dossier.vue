@@ -174,13 +174,12 @@
         },
 
         created: function () {
-            let httpPatientsService = new HttpPatientsService();
-            let bsn = this.$route.params.bsn;
+            this.patient.bsn = this.$route.params.bsn;
 
-            httpPatientsService.getPatientbyBsn(bsn).then((patient) => {
+            HttpPatientsService.getPatientbyBsn(this.patient.bsn).then((patient) => {
                 this.patient = patient;
 
-                HttpMedicalFileService.getMedicalFile(bsn).then(medicalFile => {
+                HttpMedicalFileService.getMedicalFile(this.patient.bsn).then(medicalFile => {
                     this.medicalFile = medicalFile[0];
                 });
             });

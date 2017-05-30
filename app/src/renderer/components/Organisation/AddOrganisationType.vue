@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-success pull-right">Opslaan</button>
+        <button type="submit" class="btn btn-default">Opslaan</button>
     </form>
 </template>
 
@@ -37,12 +37,10 @@ export default {
     methods: {
       validateForm () {
         this.$validator.validateAll().then(() => {
-          let httpOrganisationTypeService = new HttpOrganisationTypeService();
-
-          httpOrganisationTypeService.add(Uuid(), this.model.name, this.model.description).then(() => {
+          HttpOrganisationTypeService.add(Uuid(), this.model.name, this.model.description).then(() => {
             this.$router.push({path: '/organisation-types'})
           }).catch(() => {
-            alert('An error occurred while adding the organisation type')
+            alert('An error occurred while adding the organisation organisationType')
           })
         }).catch(() => {});
       }

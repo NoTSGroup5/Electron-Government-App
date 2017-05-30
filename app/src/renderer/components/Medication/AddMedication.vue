@@ -35,7 +35,7 @@
         },
         props: {
             bsn: {
-                type: String,
+                organisationType: String,
                 required: true
             }
         }
