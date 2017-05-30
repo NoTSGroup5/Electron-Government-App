@@ -1,7 +1,6 @@
 <template>
   <tr>
-   <p>WE STILL NEED TO CHANGE THIS!</p>
-   <td>{{allergy}}</td>
+      <td>{{allergy}}</td>
   </tr>
 </template>
 
