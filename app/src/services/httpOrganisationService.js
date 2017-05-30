@@ -19,9 +19,9 @@ export default class HttpOrganisationService {
         return this.httpService.post(this.url, {
             id : id,
             name : name,
-            city : residence,
-            street : streetName,
-            houseNumber : streetNumber,
+            city : city,
+            street : street,
+            houseNumber : houseNumber,
             zipCode : zipCode,
             houseNumberExtra: streetNumberExtra,
             organisationType : type
@@ -31,9 +31,9 @@ export default class HttpOrganisationService {
     update(id, name, streetName, streetNumber, streetNumberExtra, zipCode, residence, type){
         return this.httpService.put(this.url + '/' + id, {
             name : name,
-            city : residence,
-            street : streetName,
-            houseNumber : streetNumber,
+            city : city,
+            street : street,
+            houseNumber : houseNumber,
             zipCode : zipCode,
             houseNumberExtra: streetNumberExtra,
             organisationType : type

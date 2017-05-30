@@ -24,7 +24,6 @@
 <script>
     import patient from './Patient';
     import HttpPatientsService from '../../../../services/httpPatientsService';
-    let httpPatientService = new HttpPatientsService();
 
     export default {
         components: {
@@ -36,7 +35,7 @@
             }
         },
         created () {
-            httpPatientService.fetch().then((items) => {
+            HttpPatientsService.fetch().then((items) => {
                 this.patients = items;
             }).catch(() => {
                 alert('Het laden van de patients is mislukt.')

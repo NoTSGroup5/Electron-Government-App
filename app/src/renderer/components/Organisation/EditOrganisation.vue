@@ -21,7 +21,7 @@
                 <div class="col-md-8">
                     <div class="form-group" :class="{'has-error': errors.has('street') }">
                         <label for="organisationadd-street" class="control-label required">Straatnaam</label>
-                        <input v-model="model.streetName" name="street" v-validate="'required'" class="form-control"
+                        <input v-model="model.street" name="street" v-validate="'required'" class="form-control"
                                id="organisationadd-street">
                         <p class="text-danger" v-show="errors.has('street')">Een straatnaam is verplicht.</p>
                     </div>
@@ -29,7 +29,7 @@
                 <div class="col-md-2">
                     <div class="form-group" :class="{'has-error': errors.has('street_number') }">
                         <label for="organisationadd-street_number" class="control-label required">Huisnummer</label>
-                        <input v-model="model.streetNumber" name="street_number" v-validate="'required'"
+                        <input v-model="model.houseNumber" name="street_number" v-validate="'required'"
                                class="form-control" id="organisationadd-street_number">
                         <p class="text-danger" v-show="errors.has('street_number')">Een huisnummer is verplicht.</p>
                     </div>
@@ -37,7 +37,7 @@
                 <div class="col-md-2">
                     <div class="form-group" :class="{'has-error': errors.has('street_number_extra') }">
                         <label for="organisationadd-street_number_extra" class="control-label">Toevoeging</label>
-                        <input v-model="model.streetNumberExtra" name="street_number_extra" class="form-control"
+                        <input v-model="model.houseNumberExtra" name="street_number_extra" class="form-control"
                                id="organisationadd-street_number_extra">
                     </div>
                 </div>
@@ -48,11 +48,11 @@
                        id="organisationadd-zip_code">
                 <p class="text-danger" v-show="errors.has('zip_code')">Een postcode is verplicht.</p>
             </div>
-            <div class="form-group" :class="{'has-error': errors.has('residence') }">
+            <div class="form-group" :class="{'has-error': errors.has('city') }">
                 <label for="organisationadd-residence" class="control-label required">Woonplaats</label>
-                <input v-model="model.residence" name="residence" v-validate="'required'" class="form-control"
+                <input v-model="model.city" name="residence" v-validate="'required'" class="form-control"
                        id="organisationadd-residence">
-                <p class="text-danger" v-show="errors.has('residence')">Een woonplaats is verplicht.</p>
+                <p class="text-danger" v-show="errors.has('city')">Een woonplaats is verplicht.</p>
             </div>
 
             <button type="submit" class="btn btn-default">Organisatie opslaan</button>
@@ -78,9 +78,6 @@
     import Uuid from 'uuid/v1'
     import _ from 'lodash'
 
-    let httpOrganisationTypeService = new HttpOrganisationTypeService();
-    let httpOrganisationService = new HttpOrganisationService();
-
     export default {
         data: () => {
             return {
@@ -88,17 +85,17 @@
                 model : {
                     id : "",
                     name : "",
-                    streetName: "",
-                    streetNumber: "",
-                    streetNumberExtra: "",
+                    street: "",
+                    houseNumber: "",
+                    houseNumberExtra: "",
                     zipCode: "",
-                    residence: "",
+                    city: "",
                     type : ""
                 }
             }
         },
         created() {
-            Promise.all([httpOrganisationTypeService.fetch(), httpOrganisationService.getById(this.$route.params.id)]).then((results) => {
+            Promise.all([HttpOrganisationTypeService.fetch(), HttpOrganisationService.getById(this.$route.params.id)]).then((results) => {
                 this.types = results[0];
                 this.setModel(results[1]);
             }).catch(() => {
@@ -108,8 +105,8 @@
         methods : {
             validateForm(){
                 this.$validator.validateAll().then(() => {
-                    httpOrganisationService.update(this.model.id, this.model.name, this.model.streetName, this.model.streetNumber,
-                        this.model.streetNumberExtra, this.model.zipCode, this.model.residence, this.getTypeFromId(this.model.type)).then(() => {
+                    HttpOrganisationService.update(this.model.id, this.model.name, this.model.street, this.model.houseNumber,
+                        this.model.houseNumberExtra, this.model.zipCode, this.model.city, this.getTypeFromId(this.model.type)).then(() => {
                         this.$router.push({path: '/organisations'})
                     }).catch(() => {
                         alert('An error occurred while updating the organisation')
@@ -122,11 +119,11 @@
             setModel(organisation){
                 this.model.id = organisation.id;
                 this.model.name = organisation.name;
-                this.model.streetName = organisation.street;
-                this.model.streetNumber = organisation.houseNumber;
-                this.model.streetNumberExtra = organisation.streetNumberExtra;
+                this.model.street = organisation.street;
+                this.model.houseNumber = organisation.houseNumber;
+                this.model.houseNumberExtra = organisation.houseNumberExtra;
                 this.model.zipCode = organisation.zipCode;
-                this.model.residence = organisation.city;
+                this.model.city = organisation.city;
                 this.model.type = organisation.organisationType.id;
             }
         }

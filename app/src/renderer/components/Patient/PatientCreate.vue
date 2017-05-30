@@ -85,7 +85,7 @@
                 <div class="col-md-8">
                     <div class="form-group" :class="{'has-error': errors.has('street') }">
                         <label for="patientcreate-street" class="control-label required">Straatnaam</label>
-                        <input v-model="model.streetName" name="street" v-validate="'required'" class="form-control"
+                        <input v-model="model.street" name="street" v-validate="'required'" class="form-control"
                                id="patientcreate-street">
                         <p class="text-danger" v-show="errors.has('street')">Een straatnaam is verplicht.</p>
                     </div>
@@ -93,7 +93,7 @@
                 <div class="col-md-2">
                     <div class="form-group" :class="{'has-error': errors.has('street_number') }">
                         <label for="patientcreate-street_number" class="control-label required">Huisnummer</label>
-                        <input v-model="model.streetNumber" name="street_number" v-validate="'required'"
+                        <input v-model="model.houseNumber" name="street_number" v-validate="'required'"
                                class="form-control" id="patientcreate-street_number">
                         <p class="text-danger" v-show="errors.has('street_number')">Een huisnummer is verplicht.</p>
                     </div>
@@ -101,7 +101,7 @@
                 <div class="col-md-2">
                     <div class="form-group" :class="{'has-error': errors.has('street_number_extra') }">
                         <label for="patientcreate-street_number_extra" class="control-label">Toevoeging</label>
-                        <input v-model="model.streetNumberExtra" name="street_number_extra" class="form-control"
+                        <input v-model="model.houseNumberExtra" name="street_number_extra" class="form-control"
                                id="patientcreate-street_number_extra">
                     </div>
                 </div>
@@ -114,11 +114,11 @@
                 <p class="text-danger" v-show="errors.has('zip_code')">Een postcode is verplicht.</p>
             </div>
 
-            <div class="form-group" :class="{'has-error': errors.has('residence') }">
+            <div class="form-group" :class="{'has-error': errors.has('city') }">
                 <label for="patientcreate-residence" class="control-label required">Woonplaats</label>
-                <input v-model="model.residence" name="residence" v-validate="'required'" class="form-control"
+                <input v-model="model.city" name="residence" v-validate="'required'" class="form-control"
                        id="patientcreate-residence">
-                <p class="text-danger" v-show="errors.has('residence')">Een woonplaats is verplicht.</p>
+                <p class="text-danger" v-show="errors.has('city')">Een woonplaats is verplicht.</p>
             </div>
 
             <div class="form-group" :class="{'has-error': errors.has('telephone_number') }">
@@ -156,8 +156,6 @@
 <script>
     import HttpPatientsService from '../../../services/httpPatientsService'
 
-    let httpPatientsService = new HttpPatientsService();
-
     export default {
         data: () => {
             return {
@@ -167,11 +165,11 @@
                     firstName: "",
                     namePrefix: "",
                     lastName: "",
-                    streetName: "",
-                    streetNumber: "",
-                    streetNumberExtra: "",
+                    street: "",
+                    houseNumber: "",
+                    houseNumberExtra: "",
                     zipCode: "",
-                    residence: "",
+                    city: "",
                     telephoneNumber: "",
                     email: "",
                     birthday: {
@@ -186,7 +184,7 @@
             validateForm(){
                 this.$validator.validateAll().then(() => {
                     let birthdayTimestamp = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
-                    httpPatientsService.addPatient(this.model.bsn, this.model.firstName, this.model.namePrefix, this.model.lastName, this.model.gender, birthdayTimestamp, this.model.streetName, this.model.streetNumber, this.model.streetNumberExtra, this.model.zipCode, this.model.residence, this.model.telephoneNumber, this.model.email).then(() => {
+                    HttpPatientsService.addPatient(this.model.bsn, this.model.firstName, this.model.namePrefix, this.model.lastName, this.model.gender, birthdayTimestamp, this.model.street, this.model.houseNumber, this.model.houseNumberExtra, this.model.zipCode, this.model.city, this.model.telephoneNumber, this.model.email).then(() => {
                         this.$router.push({name: "patientsOverview"});
                     }).catch(() => {
                         alert('An error occurred while adding the patient')

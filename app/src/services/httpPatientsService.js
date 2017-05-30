@@ -1,6 +1,6 @@
 import HttpService from './httpService'
 
-export default class HttpPatientsService {
+class HttpPatientsService {
     constructor() {
         this.httpService = new HttpService()
     }
@@ -13,7 +13,7 @@ export default class HttpPatientsService {
         return this.httpService.getById('Patient', bsn);
     }
 
-    addPatient(bsn, firstName, namePrefix, lastName, gender, birthday, streetName, streetNumber, streetNumberExtra, zipCode, residence, telephoneNumber, email) {
+    addPatient(bsn, firstName, namePrefix, lastName, gender, birthday, street, houseNumber, houseNumberExtra, zipCode, city, telephoneNumber, email) {
         return this.httpService.post('Patient', {
             bsn : bsn,
             firstName : firstName,
@@ -23,15 +23,15 @@ export default class HttpPatientsService {
             telephoneNumber : telephoneNumber,
             birthday : birthday,
             gender : gender,
-            city : residence,
-            street : streetName,
-            houseNumber : streetNumber,
-            houseNumberExtra : streetNumberExtra,
+            city : city,
+            street : street,
+            houseNumber : houseNumber,
+            houseNumberExtra : houseNumberExtra,
             zipCode : zipCode
         });
     }
 
-    editPatient(bsn, firstName, namePrefix, lastName, gender, birthday, streetName, streetNumber, streetNumberExtra, zipCode, residence, telephoneNumber, email) {
+    editPatient(bsn, firstName, namePrefix, lastName, gender, birthday, street, houseNumber, houseNumberExtra, zipCode, city, telephoneNumber, email) {
         return this.httpService.put('Patient/' + bsn, {
 
             firstName : firstName,
@@ -41,11 +41,13 @@ export default class HttpPatientsService {
             telephoneNumber : telephoneNumber,
             birthday : birthday,
             gender : gender,
-            city : residence,
-            street : streetName,
-            houseNumber : streetNumber,
-            houseNumberExtra : streetNumberExtra,
+            city : city,
+            street : street,
+            houseNumber : houseNumber,
+            houseNumberExtra : houseNumberExtra,
             zipCode : zipCode
         });
     }
 }
+
+export default new HttpPatientsService();

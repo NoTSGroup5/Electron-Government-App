@@ -76,21 +76,21 @@
                         <div class="col-md-8">
                             <div class="form-group" :class="{'has-error': errors.has('street') }">
                                 <label for="patientcreate-street" class="control-label required">Straatnaam</label>
-                                <input v-model="model.streetName" name="street" v-validate="'required'" class="form-control" id="patientcreate-street">
+                                <input v-model="model.street" name="street" v-validate="'required'" class="form-control" id="patientcreate-street">
                                 <p class="text-danger" v-show="errors.has('street')">Een straatnaam is verplicht.</p>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group" :class="{'has-error': errors.has('street_number') }">
                                 <label for="patientcreate-street_number" class="control-label required">Huisnummer</label>
-                                <input v-model="model.streetNumber" v-validate="'required'" name="street_number" class="form-control" id="patientcreate-street_number">
+                                <input v-model="model.houseNumber" v-validate="'required'" name="street_number" class="form-control" id="patientcreate-street_number">
                                 <p class="text-danger" v-show="errors.has('street_number')">Een huisnummer is verplicht.</p>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group" :class="{'has-error': errors.has('street_number_extra') }">
                                 <label for="patientcreate-street_number_extra" class="control-label">Toevoeging</label>
-                                <input v-model="model.streetNumberExtra" name="street_number_extra" class="form-control" id="patientcreate-street_number_extra">
+                                <input v-model="model.houseNumberExtra" name="street_number_extra" class="form-control" id="patientcreate-street_number_extra">
                             </div>
                         </div>
                     </div>
@@ -101,10 +101,10 @@
                         <p class="text-danger" v-show="errors.has('zip_code')">Een postcode is verplicht.</p>
                     </div>
 
-                    <div class="form-group" :class="{'has-error': errors.has('residence') }">
-                        <label for="patientcreate-residence" class="control-label required">Woonplaats</label>
-                        <input v-model="model.residence" v-validate="'required'" name="residence" class="form-control" id="patientcreate-residence">
-                        <p class="text-danger" v-show="errors.has('residence')">Een woonplaats is verplicht.</p>
+                    <div class="form-group" :class="{'has-error': errors.has('city') }">
+                        <label for="patientcreate-city" class="control-label required">Woonplaats</label>
+                        <input v-model="model.city" v-validate="'required'" name="city" class="form-control" id="patientcreate-city">
+                        <p class="text-danger" v-show="errors.has('city')">Een woonplaats is verplicht.</p>
                     </div>
 
                     <div class="form-group" :class="{'has-error': errors.has('telephone_number') }">
@@ -133,7 +133,7 @@
                                 <th>BSN</th>
                                 <th>Naam</th>
                                 <th>
-                                    <span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#addMentorModal"></span>
+                                    <span class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#addMentorModal"></span>
                                 </th>
                             </tr>
                         </thead>
@@ -150,7 +150,7 @@
                             <th>Naam organisatie</th>
                             <th>Locatie</th>
                             <th>
-                                <span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#organisatietoevoegen"> </span>
+                                <span class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#organisatietoevoegen"> </span>
                             </th>
                         </tr>
                     </thead>
@@ -162,7 +162,7 @@
         </div>
 
         <div id="addMentorModal" class="modal fade" role="dialog">
-            <MentorToevoegenModal></MentorToevoegenModal>
+            <AddMentorModal></AddMentorModal>
         </div>
     </div>
 </template>
@@ -171,20 +171,17 @@
 
     import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
     import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
-    import MentorToevoegenModal from '../Mentor/MentorsOverview/MentorToevoegenModal'
+    import AddMentorModal from '../Mentor/MentorsOverview/AddMentorModal'
 
     import BootstrapModal from '../Shared/Bootstrap/BootstrapModal'
 
     import HttpPatientsService from '../../../services/httpPatientsService'
 
-    let httpPatientsService = new HttpPatientsService();
-
     export default {
         components: {
             BootstrapTextInput,
-            MentorToevoegenModal,
-            BootstrapSelectInput,
-            BootstrapModal
+            AddMentorModal,
+            BootstrapSelectInput
         },
 
         data ()  {
@@ -196,11 +193,11 @@
                     firstName: "",
                     namePrefix: "",
                     lastName: "",
-                    streetName: "",
-                    streetNumber: "",
-                    streetNumberExtra: "",
+                    street: "",
+                    houseNumber: "",
+                    houseNumberExtra: "",
                     zipCode: "",
-                    residence: "",
+                    city: "",
                     telephoneNumber: "",
                     email: "",
                     birthday: {
@@ -215,24 +212,22 @@
         created: function () {
             let bsn = this.$route.params.bsn;
 
-            httpPatientsService.getPatientbyBsn(bsn).then(response => {
-                this.patient = response;
+            HttpPatientsService.getPatientbyBsn(bsn).then(patient => {
+                this.patient = patient;
 
-                let birthday = new Date(response.birthday);
+                let birthday = new Date(patient.birthday);
 
-                this.model.bsn = response.bsn;
-                this.model.gender = response.gender;
-                this.model.firstName = response.firstName;
-                this.model.namePrefix = response.namePrefix;
-                this.model.lastName = response.lastName;
-                this.model.streetName = response.street;
-                this.model.streetNumber = response.houseNumber;
-                this.model.birthday = { day: birthday.getDate(), month: birthday.getMonth(), year: birthday.getFullYear() },
-                this.model.streetNumberExtra = response.houseNumberExtra;
-                this.model.zipCode = response.zipCode;
-                this.model.residence = response.city;
-                this.model.telephoneNumber = response.telephoneNumber;
-                this.model.email = response.email;
+                for(let key in patient) {
+                    if(patient.hasOwnProperty(key) && key !== "birthday") {
+                        this.model[key] = patient[key];
+                    }
+                }
+
+                this.model.birthday = {
+                    day: birthday.getDate(),
+                    month: birthday.getMonth(),
+                    year: birthday.getFullYear()
+                };
             }).catch(e => {
                 console.log(e);
             });
@@ -242,7 +237,7 @@
             validateForm(){
                 this.$validator.validateAll().then(() => {
                     let birthdayTimestamp = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
-                    httpPatientsService.editPatient(this.model.bsn, this.model.firstName, this.model.namePrefix, this.model.lastName, this.model.gender, birthdayTimestamp, this.model.streetName, this.model.streetNumber, this.model.streetNumberExtra, this.model.zipCode, this.model.residence, this.model.telephoneNumber, this.model.email).then(() => {
+                    HttpPatientsService.editPatient(this.model.bsn, this.model.firstName, this.model.namePrefix, this.model.lastName, this.model.gender, birthdayTimestamp, this.model.street, this.model.houseNumber, this.model.houseNumberExtra, this.model.zipCode, this.model.city, this.model.telephoneNumber, this.model.email).then(() => {
                         this.$router.push({ name: "patientsOverview" })
                     }).catch(() => {
                         alert('An error occurred while editing the patient')
