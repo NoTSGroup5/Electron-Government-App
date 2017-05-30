@@ -10,7 +10,7 @@ export default class HttpPatientsService {
     }
 
     getPatientbyBsn(bsn) {
-        return this.httpService.get(`Patient/${bsn}`);
+        return this.httpService.getById('Patient', bsn);
     }
 
     addPatient(bsn, firstName, namePrefix, lastName, gender, birthday, streetName, streetNumber, streetNumberExtra, zipCode, residence, telephoneNumber, email) {
