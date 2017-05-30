@@ -37,8 +37,4 @@ export default class HttpService {
     get restrictedFields() {
         return ['$class'];
     }
-
-    put(url, data) {
-        return Vue.http.put(Config.apiUrl + url, data);
-    }
 }
