@@ -5,7 +5,7 @@
                 <h1>Organisaties</h1>
             </div>
             <div class="col-md-6 text-right">
-                <router-link class="btn btn-default btn-match-h1" to="/organisation/create">Maak Organisatie</router-link>
+                <router-link class="btn btn-default btn-match-h1" to="/organisation/create">Organisatie toevoegen</router-link>
             </div>
         </div>
         <div class="row">

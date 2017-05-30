@@ -16,31 +16,36 @@ export default [
   },
   {
     path: '/organisations',
-    name: 'OrganisatieOverzicht',
+    name: 'organisationsView',
     component: require('./components/Organisation/OrganisationOverview')
   },
   {
     path: '/organisation/create',
-    name: 'createorganisation',
+    name: 'organisationCreate',
     component: require('./components/Organisation/AddOrganisation')
   },
+    {
+        path: '/organisation/:id/edit',
+        name: 'organisationEdit',
+        component: require('./components/Organisation/EditOrganisation.vue')
+    },
   {
     path: '/organisation-type/create',
-    name: 'Organisatie type toevoegen',
+    name: 'organisationTypeCreate',
     component: require('./components/Organisation/AddOrganisationType')
   },
   {
     path: '/organisation-types',
-    name: 'Organisatie Types Overzicht',
+    name: 'organisationTypesView',
     component: require('./components/Organisation/OrganisationTypeOverview')
   },
   {
     path: '/patientsInfo/:bsn',
-    name: 'patientinfo',
+    name: 'patientInfo',
     component: require('components/Patient/PatientsInfoPage')
   }, {
     path: '/patientDossier/:bsn',
-    name: 'patientdossier',
+    name: 'patientDossier',
     component: require('components/Patient/Dossier')
   }, {
     path: '*',

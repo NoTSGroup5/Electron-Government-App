@@ -1,7 +1,6 @@
 <template>
     <div>
-
-        <table class="table table-striped" v-if="patients.length">
+        <table class="table table-striped">
             <thead>
             <tr>
                 <td>BSN</td>
@@ -11,14 +10,14 @@
             </tr>
             </thead>
             <tbody>
+            <tr v-show="patients.length === 0">
+                <td colspan="4">
+                    Geen patienten gevonden.
+                </td>
+            </tr>
             <patient v-for="patient in patients" v-bind="patient"></patient>
             </tbody>
         </table>
-
-        <div v-show="patients.length == 0">
-            Geen patiënten gevonden.
-        </div>
-
     </div>
 </template>
 
