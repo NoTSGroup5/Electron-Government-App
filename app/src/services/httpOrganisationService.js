@@ -1,7 +1,6 @@
 import HttpService from './httpService'
 
-export default class HttpOrganisationService {
-
+class HttpOrganisationService {
     constructor () {
         this.httpService = new HttpService();
         this.url = 'Organisation'
@@ -15,7 +14,7 @@ export default class HttpOrganisationService {
         return this.httpService.getById(this.url, id);
     }
 
-    add(id, name, streetName, streetNumber, streetNumberExtra, zipCode, residence, type){
+    add(id, name, street, houseNumber, houseNumberExtra, zipCode, city, type){
         return this.httpService.post(this.url, {
             id : id,
             name : name,
@@ -23,19 +22,19 @@ export default class HttpOrganisationService {
             street : street,
             houseNumber : houseNumber,
             zipCode : zipCode,
-            houseNumberExtra: streetNumberExtra,
+            houseNumberExtra: houseNumberExtra,
             organisationType : type
         });
     }
 
-    update(id, name, streetName, streetNumber, streetNumberExtra, zipCode, residence, type){
+    update(id, name, street, houseNumber, houseNumberExtra, zipCode, city, type){
         return this.httpService.put(this.url + '/' + id, {
             name : name,
             city : city,
             street : street,
             houseNumber : houseNumber,
             zipCode : zipCode,
-            houseNumberExtra: streetNumberExtra,
+            houseNumberExtra: houseNumberExtra,
             organisationType : type
         });
     }
@@ -44,3 +43,5 @@ export default class HttpOrganisationService {
         return this.httpService.del(this.url + '/' + id);
     }
 }
+
+export default new HttpOrganisationService();
