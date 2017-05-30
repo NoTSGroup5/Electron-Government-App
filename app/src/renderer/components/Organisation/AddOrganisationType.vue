@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-success pull-right">Opslaan</button>
+        <button type="submit" class="btn btn-default">Opslaan</button>
     </form>
 </template>
 

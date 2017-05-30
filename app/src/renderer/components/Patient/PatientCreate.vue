@@ -189,9 +189,7 @@
                     }).catch(() => {
                         alert('An error occurred while adding the patient')
                     })
-                }).catch((err) => {
-                    console.log(err)
-                });
+                }).catch();
             },
             getGenders(){
                 return ['Man', 'Vrouw', 'Apache Helicopter']

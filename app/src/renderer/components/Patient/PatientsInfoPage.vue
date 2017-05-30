@@ -236,16 +236,14 @@
         methods: {
             validateForm(){
                 this.$validator.validateAll().then(() => {
-                    this.birthday = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
+                    this.model.birthday = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
 
                     HttpPatientsService.editPatient(this.model.bsn, this.model).then(() => {
                         this.$router.push({ name: "patientsOverview" })
                     }).catch(() => {
                         alert('An error occurred while editing the patient')
                     })
-                }).catch((err) => {
-                    console.log(err)
-                });
+                }).catch();
             },
             getGenders(){
                 return ['Man', 'Vrouw', 'Apache Helicopter']
