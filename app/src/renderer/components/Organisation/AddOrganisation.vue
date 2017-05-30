@@ -5,13 +5,12 @@
         <form @submit.prevent="validateForm()">
             <div class="form-group" :class="{'has-error': errors.has('name') }">
                 <label for="organisationadd-residence" class="control-label required">Naam</label>
-                <input v-model="model.name" name="residence" v-validate="'required'" class="form-control"
-                       id="organisationadd-name">
+                <input v-model="model.name" name="residence" v-validate="'required'" class="form-control" id="organisationadd-name">
                 <p class="text-danger" v-show="errors.has('name')">Een naam is verplicht.</p>
             </div>
             <div class="form-group" :class="{'has-error': errors.has('type') }">
                 <label for="organisationadd-type" class="control-label required">Type</label>
-                <select v-model="model.type" name="type" id="organisationadd-type" class="form-control">
+                <select v-model="model.organisationType" name="type" id="organisationadd-type" class="form-control">
                     <option hidden value="" selected>Kies een type</option>
                     <option v-for="type in types" :value="type.id">{{type.name}}</option>
                 </select>
@@ -21,24 +20,21 @@
                 <div class="col-md-8">
                     <div class="form-group" :class="{'has-error': errors.has('street') }">
                         <label for="organisationadd-street" class="control-label required">Straatnaam</label>
-                        <input v-model="model.street" name="street" v-validate="'required'" class="form-control"
-                               id="organisationadd-street">
+                        <input v-model="model.street" name="street" v-validate="'required'" class="form-control" id="organisationadd-street">
                         <p class="text-danger" v-show="errors.has('street')">Een straatnaam is verplicht.</p>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group" :class="{'has-error': errors.has('street_number') }">
                         <label for="organisationadd-street_number" class="control-label required">Huisnummer</label>
-                        <input v-model="model.houseNumber" name="street_number" v-validate="'required'"
-                               class="form-control" id="organisationadd-street_number">
+                        <input v-model="model.houseNumber" name="street_number" v-validate="'required'" class="form-control" id="organisationadd-street_number">
                         <p class="text-danger" v-show="errors.has('street_number')">Een huisnummer is verplicht.</p>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group" :class="{'has-error': errors.has('street_number_extra') }">
                         <label for="organisationadd-street_number_extra" class="control-label">Toevoeging</label>
-                        <input v-model="model.houseNumberExtra" name="street_number_extra" class="form-control"
-                               id="organisationadd-street_number_extra">
+                        <input v-model="model.houseNumberExtra" name="street_number_extra" class="form-control" id="organisationadd-street_number_extra">
                     </div>
                 </div>
             </div>
@@ -89,7 +85,7 @@ export default {
             houseNumberExtra: "",
             zipCode: "",
             city: "",
-            type : ""
+            organisationType : ""
         }
       }
     },
@@ -101,8 +97,10 @@ export default {
     methods : {
         validateForm(){
             this.$validator.validateAll().then(() => {
-                HttpOrganisationService.add(Uuid(), this.model.name, this.model.street, this.model.houseNumber,
-                    this.model.houseNumberExtra, this.model.zipCode, this.model.city, this.getTypeFromId(this.model.type)).then(() => {
+                this.model.id = Uuid();
+                this.model.organisationType = this.getTypeFromId(this.model.organisationType);
+
+                HttpOrganisationService.add(this.model).then(() => {
                     this.$router.push({path: '/organisations'})
                 }).catch(() => {
                     alert('An error occurred while adding the organisation')

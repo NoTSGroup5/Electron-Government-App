@@ -11,7 +11,7 @@
             </div>
             <div class="form-group" :class="{'has-error': errors.has('type') }">
                 <label for="organisationadd-type" class="control-label required">Type</label>
-                <select v-model="model.type" name="type" id="organisationadd-type" class="form-control">
+                <select v-model="model.organisationType" name="type" id="organisationadd-type" class="form-control">
                     <option hidden value="" selected>Kies een type</option>
                     <option v-for="type in types" :value="type.id">{{type.name}}</option>
                 </select>
@@ -90,7 +90,7 @@
                     houseNumberExtra: "",
                     zipCode: "",
                     city: "",
-                    type : ""
+                    organisationType : ""
                 }
             }
         },
@@ -105,8 +105,9 @@
         methods : {
             validateForm(){
                 this.$validator.validateAll().then(() => {
-                    HttpOrganisationService.update(this.model.id, this.model.name, this.model.street, this.model.houseNumber,
-                        this.model.houseNumberExtra, this.model.zipCode, this.model.city, this.getTypeFromId(this.model.type)).then(() => {
+                    this.model.organisationType = this.getTypeFromId(this.model.organisationType);
+
+                    HttpOrganisationService.update(this.model.id, this.model).then(() => {
                         this.$router.push({path: '/organisations'})
                     }).catch(() => {
                         alert('An error occurred while updating the organisation')
@@ -124,7 +125,7 @@
                 this.model.houseNumberExtra = organisation.houseNumberExtra;
                 this.model.zipCode = organisation.zipCode;
                 this.model.city = organisation.city;
-                this.model.type = organisation.organisationType.id;
+                this.model.organisationType = organisation.organisationType.id;
             }
         }
     }

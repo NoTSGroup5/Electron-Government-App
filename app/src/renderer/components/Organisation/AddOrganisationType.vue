@@ -40,7 +40,7 @@ export default {
           HttpOrganisationTypeService.add(Uuid(), this.model.name, this.model.description).then(() => {
             this.$router.push({path: '/organisation-types'})
           }).catch(() => {
-            alert('An error occurred while adding the organisation type')
+            alert('An error occurred while adding the organisation organisationType')
           })
         }).catch(() => {});
       }

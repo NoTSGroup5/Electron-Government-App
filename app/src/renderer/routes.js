@@ -30,7 +30,7 @@ export default [
         component: require('./components/Organisation/EditOrganisation.vue')
     },
   {
-    path: '/organisation-type/create',
+    path: '/organisation-organisationType/create',
     name: 'organisationTypeCreate',
     component: require('./components/Organisation/AddOrganisationType')
   },

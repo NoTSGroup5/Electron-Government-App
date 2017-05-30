@@ -14,29 +14,12 @@ class HttpOrganisationService {
         return this.httpService.getById(this.url, id);
     }
 
-    add(id, name, street, houseNumber, houseNumberExtra, zipCode, city, type){
-        return this.httpService.post(this.url, {
-            id : id,
-            name : name,
-            city : city,
-            street : street,
-            houseNumber : houseNumber,
-            zipCode : zipCode,
-            houseNumberExtra: houseNumberExtra,
-            organisationType : type
-        });
+    add(model){
+        return this.httpService.post(this.url, model);
     }
 
-    update(id, name, street, houseNumber, houseNumberExtra, zipCode, city, type){
-        return this.httpService.put(this.url + '/' + id, {
-            name : name,
-            city : city,
-            street : street,
-            houseNumber : houseNumber,
-            zipCode : zipCode,
-            houseNumberExtra: houseNumberExtra,
-            organisationType : type
-        });
+    update(id, model){
+        return this.httpService.put(this.url + '/' + id, model);
     }
 
     del (id) {
