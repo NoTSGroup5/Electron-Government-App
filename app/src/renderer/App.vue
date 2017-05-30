@@ -28,19 +28,19 @@
 
         methods: {
             isOrganisationPageActive() {
-                let pages = ['/organisations', '/organisation/create'];
+                let pages = ['organisationsView', 'organisationCreate', 'organisationEdit'];
 
-                return pages.indexOf(this.$route.path) > -1;
+                return pages.indexOf(this.$route.name) > -1;
             },
             isOrganisationTypePageActive(){
-                let pages = ['/organisation-types', '/organisation-type/create'];
+                let pages = ['organisationTypesView', 'organisationTypeCreate'];
 
-                return pages.indexOf(this.$route.path) > -1;
+                return pages.indexOf(this.$route.name) > -1;
             },
             isPatientsPageActive(){
-                let pages = ['/patients', '/patients/create', '/patientsInfo/:bsn', '/patientDossier/:bsn'];
+                let pages = ['patientsOverview', 'patientsCreate', 'patientInfo', 'patientDossier'];
 
-                return pages.indexOf(this.$route.path) > -1;
+                return pages.indexOf(this.$route.name) > -1;
             }
         }
     }

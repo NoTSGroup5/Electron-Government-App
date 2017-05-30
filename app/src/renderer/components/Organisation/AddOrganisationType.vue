@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import Uuid from 'uuid/v1'
+import Uuid from 'uuid/v1'
 import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
 
 export default {
