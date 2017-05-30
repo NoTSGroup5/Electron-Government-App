@@ -12,6 +12,9 @@
             </tr>
             </thead>
             <tbody>
+            <tr v-show="organisationTypes.length === 0">
+                <td colspan="2">Geen organisatie types gevonden.</td>
+            </tr>
             <tr v-for="type in organisationTypes">
                 <td>{{type.name}}</td>
                 <td>{{type.description}}</td>
@@ -22,26 +25,25 @@
 </template>
 
 <script>
-  import Uuid from 'uuid/v1'
-import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
+    import Uuid from 'uuid/v1'
+    import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
 
-let httpOrganisationTypeService = new HttpOrganisationTypeService();
+    let httpOrganisationTypeService = new HttpOrganisationTypeService();
 
-export default {
-    data: () => {
-      return {
-        organisationTypes: []
-      }
-    },
-    created () {
-      httpOrganisationTypeService.fetch().then((items) => {
-        this.organisationTypes = items
-      }).catch(() => {
-        alert('Het laden van de organisatie types zijn mislukt.')
-      })
-    },
-    methods: {}
-  }
+    export default {
+        data: () => {
+            return {
+                organisationTypes: []
+            }
+        },
+        created () {
+            httpOrganisationTypeService.fetch().then((items) => {
+                this.organisationTypes = items
+            }).catch(() => {
+                alert('Het laden van de organisatie types zijn mislukt.')
+            })
+        }
+    }
 </script>
 
 <style scoped>

@@ -55,7 +55,7 @@
                 <p class="text-danger" v-show="errors.has('residence')">Een woonplaats is verplicht.</p>
             </div>
 
-            <button type="submit" class="btn btn-default">Organisatie toevoegen</button>
+            <button type="submit" class="btn btn-default">Organisatie opslaan</button>
         </form>
     </div>
 </template>
@@ -73,48 +73,62 @@
 </style>
 
 <script>
-import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
-import HttpOrganisationService from '../../../services/httpOrganisationService'
-import Uuid from 'uuid/v1'
-import _ from 'lodash'
+    import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
+    import HttpOrganisationService from '../../../services/httpOrganisationService'
+    import Uuid from 'uuid/v1'
+    import _ from 'lodash'
 
-let httpOrganisationTypeService = new HttpOrganisationTypeService();
-let httpOrganisationService = new HttpOrganisationService();
+    let httpOrganisationTypeService = new HttpOrganisationTypeService();
+    let httpOrganisationService = new HttpOrganisationService();
 
-export default {
-    data: () => {
-      return {
-        types : [],
-        model : {
-            name : "",
-            streetName: "",
-            streetNumber: "",
-            streetNumberExtra: "",
-            zipCode: "",
-            residence: "",
-            type : ""
-        }
-      }
-    },
-    created(){
-        httpOrganisationTypeService.fetch().then((items) => {
-            this.types = items;
-        }).catch(() => console.log('Retrieving organisation types failed'));
-    },
-    methods : {
-        validateForm(){
-            this.$validator.validateAll().then(() => {
-                httpOrganisationService.add(Uuid(), this.model.name, this.model.streetName, this.model.streetNumber,
-                    this.model.streetNumberExtra, this.model.zipCode, this.model.residence, this.getTypeFromId(this.model.type)).then(() => {
-                    this.$router.push({path: '/organisations'})
-                }).catch(() => {
-                    alert('An error occurred while adding the organisation')
-                })
-            }).catch();
+    export default {
+        data: () => {
+            return {
+                types : [],
+                model : {
+                    id : "",
+                    name : "",
+                    streetName: "",
+                    streetNumber: "",
+                    streetNumberExtra: "",
+                    zipCode: "",
+                    residence: "",
+                    type : ""
+                }
+            }
         },
-        getTypeFromId(id){
-            return _.find(this.types, {id});
+        created() {
+            Promise.all([httpOrganisationTypeService.fetch(), httpOrganisationService.getById(this.$route.params.id)]).then((results) => {
+                this.types = results[0];
+                this.setModel(results[1]);
+            }).catch(() => {
+                console.log('An error occurd while retrieving data');
+            })
+        },
+        methods : {
+            validateForm(){
+                this.$validator.validateAll().then(() => {
+                    httpOrganisationService.update(this.model.id, this.model.name, this.model.streetName, this.model.streetNumber,
+                        this.model.streetNumberExtra, this.model.zipCode, this.model.residence, this.getTypeFromId(this.model.type)).then(() => {
+                        this.$router.push({path: '/organisations'})
+                    }).catch(() => {
+                        alert('An error occurred while updating the organisation')
+                    })
+                }).catch();
+            },
+            getTypeFromId(id){
+                return _.find(this.types, {id});
+            },
+            setModel(organisation){
+                this.model.id = organisation.id;
+                this.model.name = organisation.name;
+                this.model.streetName = organisation.street;
+                this.model.streetNumber = organisation.houseNumber;
+                this.model.streetNumberExtra = organisation.streetNumberExtra;
+                this.model.zipCode = organisation.zipCode;
+                this.model.residence = organisation.city;
+                this.model.type = organisation.organisationType.id;
+            }
         }
     }
-  }
 </script>

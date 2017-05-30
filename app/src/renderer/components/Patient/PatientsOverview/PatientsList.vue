@@ -1,24 +1,23 @@
 <template>
     <div>
-
-        <table class="table table-striped" v-if="patients.length">
+        <table class="table table-striped">
             <thead>
-            <tr>
-                <td>BSN</td>
-                <td>Naam</td>
-                <td>Bewerken</td>
-                <td>Inzien</td>
-            </tr>
+                <tr>
+                    <td><strong>BSN</strong></td>
+                    <td><strong>Naam</strong></td>
+                    <td><strong>Bewerken</strong></td>
+                    <td><strong>Inzien</strong></td>
+                </tr>
             </thead>
             <tbody>
+            <tr v-show="patients.length === 0">
+                <td colspan="4">
+                    Geen patienten gevonden.
+                </td>
+            </tr>
             <patient v-for="patient in patients" v-bind="patient"></patient>
             </tbody>
         </table>
-
-        <div v-show="patients.length == 0">
-            Geen patiënten gevonden.
-        </div>
-
     </div>
 </template>
 
