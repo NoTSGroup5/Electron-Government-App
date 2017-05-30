@@ -3,6 +3,7 @@ import Vue from 'vue'
 
 export default class HttpService {
     get(url) {
+      var route = Config.apiUrl + url;
         return Vue.http.get(Config.apiUrl + url).then((results) => {
             return this._stripRestrictedValues(results.body);
         });

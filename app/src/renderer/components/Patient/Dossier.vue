@@ -64,7 +64,7 @@
                             <th>Datum vn -tot</th>
                             <th>Bewerken</th>
                             <th>Logs</th>
-                            <th><span class="glyphicon glyphicon-plus pull-right"></span></th>
+                            <th><span class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#AddTreatment"></span></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -135,6 +135,51 @@
                 </div>
             </div>
         </div>
+
+// {
+//       "$class": "nl.epd.blockchain.Visit",
+//       "id": "string",
+//       "date": 0,
+//       "description": "string",
+//       "organisation": "string"
+//     }
+                <!-- Treatment modal -->
+        <div id="AddTreatment" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Behandelingen toevoegen</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="reason" class="col-sm-4 col-form-label" aria-describedby="reason">Allergie</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="reason" placeholder="beschrijving" v-model="AddtreatmentInfo.reason">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="startDate" class="col-sm-4 col-form-label" aria-describedby="startDate">Startdatum</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" id="startDate" v-model="AddtreatmentInfo.startDate">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="endDate" class="col-sm-4 col-form-label" aria-describedby="endDate">Einddatum</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" id="endDate" v-model="AddtreatmentInfo.endDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" v-on:click="addTreatment" data-dismiss="modal">Toevoegen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </template>
 
@@ -169,20 +214,27 @@
             return {
                 patient: {},
                 medicalFile: {},
-                allergyValue: ""
+                allergyValue: "",
+                AddtreatmentInfo: {
+                    reason : "",
+                    startDate: "",
+                    endDate : ""
+                }
             }
         },
 
         created: function () {
             let httpPatientsService = new HttpPatientsService();
+            
             let bsn = this.$route.params.bsn;
+
 
             httpPatientsService.getPatientbyBsn(bsn).then((patient) => {
                 this.patient = patient;
+            });
 
-                HttpMedicalFileService.getMedicalFile(bsn).then(medicalFile => {
-                    this.medicalFile = medicalFile[0];
-                });
+            HttpMedicalFileService.getMedicalFile(bsn).then(medicalFile => {
+                this.medicalFile = medicalFile[0];
             });
         },
 
@@ -203,7 +255,17 @@
                 if(this.allergyValue !== "") {
                     this.medicalFile.allergies.push(this.allergyValue);
                 }
+            },
+
+            addTreatment(){
+                if(this.AddtreatmentInfo.startDate !== "" && this.AddtreatmentInfo.reason !== "") {
+                    debugger
+                }
             }
         }
     }
+
+
 </script>
+
+
