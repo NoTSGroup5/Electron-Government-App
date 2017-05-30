@@ -13,40 +13,14 @@ class HttpPatientsService {
         return this.httpService.getById('Patient', bsn);
     }
 
-    addPatient(bsn, firstName, namePrefix, lastName, gender, birthday, street, houseNumber, houseNumberExtra, zipCode, city, telephoneNumber, email) {
-        return this.httpService.post('Patient', {
-            bsn : bsn,
-            firstName : firstName,
-            namePrefix : namePrefix,
-            lastName : lastName,
-            email : email,
-            telephoneNumber : telephoneNumber,
-            birthday : birthday,
-            gender : gender,
-            city : city,
-            street : street,
-            houseNumber : houseNumber,
-            houseNumberExtra : houseNumberExtra,
-            zipCode : zipCode
-        });
+    addPatient(model) {
+        return this.httpService.post('Patient', model);
     }
 
-    editPatient(bsn, firstName, namePrefix, lastName, gender, birthday, street, houseNumber, houseNumberExtra, zipCode, city, telephoneNumber, email) {
-        return this.httpService.put('Patient/' + bsn, {
+    editPatient(bsn, model) {
+        delete model.bsn;
 
-            firstName : firstName,
-            namePrefix : namePrefix,
-            lastName : lastName,
-            email : email,
-            telephoneNumber : telephoneNumber,
-            birthday : birthday,
-            gender : gender,
-            city : city,
-            street : street,
-            houseNumber : houseNumber,
-            houseNumberExtra : houseNumberExtra,
-            zipCode : zipCode
-        });
+        return this.httpService.put('Patient/' + bsn, model);
     }
 }
 

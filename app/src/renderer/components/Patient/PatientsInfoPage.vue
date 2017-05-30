@@ -236,8 +236,9 @@
         methods: {
             validateForm(){
                 this.$validator.validateAll().then(() => {
-                    let birthdayTimestamp = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
-                    HttpPatientsService.editPatient(this.model.bsn, this.model.firstName, this.model.namePrefix, this.model.lastName, this.model.gender, birthdayTimestamp, this.model.street, this.model.houseNumber, this.model.houseNumberExtra, this.model.zipCode, this.model.city, this.model.telephoneNumber, this.model.email).then(() => {
+                    this.birthday = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
+
+                    HttpPatientsService.editPatient(this.model.bsn, this.model).then(() => {
                         this.$router.push({ name: "patientsOverview" })
                     }).catch(() => {
                         alert('An error occurred while editing the patient')
