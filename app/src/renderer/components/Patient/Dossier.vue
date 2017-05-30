@@ -135,13 +135,12 @@
 
         beforeCreate: function () {
             let httpPatientsService = new HttpPatientsService();
-            let medicalFileService = new HttpMedicalFileService();
             let bsn = this.$route.params.bsn;
 
             httpPatientsService.getPatientbyBsn(bsn).then((patient) => {
                 this.patient = patient;
 
-                medicalFileService.getMedicalFile(bsn).then(medicalFile => {
+                HttpMedicalFileService.getMedicalFile(bsn).then(medicalFile => {
                     this.medicalFile = medicalFile[0];
                 });
             });

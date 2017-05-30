@@ -1,6 +1,6 @@
 import HttpService from './httpService'
 
-export default class HttpMedicalFileService {
+class HttpMedicalFileService {
 
     constructor () {
         this.httpService = new HttpService();
@@ -11,3 +11,5 @@ export default class HttpMedicalFileService {
         return this.httpService.get("/MedicalFile?filter={\"owner\":\"" + bsn + "\"}");
     }
 }
+
+export default new HttpMedicalFileService();
