@@ -40,13 +40,18 @@
 
                 <div class="row">
                     <h4>Medicatie  </h4>
-
                     <table class="table table-striped">
                         <thead>
                         <tr>
                             <th>Medicijn</th>
                             <th>Inname op moment</th>
-                            <th><span class="glyphicon glyphicon-plus pull-right"></span></th>
+                            <th><span class="glyphicon glyphicon-plus pull-right"  type="button" data-toggle="modal" data-target="#MedicijnToevoegen"></span></th>
+                            
+                            <div id="MedicijnToevoegen" class="modal fade" role="dialog">
+                            <MedicijnToevoegen :bsn="patient.bsn" ></MedicijnToevoegen>
+                            </div>
+
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -62,7 +67,7 @@
                         <thead>
                         <tr>
                             <th>Behandeling</th>
-                            <th>Datum van -tot</th>
+                            <th>Datum vn -tot</th>
                             <th>Bewerken</th>
                             <th>Logs</th>
                             <th><span class="glyphicon glyphicon-plus pull-right"></span></th>
@@ -109,6 +114,9 @@
     import Vue from 'vue'
     import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
     import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
+    import BootstrapModal from '../Shared/Bootstrap/BootstrapSelectInput'
+
+    import MedicijnToevoegen from '../Medicatie/MedicijnToevoegen'
 
     import HttpPatientsService from '../../../services/httpPatientsService'
 
@@ -126,7 +134,8 @@
             Treatment,
             Allergy,
             Visit,
-            Medicine
+            Medicine,
+            MedicijnToevoegen
         },
         data () {
             return {
