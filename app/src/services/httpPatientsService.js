@@ -39,8 +39,6 @@ export default class HttpPatientsService {
     }
 
     _stripRestrictedValues(patients) {
-
-
         patients.forEach(patient => {
             this._stripRestrictedFields(patient);
         });
@@ -51,6 +49,8 @@ export default class HttpPatientsService {
     _stripRestrictedFields(patient)
     {
         this.restrictedFields.forEach(field => delete patient[field]);
+
+        return patient;
     }
 
 }

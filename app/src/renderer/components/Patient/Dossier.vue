@@ -128,11 +128,13 @@
             Visit,
             Medicine
         },
+
         data () {
             return {
                 patient: patient
             }
         },
+
         beforeCreate: function () {
             let httpPatientsService = new HttpPatientsService();
             let bsn = this.$route.params.bsn;
@@ -152,6 +154,7 @@
 
             }.bind(this));
         },
+
         destroyed: function () {
             patient = [];
         }
