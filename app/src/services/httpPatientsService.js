@@ -2,48 +2,55 @@ import HttpService from './httpService'
 
 export default class HttpPatientsService {
 
-  constructor () {
-    this.httpService = new HttpService()
-  }
+    constructor() {
+        this.httpService = new HttpService()
+    }
 
-  get restrictedFields () {
-    return ['$class']
-  }
+    get restrictedFields() {
+        return ['$class']
+    }
 
-  fetch () {
-    return this.httpService.get('Patient')
-                 .then(this._stripRestrictedValues.bind(this))
-  }
+    fetch() {
+        return this.httpService.get('Patient')
+            .then(this._stripRestrictedValues.bind(this))
+    }
 
-  getPatientbyBsn (bsn) {
-    return this.httpService.get(`Patient/${bsn}`)
-                 .then(this._stripRestrictedValues.bind(this))
-  }
+    getPatientbyBsn(bsn) {
+        return this.httpService.get(`Patient/${bsn}`)
+            .then(this._stripRestrictedFields.bind(this))
+    }
 
-  addPatient(bsn, firstName, namePrefix, lastName, gender, birthday, streetName, streetNumber, streetNumberExtra, zipCode, residence, telephoneNumber, email) {
-    return this.httpService.post('Patient', {
-      bsn : bsn,
-      firstName : firstName,
-      namePrefix : namePrefix,
-      lastName : lastName,
-      email : email,
-      telephoneNumber : telephoneNumber,
-      birthday : birthday,
-      gender : gender,
-      city : residence,
-      street : streetName,
-      houseNumber : streetNumber,
-      houseNumberExtra : streetNumberExtra,
-      zipCode : zipCode
-    });
-  }
+    addPatient(bsn, firstName, namePrefix, lastName, gender, birthday, streetName, streetNumber, streetNumberExtra, zipCode, residence, telephoneNumber, email) {
+        return this.httpService.post('Patient', {
+            bsn: bsn,
+            firstName: firstName,
+            namePrefix: namePrefix,
+            lastName: lastName,
+            email: email,
+            telephoneNumber: telephoneNumber,
+            birthday: birthday,
+            gender: gender,
+            city: residence,
+            street: streetName,
+            houseNumber: streetNumber,
+            houseNumberExtra: streetNumberExtra,
+            zipCode: zipCode
+        });
+    }
 
-  _stripRestrictedValues (patients) {
-      patients.forEach(patient => {
-        this.restrictedFields.forEach(field => delete patient[field])
-      });
+    _stripRestrictedValues(patients) {
 
-      return patients;
-  }
+
+        patients.forEach(patient => {
+            this._stripRestrictedFields(patient);
+        });
+
+        return patients;
+    }
+
+    _stripRestrictedFields(patient)
+    {
+        this.restrictedFields.forEach(field => delete patient[field]);
+    }
 
 }
