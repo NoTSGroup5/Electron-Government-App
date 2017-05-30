@@ -4,10 +4,10 @@
         <table class="table table-striped" v-if="patients.length">
             <thead>
             <tr>
-                <td>BSN</td>
-                <td>Naam</td>
-                <td>Bewerken</td>
-                <td>Inzien</td>
+                <td><strong>BSN</strong></td>
+                <td><strong>Naam</strong></td>
+                <td><strong>Bewerken</strong></td>
+                <td><strong>Inzien</strong></td>
             </tr>
             </thead>
             <tbody>

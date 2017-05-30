@@ -2,8 +2,8 @@
   <tr>
     <td>{{bsn}}</td>
     <td>{{firstName}} {{lastName}}</td>
-    <td><router-link class="btn btn-default" :to="{ name: 'patientinfo', params: { bsn: bsn }}"> Bewerk {{firstName}} {{lastName}}</router-link></td>
-    <td><router-link class="btn btn-default" :to="{ name: 'patientdossier', params: {bsn: bsn}}">Dossier van {{firstName}} {{lastName}}</router-link></td>
+    <td><router-link class="btn btn-default" :to="{ name: 'patientinfo', params: { bsn: bsn }}"> Bewerk</router-link></td>
+    <td><router-link class="btn btn-default" :to="{ name: 'patientdossier', params: {bsn: bsn}}">Dossier van</router-link></td>
   </tr>
 </template>
 
