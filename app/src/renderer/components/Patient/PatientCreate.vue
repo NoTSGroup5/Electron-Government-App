@@ -187,7 +187,7 @@
                 this.$validator.validateAll().then(() => {
                     let birthdayTimestamp = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
                     httpPatientsService.addPatient(this.model.bsn, this.model.firstName, this.model.namePrefix, this.model.lastName, this.model.gender, birthdayTimestamp, this.model.streetName, this.model.streetNumber, this.model.streetNumberExtra, this.model.zipCode, this.model.residence, this.model.telephoneNumber, this.model.email).then(() => {
-                        this.$router.push({path: '/patients'})
+                        this.$router.push({name: "patientsOverview"});
                     }).catch(() => {
                         alert('An error occurred while adding the patient')
                     })

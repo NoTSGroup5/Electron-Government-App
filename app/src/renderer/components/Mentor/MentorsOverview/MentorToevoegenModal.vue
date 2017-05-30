@@ -1,5 +1,4 @@
 <template>
-<!-- Modal -->
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -7,17 +6,16 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Mentoren toevoegen</h4>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <input type="search" id="search" value="" class="form-control"
-                                placeholder="Zoeken op BSN">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
+                    
+                <div class="modal-body">
+                    <div>
+                        <div class="input-group">
+                            <input v-model="bsn" type="text" class="form-control" placeholder="Zoek mentor...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" v-on:click="findMentor()">Zoek</button>
+                                </span>
+                        </div>
+                 
                         <table class="table" id="table">
                             <thead>
                             <tr>
@@ -26,53 +24,56 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <Mentor v-for="mentor in mentoren" v-bind="mentor"></Mentor>
+                               <tr>
+                                    <td>{{ model.bsn }}</td>
+                                    <td>{{ model.name }}</td>
+                                    
+                                </tr>
                             </tbody>
                         </table>
-                        <hr>
                     </div>
                 </div>
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Toevoegen</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Opslaan
-                </button>
-            </div>
-        </div>
-
     </div>
 </template>
 
 <script>
-import Mentor from './Mentor'
-let mentoren = []
+
+ import HttpPatientsService from '../../../../services/httpPatientsService'
+
+let httpPatientsService = new HttpPatientsService();
+
 
 export default {
   components: {
-    Mentor
+
   },
-  data: () => {
+  data () {
     return {
-      mentoren: mentoren
+        bsn: "",
+        model: {
+            bsn: "",
+            name: ""
+        }
     }
   },
 
-  beforeCreate: () => {
-      // TODO: Add actual API endpoint here, simulate async call for now
-    setTimeout(() => {
-      mentoren.push({
-        BSN: '2736498',
-        naam: 'Kees, J'
-      })
-      mentoren.push({
-        BSN: '3243243',
-        naam: 'Hans, S'
-      })
-    }, 100)
-  },
-
-  beforeDestroy: () => {
-    mentoren = []
-  }
+    methods: {
+        findMentor(){
+            httpPatientsService.getPatientbyBsn(this.bsn).then(response => {
+            // JSON responses are automatically parsed.
+            this.model.bsn = response.bsn;
+            this.model.name = response.firstName + " " +  response.lastName;
+            })
+            .catch(e => {
+            console.log(e);
+            })
+        }
+    },
 }
 
 </script>

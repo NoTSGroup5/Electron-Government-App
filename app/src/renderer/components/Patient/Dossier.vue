@@ -12,7 +12,7 @@
                             <th>Locatie</th>
                             <th>Onderwerp</th>
                             <th>Datum</th>
-                            <th><span class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#doktersbezoek"></span></th>
+                            <th><span class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#doctorsVisit"></span></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,13 +40,12 @@
 
                 <div class="row">
                     <h4>Medicatie  </h4>
-
                     <table class="table table-striped">
                         <thead>
                         <tr>
                             <th>Medicijn</th>
                             <th>Inname op moment</th>
-                            <th><span class="glyphicon glyphicon-plus pull-right"></span></th>
+                            <th><span class="glyphicon glyphicon-plus pull-right"  type="button" data-toggle="modal" data-target="#addMedicine"></span></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -62,7 +61,7 @@
                         <thead>
                         <tr>
                             <th>Behandeling</th>
-                            <th>Datum van -tot</th>
+                            <th>Datum vn -tot</th>
                             <th>Bewerken</th>
                             <th>Logs</th>
                             <th><span class="glyphicon glyphicon-plus pull-right"></span></th>
@@ -81,11 +80,15 @@
             </div>
         </div>
 
-        <!-- Modal -->
-        <div id="doktersbezoek" class="modal fade" role="dialog">
-            <div class="modal-dialog">
 
-                <!-- Modal content-->
+        <!-- Add medicine modal -->
+        <div id="addMedicine" class="modal fade" role="dialog">
+            <AddMedicine :bsn="patient.bsn" ></AddMedicine>
+        </div>
+
+        <!-- Doctor visit modal -->
+        <div id="doctorsVisit" class="modal fade" role="dialog">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -138,8 +141,10 @@
 
 <script>
     import Vue from 'vue'
+
     import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput';
     import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput';
+    import AddMedicine from '../Medication/AddMedication'
 
     import HttpPatientsService from '../../../services/httpPatientsService';
     import HttpMedicalFileService from '../../../services/httpMedicalFileService';
@@ -156,7 +161,8 @@
             Treatment,
             Allergy,
             Visit,
-            Medicine
+            Medicine,
+            AddMedicine
         },
 
         data () {
