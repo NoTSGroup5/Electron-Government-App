@@ -2,12 +2,12 @@
     <div>
         <table class="table table-striped">
             <thead>
-            <tr>
-                <td>BSN</td>
-                <td>Naam</td>
-                <td>Bewerken</td>
-                <td>Inzien</td>
-            </tr>
+                <tr>
+                    <td><strong>BSN</strong></td>
+                    <td><strong>Naam</strong></td>
+                    <td><strong>Bewerken</strong></td>
+                    <td><strong>Inzien</strong></td>
+                </tr>
             </thead>
             <tbody>
             <tr v-show="patients.length === 0">

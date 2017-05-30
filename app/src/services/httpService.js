@@ -2,32 +2,31 @@ import Config from '../../../config'
 import Vue from 'vue'
 
 export default class HttpService {
-
-    get (url) {
+    get(url) {
         return Vue.http.get(Config.apiUrl + url).then((results) => {
             return this._stripRestrictedValues(results.body);
         });
     }
 
-    getById(url, id){
+    getById(url, id) {
         return Vue.http.get(Config.apiUrl + url + '/' + id).then((response) => {
-          return response.body;
+            return response.body;
         });
     }
 
-    post (url, data) {
+    post(url, data) {
         return Vue.http.post(Config.apiUrl + url, data);
     }
 
-    put (url, data) {
+    put(url, data) {
         return Vue.http.put(Config.apiUrl + url, data);
     }
 
-    del (url) {
+    del(url) {
         return Vue.http.delete(Config.apiUrl + url);
     }
 
-    _stripRestrictedValues (items) {
+    _stripRestrictedValues(items) {
         items.forEach(item => {
             this.restrictedFields.forEach(field => delete item[field])
         });
@@ -35,8 +34,7 @@ export default class HttpService {
         return items;
     }
 
-    get restrictedFields () {
+    get restrictedFields() {
         return ['$class'];
     }
-
 }
