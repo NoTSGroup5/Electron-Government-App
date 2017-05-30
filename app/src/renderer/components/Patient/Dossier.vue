@@ -28,12 +28,11 @@
                         <thead>
                         <tr>
                             <th>Allergie</th>
-                            <th>Bewerken</th>
                             <th><span class="glyphicon glyphicon-plus pull-right"></span></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <Allergy v-for="allergy in patient.allergies" :allergy="allergy"></Allergy>
+                        <Allergy v-for="allergy in medicalFile.allergies" :allergy="allergy"></Allergy>
                         </tbody>
                     </table>
                 </div>
@@ -91,7 +90,6 @@
                         <BootstrapTextInput :type="'text'" :name="'Behandelend arts'" :value="'Behandelend arts'"></BootstrapTextInput>
                         <BootstrapTextInput :type="'text'" :name="'Omschrijving bezoek'" :value="'Omschrijving bezoek'"></BootstrapTextInput>
                         <BootstrapTextInput :type="'text'" :name="'Ondernomen acties'" :value="'Ondernomen acties'"></BootstrapTextInput>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Toevoegen
@@ -107,17 +105,16 @@
 
 <script>
     import Vue from 'vue'
-    import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
-    import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
+    import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput';
+    import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput';
 
-    import HttpPatientsService from '../../../services/httpPatientsService'
+    import HttpPatientsService from '../../../services/httpPatientsService';
+    import HttpMedicalFileService from '../../../services/httpMedicalFileService';
 
-    import Treatment from './Dossier/Treatment'
-    import Allergy from './Dossier/Allergy'
-    import Visit from './Dossier/Visit'
-    import Medicine from './Dossier/Medicine'
-
-    let patient = {};
+    import Treatment from './Dossier/Treatment';
+    import Allergy from './Dossier/Allergy';
+    import Visit from './Dossier/Visit';
+    import Medicine from './Dossier/Medicine';
 
     export default {
         components: {
@@ -131,28 +128,23 @@
 
         data () {
             return {
-                patient: patient
+                patient: {},
+                medicalFile: {}
             }
         },
 
         beforeCreate: function () {
             let httpPatientsService = new HttpPatientsService();
+            let medicalFileService = new HttpMedicalFileService();
             let bsn = this.$route.params.bsn;
 
-            httpPatientsService.getPatientbyBsn(bsn).then(function (res) {
-                for (let key in res) {
-                    if(res.hasOwnProperty(key)) {
-                        this.$set(this.patient, key, res[key])
-                    }
-                }
+            httpPatientsService.getPatientbyBsn(bsn).then((patient) => {
+                this.patient = patient;
 
-                //mocked for now
-                this.$set(this.patient, "allergies", {allergy: "pollen"});
-                this.$set(this.patient, "visits", {allergy: "pollen"});
-                this.$set(this.patient, "medication", {allergy: "pollen"});
-                this.$set(this.patient, "treatments", {allergy: "pollen"});
-
-            }.bind(this));
+                medicalFileService.getMedicalFile(bsn).then(medicalFile => {
+                    this.medicalFile = medicalFile[0];
+                });
+            });
         },
 
         destroyed: function () {
