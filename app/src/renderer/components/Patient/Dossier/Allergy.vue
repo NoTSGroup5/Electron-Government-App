@@ -1,15 +1,27 @@
 <template>
-  <tr>
-      <td>{{allergy}}</td>
-  </tr>
+    <tr>
+        <td>{{ allergy }}</td>
+        <td><span class="glyphicon glyphicon-remove pull-right" v-on:click="removeAllergy"></span></td>
+    </tr>
 </template>
 
 <script>
-  export default {
-    props: [
-      'allergy',
-    ]
-  }
+    import HttpMedicalFileService from '../../../../services/httpMedicalFileService';
+
+    export default {
+        props: {
+            allergy: {
+                type: String,
+                required: true
+            }
+        },
+
+        methods: {
+            removeAllergy() {
+                this.$emit('remove', this.allergy);
+            }
+        }
+    }
 </script>
 
 <style scoped>
