@@ -167,7 +167,7 @@
             }
         },
 
-        beforeCreate: function () {
+        created: function () {
             let httpPatientsService = new HttpPatientsService();
             let bsn = this.$route.params.bsn;
 
@@ -189,6 +189,8 @@
 
             save() {
                 HttpMedicalFileService.saveMedicalFile(this.medicalFile);
+
+                this.$router.push({name: 'patientsOverview'})
             },
 
             addAllergy() {
@@ -196,11 +198,6 @@
                     this.medicalFile.allergies.push(this.allergyValue);
                 }
             }
-        },
-
-        destroyed: function () {
-            patient = [];
         }
-
     }
 </script>
