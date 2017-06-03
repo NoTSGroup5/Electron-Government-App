@@ -1,17 +1,22 @@
 <template>
   <tr>
-   <td>{{ description }} DESCRIPTION </td>
-   <td>{{ date }} DATE</td>
-    <td><span class="glyphicon glyphicon-pencil pull-right" v-on:click="EditTreatment"></span></td>
+   <td>{{ treatment.description }}</td>
+   <td>{{ treatment.startDate + (treatment.endDate? " - "+ treatment.endDate : "")}}</td>
+   <td><span class="glyphicon glyphicon-pencil pull-right" v-on:click="EditTreatment"></span></td>
+   <td>view logs</td>
+   <td>add log</td>
   </tr>
 </template>
 
 <script>
   export default {
-    props: [
-      "description",
-      "date",
-    ],
+    props: {
+        treatment: {
+            description: String,
+            startDate: String,
+            endDate: String
+        }
+    },
     methods: {
             EditTreatment() {
               debugger

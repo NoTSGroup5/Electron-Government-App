@@ -244,25 +244,20 @@
 
             addAllergy() {
                 if(this.allergyValue !== "") {
-                    this.medicalFile.allergies.push(this.allergyValue);
+                    this.medicalFile.allergies.unshift(this.allergyValue);
+                    this.allergyValue = "";
                 }
             },
 
             addTreatment(){
                 if(this.AddtreatmentInfo.startDate !== "" && this.AddtreatmentInfo.description !== "") {
                     debugger
-                    this.medicalFile.treatments.push({
+                    this.medicalFile.treatments.unshift({
                         description: this.AddtreatmentInfo.description,
-                        date: this.AddtreatmentInfo.startDate
+                        startDate: this.AddtreatmentInfo.startDate,
+                        endDate: this.AddtreatmentInfo.endDate
                     })
 
-                    // {
-//       "$class": "nl.epd.blockchain.Visit",
-//       "id": "string",
-//       "date": 0,
-//       "description": "string",
-//       "organisation": "string"
-//     }
                 }
             }
         }
