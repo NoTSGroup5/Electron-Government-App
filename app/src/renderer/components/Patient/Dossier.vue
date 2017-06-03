@@ -69,7 +69,7 @@
                         </thead>
                         <tbody>
                         <Treatment v-for="treatment in medicalFile.treatments" :treatment="treatment"
-                                    @edit="editTreatment" @addLog="addLog"></Treatment>
+                                    @edit="editTreatment" @showLogs="showLogs" @addLog="addLog"></Treatment>
                         </tbody>
                     </table>
                 </div>
@@ -105,7 +105,8 @@
                                             :value="'Ondernomen acties'"></BootstrapTextInput>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Toevoegen
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Toevoegen
                         </button>
                     </div>
                 </div>
@@ -173,6 +174,33 @@
                 </div>
             </div>
         </div>
+
+        <div id="ShowLogs" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">logs van {{ActiveTreatment.description}}</h4>
+                        <a v-on:click="addLog">Log toevoegen</a>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Datum en tijd</th>
+                            <th>beschrijving</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <Log v-for="log in ActiveTreatment.logs" :log="log"></Log>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </template>
 
@@ -191,6 +219,7 @@
     import Allergy from './Dossier/Allergy';
     import Visit from './Dossier/Visit';
     import Medicine from './Dossier/Medicine';
+    import Log from './Dossier/Log'
 
     import Uuid from 'uuid/v1';
 
@@ -202,7 +231,8 @@
             Allergy,
             Visit,
             Medicine,
-            AddMedicine
+            AddMedicine,
+            Log
         },
 
         data () {
@@ -212,8 +242,12 @@
                 allergyValue: "",
                 TreatmentInfo: {
                     description : "",
-                    startDate: new Date().toISOString().slice(0,10),
+                    startDate: Date.now(),
                     endDate : ""
+                },
+                ActiveTreatment: {
+                    description: "",
+                    logs: []
                 }
             }
         },
@@ -238,6 +272,7 @@
             },
 
             save() {
+                debugger
                 HttpMedicalFileService.saveMedicalFile(this.medicalFile);
 
                 this.$router.push({name: 'patientsOverview'})
@@ -294,8 +329,22 @@
                 $("#AddTreatment").modal();
             },
 
-            addLog(treatment){
+            addLogModal(){
                 debugger
+            },
+
+            addLog(){
+                this.ActiveTreatment.logs.unshift({
+                    description:"description",
+                    id: Uuid(),
+                    date: Date.now()
+                });
+            },
+
+            showLogs(treatment){
+                this.ActiveTreatment.description = treatment.description;
+                this.ActiveTreatment.logs = treatment.logs;
+                $("#ShowLogs").modal();
             },
 
             clearTreatmentInfo(){

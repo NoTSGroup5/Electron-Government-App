@@ -12,7 +12,7 @@ let config = {
   eslint: true,
 
   // webpack-dev-server port
-  port: 9080,
+  port: 9081,
 
   apiUrl: 'http://localhost:3000/api/',
 
