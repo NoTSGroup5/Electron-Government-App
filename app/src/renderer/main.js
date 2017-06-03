@@ -6,6 +6,7 @@ import VeeValidate from 'vee-validate'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'jquery'
 import 'bootstrap/dist/js/bootstrap.min.js'
+import moment from 'moment'
 
 import App from './App'
 import routes from './routes'
@@ -21,6 +22,13 @@ const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes
 })
+
+//To display our timestamps in a proper way 
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(value).format('YYYY/MM/DD hh:mm');
+  }
+});
 
 /* eslint-disable no-new */
 new Vue({
