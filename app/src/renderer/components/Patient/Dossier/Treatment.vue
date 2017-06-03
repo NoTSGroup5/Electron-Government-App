@@ -3,15 +3,18 @@
    <td>{{ treatment.description }}</td>
    <td>{{ treatment.startDate + (treatment.endDate? " - "+ treatment.endDate : "")}}</td>
    <td><span class="glyphicon glyphicon-pencil pull-right" v-on:click="EditTreatment"></span></td>
-   <td>view logs</td>
+   <td><a v-on:click="showLogs">view logs</a></td>
    <td>add log</td>
   </tr>
 </template>
 
 <script>
+
+
   export default {
     props: {
         treatment: {
+            id: String,
             description: String,
             startDate: String,
             endDate: String
@@ -19,8 +22,10 @@
     },
     methods: {
             EditTreatment() {
-              debugger
-              this.$emit('remove');
+              this.$emit('edit', this.treatment);
+            },
+            showLogs(){
+              this.$emit('showLogs', this.treatment)
             }
         }
   }

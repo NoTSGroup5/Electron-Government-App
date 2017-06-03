@@ -68,7 +68,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <Treatment v-for="treatment in medicalFile.treatments" :treatment="treatment"></Treatment>
+                        <Treatment v-for="treatment in medicalFile.treatments" :treatment="treatment"
+                                    @edit="editTreatment" @addLog="addLog"></Treatment>
                         </tbody>
                     </table>
                 </div>
@@ -149,19 +150,19 @@
                         <div class="form-group row">
                             <label for="reason" class="col-sm-4 col-form-label" aria-describedby="reason">Allergie</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="reason" placeholder="beschrijving" v-model="AddtreatmentInfo.description">
+                                <input type="text" class="form-control" id="reason" placeholder="beschrijving" v-model="TreatmentInfo.description">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="startDate" class="col-sm-4 col-form-label" aria-describedby="startDate">Startdatum</label>
                             <div class="col-sm-8">
-                                <input type="date" class="form-control" id="startDate" v-model="AddtreatmentInfo.startDate">
+                                <input type="date" class="form-control" id="startDate" v-model="TreatmentInfo.startDate">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="endDate" class="col-sm-4 col-form-label" aria-describedby="endDate">Einddatum</label>
                             <div class="col-sm-8">
-                                <input type="date" class="form-control" id="endDate" v-model="AddtreatmentInfo.endDate">
+                                <input type="date" class="form-control" id="endDate" v-model="TreatmentInfo.endDate">
                             </div>
                         </div>
                     </div>
@@ -172,8 +173,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </template>
 
@@ -193,6 +192,8 @@
     import Visit from './Dossier/Visit';
     import Medicine from './Dossier/Medicine';
 
+    import Uuid from 'uuid/v1';
+
     export default {
         components: {
             BootstrapTextInput,
@@ -209,9 +210,9 @@
                 patient: {},
                 medicalFile: {},
                 allergyValue: "",
-                AddtreatmentInfo: {
+                TreatmentInfo: {
                     description : "",
-                    startDate: "",
+                    startDate: new Date().toISOString().slice(0,10),
                     endDate : ""
                 }
             }
@@ -250,20 +251,67 @@
             },
 
             addTreatment(){
-                if(this.AddtreatmentInfo.startDate !== "" && this.AddtreatmentInfo.description !== "") {
-                    debugger
-                    this.medicalFile.treatments.unshift({
-                        description: this.AddtreatmentInfo.description,
-                        startDate: this.AddtreatmentInfo.startDate,
-                        endDate: this.AddtreatmentInfo.endDate
-                    })
+                // if it already has an id, it's an edit!
+                if(this.TreatmentInfo.id){
+                    var found = false;
+                    this.medicalFile.treatments.forEach(function(treatment, index){
+                        if(found) return
+                        if(treatment.id === this.TreatmentInfo.id){
+                            // and here we have to update the new values
+                            // we can't overwrite the item, otherwise the observer would be gone :')
+                            let item = this.medicalFile.treatments[index]; 
+                            let info = this.TreatmentInfo;
+                            item.description = info.description;
+                            item.startDate = info.startDate;
+                            item.endDate = info.endDate;
+                            
+                            // for some reason, the cleartreatmentinfo below doesn't work when we're done here
+                            // we might want to look into this...
+                            info.description = "";
+                            info.endDate = "";
 
+                            found = true;
+                        };
+                    }.bind(this));
                 }
+                else if(this.TreatmentInfo.startDate !== "" && this.TreatmentInfo.description !== "") {
+                    this.medicalFile.treatments.unshift({
+                        id: Uuid(),
+                        description: this.TreatmentInfo.description,
+                        startDate: this.TreatmentInfo.startDate,
+                        endDate: this.TreatmentInfo.endDate,
+                        logs: []
+                    });
+                }
+                this.TreatmentInfo;
+                //when we're done, clean up our mess
+                this.clearTreatmentInfo();
+            },
+
+            editTreatment(treatment){
+                // to prevent the databinding
+                this.TreatmentInfo = JSON.parse(JSON.stringify(treatment));
+                $("#AddTreatment").modal();
+            },
+
+            addLog(treatment){
+                debugger
+            },
+
+            clearTreatmentInfo(){
+                let ti = this.TreatmentInfo;
+                let now = ti.startDate;
+                this.clearObject(ti)
+                ti.startDate = now; 
+            },
+
+
+            // clear the values from the object, except the default ones 
+            clearObject(object){
+                Object.keys(object).forEach(function(key) { delete object[key]; });
             }
         }
     }
-
-
 </script>
 
 
