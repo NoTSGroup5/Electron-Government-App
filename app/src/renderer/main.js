@@ -24,11 +24,24 @@ const router = new Router({
 })
 
 //To display our timestamps in a proper way 
-Vue.filter('formatDate', function(value) {
+Vue.filter('formatDateWithTime', function(value) {
   if (value) {
-    return moment(value).format('YYYY/MM/DD hh:mm');
+    return moment(value).format('DD/MM/YYYY hh:mm');
   }
 });
+
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(value).format('DD/MM/YYYY');
+  }
+});
+
+
+Vue.filter('moment', function(value){
+  if(value){
+    return moment(value);
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

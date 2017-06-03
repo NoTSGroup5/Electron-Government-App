@@ -69,7 +69,7 @@
                         </thead>
                         <tbody>
                         <Treatment v-for="treatment in medicalFile.treatments" :treatment="treatment"
-                                    @edit="editTreatment" @showLogs="showLogs" @addLog="addLog"></Treatment>
+                                    @edit="editTreatment" @showLogs="showLogs" @addLog="addLogModal"></Treatment>
                         </tbody>
                     </table>
                 </div>
@@ -146,10 +146,11 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Behandelingen toevoegen</h4>
+                        {{TreatmentInfo}}
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="reason" class="col-sm-4 col-form-label" aria-describedby="reason">Allergie</label>
+                            <label for="reason" class="col-sm-4 col-form-label" aria-describedby="reason">Behandeling</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="reason" placeholder="beschrijving" v-model="TreatmentInfo.description">
                             </div>
@@ -181,7 +182,6 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">logs van {{ActiveTreatment.description}}</h4>
-                        <a v-on:click="addLog">Log toevoegen</a>
                     </div>
                     <div class="modal-body">
                         <table class="table table-striped">
@@ -195,6 +195,30 @@
                         <Log v-for="log in ActiveTreatment.logs" :log="log"></Log>
                         </tbody>
                     </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="addLog" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">log toevoegen aan {{ActiveTreatment.description}}</h4>
+                    </div>
+                    <div class="modal-body">
+                    <div class="form-group row">
+                            <label for="logdescription" class="col-sm-4 col-form-label" aria-describedby="logdescription">beschrijving</label>
+                            <div class="col-sm-8">
+                                <textarea v-model="logDescription" class="form-control" id="logdescription"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" v-on:click="addLog" data-dismiss="modal">Toevoegen
+                        </button>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -242,13 +266,14 @@
                 allergyValue: "",
                 TreatmentInfo: {
                     description : "",
-                    startDate: Date.now(),
+                    startDate: new Date().toISOString().slice(0,10),
                     endDate : ""
                 },
                 ActiveTreatment: {
                     description: "",
                     logs: []
-                }
+                },
+                logDescription: ""
             }
         },
 
@@ -272,9 +297,7 @@
             },
 
             save() {
-                debugger
                 HttpMedicalFileService.saveMedicalFile(this.medicalFile);
-
                 this.$router.push({name: 'patientsOverview'})
             },
 
@@ -313,12 +336,11 @@
                     this.medicalFile.treatments.unshift({
                         id: Uuid(),
                         description: this.TreatmentInfo.description,
-                        startDate: this.TreatmentInfo.startDate,
-                        endDate: this.TreatmentInfo.endDate,
+                        startDate: new Date(this.TreatmentInfo.startDate).getTime(),
+                        endDate: this.TreatmentInfo.endDate || "",
                         logs: []
                     });
                 }
-                this.TreatmentInfo;
                 //when we're done, clean up our mess
                 this.clearTreatmentInfo();
             },
@@ -329,16 +351,20 @@
                 $("#AddTreatment").modal();
             },
 
-            addLogModal(){
-                debugger
+            addLogModal(treatment){
+                if(treatment){
+                    this.ActiveTreatment = treatment;
+                }
+                $("#addLog").modal();
             },
 
             addLog(){
                 this.ActiveTreatment.logs.unshift({
-                    description:"description",
+                    description:this.logDescription,
                     id: Uuid(),
                     date: Date.now()
                 });
+                this.logDescription = "";
             },
 
             showLogs(treatment){

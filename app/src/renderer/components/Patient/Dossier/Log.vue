@@ -1,6 +1,6 @@
 <template>
   <tr>
-   <td>{{log.date}}</td>
+   <td>{{log.date | formatDateWithTime }}</td>
    <td>{{log.description}}</td>
   </tr>
 </template>
