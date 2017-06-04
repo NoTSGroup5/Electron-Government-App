@@ -8,7 +8,7 @@ class HttpMedicalFileService {
     }
 
     getMedicalFile(bsn) {
-        return this.httpService.get("MedicalFile?filter={\"owner\":\"" + bsn + "\"}");
+        return this.httpService.get(`MedicalFile?filter={"owner":"${bsn}"}`);
     }
 
     saveMedicalFile(medicalFile) {

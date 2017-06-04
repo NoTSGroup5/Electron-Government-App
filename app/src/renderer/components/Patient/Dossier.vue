@@ -64,11 +64,12 @@
                             <th>Datum vn -tot</th>
                             <th>Bewerken</th>
                             <th>Logs</th>
-                            <th><span class="glyphicon glyphicon-plus pull-right"></span></th>
+                            <th><span class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#AddTreatment"></span></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <Treatment v-for="treatment in medicalFile.treatments" :treatment="treatment"></Treatment>
+                        <Treatment v-for="treatment in medicalFile.treatments" :treatment="treatment"
+                                    @edit="editTreatment" @showLogs="showLogs" @addLog="addLogModal"></Treatment>
                         </tbody>
                     </table>
                 </div>
@@ -104,7 +105,8 @@
                                             :value="'Ondernomen acties'"></BootstrapTextInput>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Toevoegen
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Toevoegen
                         </button>
                     </div>
                 </div>
@@ -135,6 +137,94 @@
                 </div>
             </div>
         </div>
+
+
+                <!-- Treatment modal -->
+        <div id="AddTreatment" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Behandelingen toevoegen</h4>
+                        {{TreatmentInfo}}
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="reason" class="col-sm-4 col-form-label" aria-describedby="reason">Behandeling</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="reason" placeholder="beschrijving" v-model="TreatmentInfo.description">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="startDate" class="col-sm-4 col-form-label" aria-describedby="startDate">Startdatum</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" id="startDate" v-model="TreatmentInfo.startDate">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="endDate" class="col-sm-4 col-form-label" aria-describedby="endDate">Einddatum</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" id="endDate" v-model="TreatmentInfo.endDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" v-on:click="addTreatment" data-dismiss="modal">Toevoegen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="ShowLogs" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">logs van {{ActiveTreatment.description}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Datum en tijd</th>
+                            <th>beschrijving</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <Log v-for="log in ActiveTreatment.logs" :log="log"></Log>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="addLog" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">log toevoegen aan {{ActiveTreatment.description}}</h4>
+                    </div>
+                    <div class="modal-body">
+                    <div class="form-group row">
+                            <label for="logdescription" class="col-sm-4 col-form-label" aria-describedby="logdescription">beschrijving</label>
+                            <div class="col-sm-8">
+                                <textarea v-model="logDescription" class="form-control" id="logdescription"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" v-on:click="addLog" data-dismiss="modal">Toevoegen
+                        </button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </template>
 
@@ -153,6 +243,9 @@
     import Allergy from './Dossier/Allergy';
     import Visit from './Dossier/Visit';
     import Medicine from './Dossier/Medicine';
+    import Log from './Dossier/Log'
+
+    import Uuid from 'uuid/v1';
 
     export default {
         components: {
@@ -162,14 +255,25 @@
             Allergy,
             Visit,
             Medicine,
-            AddMedicine
+            AddMedicine,
+            Log
         },
 
         data () {
             return {
                 patient: {},
                 medicalFile: {},
-                allergyValue: ""
+                allergyValue: "",
+                TreatmentInfo: {
+                    description : "",
+                    startDate: new Date().toISOString().slice(0,10),
+                    endDate : ""
+                },
+                ActiveTreatment: {
+                    description: "",
+                    logs: []
+                },
+                logDescription: ""
             }
         },
 
@@ -178,10 +282,10 @@
 
             HttpPatientsService.getPatientbyBsn(this.patient.bsn).then((patient) => {
                 this.patient = patient;
+            });
 
-                HttpMedicalFileService.getMedicalFile(this.patient.bsn).then(medicalFile => {
+            HttpMedicalFileService.getMedicalFile(this.patient.bsn).then(medicalFile => {
                     this.medicalFile = medicalFile[0];
-                });
             });
         },
 
@@ -194,15 +298,95 @@
 
             save() {
                 HttpMedicalFileService.saveMedicalFile(this.medicalFile);
-
                 this.$router.push({name: 'patientsOverview'})
             },
 
             addAllergy() {
                 if(this.allergyValue !== "") {
-                    this.medicalFile.allergies.push(this.allergyValue);
+                    this.medicalFile.allergies.unshift(this.allergyValue);
+                    this.allergyValue = "";
                 }
+            },
+
+            addTreatment(){
+                // if it already has an id, it's an edit!
+                if(this.TreatmentInfo.id){
+                    var found = false;
+                    this.medicalFile.treatments.forEach(function(treatment, index){
+                        if(found) return
+                        if(treatment.id === this.TreatmentInfo.id){
+                            // and here we have to update the new values
+                            // we can't overwrite the item, otherwise the observer would be gone :')
+                            let item = this.medicalFile.treatments[index]; 
+                            let info = this.TreatmentInfo;
+                            item.description = info.description;
+                            item.startDate = info.startDate;
+                            item.endDate = info.endDate;
+                            
+                            // for some reason, the cleartreatmentinfo below doesn't work when we're done here
+                            // we might want to look into this...
+                            info.description = "";
+                            info.endDate = "";
+
+                            found = true;
+                        };
+                    }.bind(this));
+                }
+                else if(this.TreatmentInfo.startDate !== "" && this.TreatmentInfo.description !== "") {
+                    this.medicalFile.treatments.unshift({
+                        id: Uuid(),
+                        description: this.TreatmentInfo.description,
+                        startDate: new Date(this.TreatmentInfo.startDate).getTime(),
+                        endDate: this.TreatmentInfo.endDate || "",
+                        logs: []
+                    });
+                }
+                //when we're done, clean up our mess
+                this.clearTreatmentInfo();
+            },
+
+            editTreatment(treatment){
+                // to prevent the databinding
+                this.TreatmentInfo = JSON.parse(JSON.stringify(treatment));
+                $("#AddTreatment").modal();
+            },
+
+            addLogModal(treatment){
+                if(treatment){
+                    this.ActiveTreatment = treatment;
+                }
+                $("#addLog").modal();
+            },
+
+            addLog(){
+                this.ActiveTreatment.logs.unshift({
+                    description:this.logDescription,
+                    id: Uuid(),
+                    date: Date.now()
+                });
+                this.logDescription = "";
+            },
+
+            showLogs(treatment){
+                this.ActiveTreatment.description = treatment.description;
+                this.ActiveTreatment.logs = treatment.logs;
+                $("#ShowLogs").modal();
+            },
+
+            clearTreatmentInfo(){
+                let ti = this.TreatmentInfo;
+                let now = ti.startDate;
+                this.clearObject(ti)
+                ti.startDate = now; 
+            },
+
+
+            // clear the values from the object, except the default ones 
+            clearObject(object){
+                Object.keys(object).forEach(function(key) { delete object[key]; });
             }
         }
     }
 </script>
+
+

@@ -9,12 +9,9 @@
     import HttpMedicalFileService from '../../../../services/httpMedicalFileService';
 
     export default {
-        props: {
-            allergy: {
-                organisationType: String,
-                required: true
-            }
-        },
+        props: [
+            "allergy"
+        ],
 
         methods: {
             removeAllergy() {
