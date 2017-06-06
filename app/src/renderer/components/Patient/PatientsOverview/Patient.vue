@@ -27,22 +27,6 @@
               required: true
           }
       }
-
-//    props: [
-//      'bsn',
-//      'firstName',
-//      'namePrefix',
-//      'lastName',
-//      'email',
-//      'telephoneNumber',
-//      'birthday',
-//      'gender',
-//      'city',
-//      'zipCode',
-//      'street',
-//      'houseNumber',
-//      'houseNumberExtra'
-//    ]
   }
 </script>
 
