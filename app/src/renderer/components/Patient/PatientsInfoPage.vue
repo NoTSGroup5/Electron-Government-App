@@ -156,7 +156,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- TODO: Implement this -->
+                        <Organisatie v-for="organisatie in organisaties" :organisatie="organisatie"></Organisatie>
                     </tbody>
                 </table>
             </div>
@@ -202,6 +202,48 @@
                 </div>
             </div>
         </div>
+
+
+        <div id="organisatietoevoegen" class="modal fade" role="dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Organisatie toevoegen</h4>
+                </div>
+                    
+                <div class="modal-body">
+                    <div>
+                        <div class="input-group">
+                            <input  v-model="organisatieInput" type="text" class="form-control" placeholder="Zoek organisatie op naam...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" v-on:click="findOrganization(organisatieInput)">Zoek</button>
+                                </span>
+                        </div>
+                 
+                        <table class="table" id="table">
+                            <thead>
+                            <tr>
+                                <th>Naam</th>
+                                <th>Locatie</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                    <td>{{ organisatie.name }}</td>
+                                    <td>{{ organisatie.city }}</td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="addOrganization()">Toevoegen</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -211,19 +253,23 @@
     import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
     import AddMentorModal from '../Mentor/MentorsOverview/AddMentorModal'
     import Mentor from './Dossier/Mentor'
+    import Organisatie from './Dossier/Organisatie'
 
     import BootstrapModal from '../Shared/Bootstrap/BootstrapModal'
 
 
     import HttpPatientsService from '../../../services/httpPatientsService'
-    import HttpMedicalFileService from '../../../services/httpMedicalFileService';
+    import HttpMedicalFileService from '../../../services/httpMedicalFileService'
+    import HttpOrganisationService from '../../../services/httpOrganisationService'
+
 
     export default {
         components: {
             BootstrapTextInput,
             AddMentorModal,
             BootstrapSelectInput,
-            Mentor
+            Mentor,
+            Organisatie
 
         },
 
@@ -236,7 +282,15 @@
                     name: "",
                 },
                 mentors: [],
+
+
+                organisatie: {
+                    name: "",
+                    city: "",
+                },
+                organisaties: [],
                 userInput: "",
+                organisatieInput: "",
                 model: {
                     bsn: "",
                     gender: "",
@@ -283,20 +337,24 @@
             });
 
              HttpMedicalFileService.getMedicalFile(bsn).then(medicalFile => {
-                this.medicalFile = medicalFile;       
+                this.medicalFile = medicalFile; 
+                  
                 
                 medicalFile.mentors.forEach((mentor) => {
                       let bsnIndex = mentor.indexOf("#");
                       let id = mentor.substr(bsnIndex + 1, mentor.length - bsnIndex + 1);
-                      console.log(id);
   
                       HttpPatientsService.getPatientbyBsn(id).then(patient => {
                       this.mentors.push(patient)});
                 });
 
-
-               
-
+                medicalFile.permissions.forEach((permission) => {
+                      let bsnIndex = permission.indexOf("#");
+                      let id = permission.substr(bsnIndex + 1, permission.length - bsnIndex + 1);
+  
+                      HttpOrganisationService.getById(id).then(organisatie => {
+                      this.organisaties.push(organisatie)});
+                });
              });           
         
         },
@@ -312,6 +370,33 @@
                     this.mentor.bsn = "";
                     this.mentor.name = "";
                 }
+            },
+
+            addOrganization()
+            {
+                if(this.organisatie.bsn !== "") {
+                    HttpOrganisationService.getById(this.organisatie.id).then(organisatie => {
+                    this.medicalFile.permissions.push(organisatie.id);
+                    this.organisaties.push(organisatie);
+                    });
+
+                    this.organisatie.name = "";
+                    this.organisatie.city = "";
+                }
+
+            },
+
+            findOrganization(naam)
+            {
+              HttpOrganisationService.findByName(naam).then(response => {
+                  console.log(response);
+              this.organisatie.name = response[0].name;
+              this.organisatie.city = repsonse[0].city;
+            }).catch(e => {
+                console.log(e);
+            })
+
+
             },
 
             findMentor(bsn){

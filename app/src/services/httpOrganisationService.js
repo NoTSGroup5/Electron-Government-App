@@ -14,6 +14,10 @@ class HttpOrganisationService {
         return this.httpService.getById(this.url, id);
     }
 
+    findByName(name){
+        return this.httpService.get(this.url + `?filter={"name" : "${name}"}`);
+    }
+
     add(model){
         return this.httpService.post(this.url, model);
     }
