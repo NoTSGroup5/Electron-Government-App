@@ -139,7 +139,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                           <Mentor v-for="mentor in medicalFile.mentors" :mentor="mentor"></Mentor>
+                           <Mentor v-for="mentor in mentors" :mentor="mentor"></Mentor>
                         </tbody>
                     </table>
                 </div>
@@ -235,6 +235,7 @@
                     bsn: "",
                     name: "",
                 },
+                mentors: [],
                 userInput: "",
                 model: {
                     bsn: "",
@@ -282,45 +283,54 @@
             });
 
              HttpMedicalFileService.getMedicalFile(bsn).then(medicalFile => {
-                this.medicalFile = medicalFile;
-                console.log(medicalFile);
-            });
+                this.medicalFile = medicalFile;       
+                
+                medicalFile.mentors.forEach((mentor) => {
+                      let bsnIndex = mentor.indexOf("#");
+                      let id = mentor.substr(bsnIndex + 1, mentor.length - bsnIndex + 1);
+                      console.log(id);
+  
+                      HttpPatientsService.getPatientbyBsn(id).then(patient => {
+                      this.mentors.push(patient)});
+                });
+
+
+               
+
+             });           
+        
         },
 
         methods: {
             addMentor(){
                  if(this.mentor.bsn !== "") {
-                    this.medicalFile.mentors.push(this.mentor.bsn);
-                     this.medicalFile.mentors.push(this.mentor.name);
+                    HttpPatientsService.getPatientbyBsn(this.mentor.bsn).then(patient => {
+                    this.medicalFile.mentors.push(patient.bsn);
+                    this.mentors.push(patient);
+                    });
 
                     this.mentor.bsn = "";
                     this.mentor.name = "";
                 }
             },
 
-          
-
-
             findMentor(bsn){
-                httpPatientsService.getPatientbyBsn(bsn).then(response => {
-                    if(bsn !== response.bsn)
-                    {
+                HttpPatientsService.getPatientbyBsn(bsn).then(response => {
+                    
                         this.mentor.bsn = response.bsn;
                         this.mentor.name = response.firstName + " " +  response.lastName;
-                    }
-                    else 
-                    {
-                        alert('Mentor not found');
-                    }
-                        
+                   
                 })
                     .catch(e => {
                     console.log(e);
                 })
             },
+
             validateForm(){
                 this.$validator.validateAll().then(() => {
                     this.model.birthday = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
+
+                    delete this.medicalFile.bsn;
                     HttpMedicalFileService.saveMedicalFile(this.model.bsn, this.medicalFile);
                     HttpPatientsService.editPatient(this.model.bsn, this.model).then(() => {
                         this.$router.push({ name: "patientsOverview" })

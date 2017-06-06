@@ -1,7 +1,7 @@
 <template>
     <tr>
-        <td>{{ bsn }}</td>
-        <td>{{ name }}</td>
+        <td>{{ mentor.bsn }}</td>
+        <td>{{ mentor.firstName }}</td>
       
     </tr>
 </template>
@@ -10,8 +10,7 @@
    
     export default {
         props: [
-            "bsn",
-            "name",
+            "mentor"
         ]
     }
 </script>
