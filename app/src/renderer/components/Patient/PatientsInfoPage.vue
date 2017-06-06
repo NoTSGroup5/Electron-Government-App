@@ -138,7 +138,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- TODO: Implement this -->
+                           <Mentor v-for="mentor in medicalFile.mentors" :mentor="mentor"></Mentor>
                         </tbody>
                     </table>
                 </div>
@@ -172,21 +172,27 @@
     import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
     import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
     import AddMentorModal from '../Mentor/MentorsOverview/AddMentorModal'
+    import Mentor from './Dossier/Mentor'
 
     import BootstrapModal from '../Shared/Bootstrap/BootstrapModal'
 
+
     import HttpPatientsService from '../../../services/httpPatientsService'
+    import HttpMedicalFileService from '../../../services/httpMedicalFileService';
 
     export default {
         components: {
             BootstrapTextInput,
             AddMentorModal,
-            BootstrapSelectInput
+            BootstrapSelectInput,
+            Mentor
+
         },
 
         data ()  {
             return {
                 patient: {},
+                medicalFile: {},
                 model: {
                     bsn: "",
                     gender: "",
@@ -230,6 +236,10 @@
                 };
             }).catch(e => {
                 console.log(e);
+            });
+
+             HttpMedicalFileService.getMedicalFile(this.patient.bsn).then(medicalFile => {
+                this.medicalFile = medicalFile;
             });
         },
 
