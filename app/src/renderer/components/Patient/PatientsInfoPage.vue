@@ -124,6 +124,7 @@
                 </form>
             </div>
 
+            
             <div class="col-xs-6 form-group">
                 <label>Mentoren</label>
                 <div>
@@ -133,12 +134,12 @@
                                 <th>BSN</th>
                                 <th>Naam</th>
                                 <th>
-                                    <span class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#addMentorModal"></span>
+                                    <span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#addMentorModal"></span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- TODO: Implement this -->
+                           <Mentor v-for="mentor in mentors" :mentor="mentor"></Mentor>
                         </tbody>
                     </table>
                 </div>
@@ -150,7 +151,7 @@
                             <th>Naam organisatie</th>
                             <th>Locatie</th>
                             <th>
-                                <span class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#organisatietoevoegen"> </span>
+                                <span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#organisatietoevoegen"> </span>
                             </th>
                         </tr>
                     </thead>
@@ -162,7 +163,44 @@
         </div>
 
         <div id="addMentorModal" class="modal fade" role="dialog">
-            <AddMentorModal></AddMentorModal>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Mentoren toevoegen</h4>
+                </div>
+                    
+                <div class="modal-body">
+                    <div>
+                        <div class="input-group">
+                            <input  v-model="userInput" type="text" class="form-control" placeholder="Zoek mentor...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" v-on:click="findMentor(userInput)">Zoek</button>
+                                </span>
+                        </div>
+                 
+                        <table class="table" id="table">
+                            <thead>
+                            <tr>
+                                <th>BSN</th>
+                                <th>Naam</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                    <td>{{ mentor.bsn }}</td>
+                                    <td>{{ mentor.name }}</td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="addMentor()">Toevoegen</button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -172,21 +210,33 @@
     import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
     import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
     import AddMentorModal from '../Mentor/MentorsOverview/AddMentorModal'
+    import Mentor from './Dossier/Mentor'
 
     import BootstrapModal from '../Shared/Bootstrap/BootstrapModal'
 
+
     import HttpPatientsService from '../../../services/httpPatientsService'
+    import HttpMedicalFileService from '../../../services/httpMedicalFileService';
 
     export default {
         components: {
             BootstrapTextInput,
             AddMentorModal,
-            BootstrapSelectInput
+            BootstrapSelectInput,
+            Mentor
+
         },
 
         data ()  {
             return {
                 patient: {},
+                medicalFile: {},
+                mentor: {
+                    bsn: "",
+                    name: "",
+                },
+                mentors: [],
+                userInput: "",
                 model: {
                     bsn: "",
                     gender: "",
@@ -231,13 +281,57 @@
             }).catch(e => {
                 console.log(e);
             });
+
+             HttpMedicalFileService.getMedicalFile(bsn).then(medicalFile => {
+                this.medicalFile = medicalFile;       
+                
+                medicalFile.mentors.forEach((mentor) => {
+                      let bsnIndex = mentor.indexOf("#");
+                      let id = mentor.substr(bsnIndex + 1, mentor.length - bsnIndex + 1);
+                      console.log(id);
+  
+                      HttpPatientsService.getPatientbyBsn(id).then(patient => {
+                      this.mentors.push(patient)});
+                });
+
+
+               
+
+             });           
+        
         },
 
         methods: {
+            addMentor(){
+                 if(this.mentor.bsn !== "") {
+                    HttpPatientsService.getPatientbyBsn(this.mentor.bsn).then(patient => {
+                    this.medicalFile.mentors.push(patient.bsn);
+                    this.mentors.push(patient);
+                    });
+
+                    this.mentor.bsn = "";
+                    this.mentor.name = "";
+                }
+            },
+
+            findMentor(bsn){
+                HttpPatientsService.getPatientbyBsn(bsn).then(response => {
+                    
+                        this.mentor.bsn = response.bsn;
+                        this.mentor.name = response.firstName + " " +  response.lastName;
+                   
+                })
+                    .catch(e => {
+                    console.log(e);
+                })
+            },
+
             validateForm(){
                 this.$validator.validateAll().then(() => {
                     this.model.birthday = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
 
+                    delete this.medicalFile.bsn;
+                    HttpMedicalFileService.saveMedicalFile(this.model.bsn, this.medicalFile);
                     HttpPatientsService.editPatient(this.model.bsn, this.model).then(() => {
                         this.$router.push({ name: "patientsOverview" })
                     }).catch(() => {
