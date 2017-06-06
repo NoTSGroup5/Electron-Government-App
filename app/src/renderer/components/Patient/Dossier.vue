@@ -167,6 +167,7 @@
 
         data () {
             return {
+                bsn: '',
                 patient: {},
                 medicalFile: {},
                 allergyValue: ""
@@ -175,12 +176,13 @@
 
         created: function () {
             this.patient.bsn = this.$route.params.bsn;
+            this.bsn = this.$route.params.bsn;
 
             HttpPatientsService.getPatientbyBsn(this.patient.bsn).then((patient) => {
                 this.patient = patient;
 
                 HttpMedicalFileService.getMedicalFile(this.patient.bsn).then(medicalFile => {
-                    this.medicalFile = medicalFile[0];
+                    this.medicalFile = medicalFile;
                 });
             });
         },
@@ -193,7 +195,9 @@
             },
 
             save() {
-                HttpMedicalFileService.saveMedicalFile(this.medicalFile);
+                delete this.medicalFile.bsn;
+
+                HttpMedicalFileService.saveMedicalFile(this.bsn, this.medicalFile);
 
                 this.$router.push({name: 'patientsOverview'})
             },
@@ -201,6 +205,8 @@
             addAllergy() {
                 if(this.allergyValue !== "") {
                     this.medicalFile.allergies.push(this.allergyValue);
+
+//                    this.allergyValue = "";
                 }
             }
         }
