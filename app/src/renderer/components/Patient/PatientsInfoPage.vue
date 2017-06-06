@@ -156,7 +156,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <Organisatie v-for="organisatie in organisaties" :organisatie="organisatie"></Organisatie>
+                        <Organisatie v-for="organisatie in addedPermissions" :organisatie="organisatie"></Organisatie>
                     </tbody>
                 </table>
             </div>
@@ -226,21 +226,20 @@
                             <tr>
                                 <th>Naam</th>
                                 <th>Locatie</th>
+                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                               <tr>
-                                    <td>{{ organisatie.name }}</td>
-                                    <td>{{ organisatie.city }}</td>
-                                    
-                                </tr>
+                              
+                                    <tr v-for="organisatie in organisaties" >
+                                       <td> {{organisatie.name}}</td>
+                                       <td> {{organisatie.city}} </td>
+                                       <button class="btn btn-default" type="button" v-on:click="addOrganisation(organisatie)">Toevoegen</button>
+                                    </tr>
+                               
                             </tbody>
                         </table>
                     </div>
-                </div>
-               
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="addOrganization()">Toevoegen</button>
                 </div>
             </div>
         </div>
@@ -281,13 +280,9 @@
                     bsn: "",
                     name: "",
                 },
+                addedPermissions: [],
                 mentors: [],
-
-
-                organisatie: {
-                    name: "",
-                    city: "",
-                },
+                selectedOrganisation: "",
                 organisaties: [],
                 userInput: "",
                 organisatieInput: "",
@@ -372,39 +367,38 @@
                 }
             },
 
-            addOrganization()
-            {
-                if(this.organisatie.bsn !== "") {
-                    HttpOrganisationService.getById(this.organisatie.id).then(organisatie => {
-                    this.medicalFile.permissions.push(organisatie.id);
-                    this.organisaties.push(organisatie);
-                    });
+            addOrganisation(organisatie)
+            { 
+                this.addedPermissions.push(organisatie);
+                this.medicalFile.permissions.push(organisatie.bsn);
+                this.organisaties = null;
 
-                    this.organisatie.name = "";
-                    this.organisatie.city = "";
-                }
 
             },
+
+                
 
             findOrganization(naam)
             {
               HttpOrganisationService.findByName(naam).then(response => {
-                  console.log(response);
-              this.organisatie.name = response[0].name;
-              this.organisatie.city = repsonse[0].city;
+                  
+              this.organisaties = response;
             }).catch(e => {
                 console.log(e);
-            })
+            });
 
 
             },
 
             findMentor(bsn){
                 HttpPatientsService.getPatientbyBsn(bsn).then(response => {
-                    
+                    if(response.bsn !== mentor.bsn){
                         this.mentor.bsn = response.bsn;
                         this.mentor.name = response.firstName + " " +  response.lastName;
-                   
+                    }
+                    else{
+                        alert('You cant add yourself')
+                    }
                 })
                     .catch(e => {
                     console.log(e);
