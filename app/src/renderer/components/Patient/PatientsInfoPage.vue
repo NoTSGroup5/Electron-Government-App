@@ -124,6 +124,7 @@
                 </form>
             </div>
 
+            
             <div class="col-xs-6 form-group">
                 <label>Mentoren</label>
                 <div>
@@ -133,12 +134,12 @@
                                 <th>BSN</th>
                                 <th>Naam</th>
                                 <th>
-                                    <span class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#addMentorModal"></span>
+                                    <span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#addMentorModal"></span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                           <Mentor v-for="mentor in medicalFile.mentors" :mentor="mentor"></Mentor>
+                            <!-- TODO: Implement this -->
                         </tbody>
                     </table>
                 </div>
@@ -150,7 +151,7 @@
                             <th>Naam organisatie</th>
                             <th>Locatie</th>
                             <th>
-                                <span class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#organisatietoevoegen"> </span>
+                                <span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal" data-target="#organisatietoevoegen"> </span>
                             </th>
                         </tr>
                     </thead>
@@ -162,7 +163,44 @@
         </div>
 
         <div id="addMentorModal" class="modal fade" role="dialog">
-            <AddMentorModal></AddMentorModal>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Mentoren toevoegen</h4>
+                </div>
+                    
+                <div class="modal-body">
+                    <div>
+                        <div class="input-group">
+                            <input  v-model="userInput" type="text" class="form-control" placeholder="Zoek mentor...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" v-on:click="findMentor(userInput)">Zoek</button>
+                                </span>
+                        </div>
+                 
+                        <table class="table" id="table">
+                            <thead>
+                            <tr>
+                                <th>BSN</th>
+                                <th>Naam</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                    <td>{{ mentor.bsn }}</td>
+                                    <td>{{ mentor.name }}</td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Toevoegen</button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
