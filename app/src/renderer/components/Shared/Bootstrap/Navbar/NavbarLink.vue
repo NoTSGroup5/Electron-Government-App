@@ -10,11 +10,11 @@
     export default {
         props: {
             to: {
-                type: String,
+                organisationType: String,
                 required: true
             },
             active: {
-                type: Boolean,
+                organisationType: Boolean,
                 required: false,
                 default: false
             }

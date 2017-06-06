@@ -1,6 +1,6 @@
 import HttpService from './httpService'
 
-export default class HttpPatientsService {
+class HttpPatientsService {
     constructor() {
         this.httpService = new HttpService()
     }
@@ -13,41 +13,15 @@ export default class HttpPatientsService {
         return this.httpService.getById('Patient', bsn);
     }
 
-    addPatient(bsn, firstName, namePrefix, lastName, gender, birthday, streetName, streetNumber, streetNumberExtra, zipCode, residence, telephoneNumber, email) {
-        return this.httpService.post('PatientCreate', {
-            patient : {
-                bsn : bsn,
-                firstName : firstName,
-                namePrefix : namePrefix,
-                lastName : lastName,
-                email : email,
-                telephoneNumber : telephoneNumber,
-                birthday : birthday,
-                gender : gender,
-                city : residence,
-                street : streetName,
-                houseNumber : streetNumber,
-                houseNumberExtra : streetNumberExtra,
-                zipCode : zipCode
-            }
-        });
+    addPatient(model) {
+        return this.httpService.post('Patient', model);
     }
 
-    editPatient(bsn, firstName, namePrefix, lastName, gender, birthday, streetName, streetNumber, streetNumberExtra, zipCode, residence, telephoneNumber, email) {
-        return this.httpService.put('Patient/' + bsn, {
+    editPatient(bsn, model) {
+        delete model.bsn;
 
-            firstName : firstName,
-            namePrefix : namePrefix,
-            lastName : lastName,
-            email : email,
-            telephoneNumber : telephoneNumber,
-            birthday : birthday,
-            gender : gender,
-            city : residence,
-            street : streetName,
-            houseNumber : streetNumber,
-            houseNumberExtra : streetNumberExtra,
-            zipCode : zipCode
-        });
+        return this.httpService.put('Patient/' + bsn, model);
     }
 }
+
+export default new HttpPatientsService();

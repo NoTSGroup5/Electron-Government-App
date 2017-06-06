@@ -28,8 +28,6 @@
     import Uuid from 'uuid/v1'
     import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
 
-    let httpOrganisationTypeService = new HttpOrganisationTypeService();
-
     export default {
         data: () => {
             return {
@@ -37,7 +35,7 @@
             }
         },
         created () {
-            httpOrganisationTypeService.fetch().then((items) => {
+            HttpOrganisationTypeService.fetch().then((items) => {
                 this.organisationTypes = items
             }).catch(() => {
                 alert('Het laden van de organisatie types zijn mislukt.')
