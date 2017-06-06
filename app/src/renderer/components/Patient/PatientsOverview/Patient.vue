@@ -9,21 +9,24 @@
 
 <script>
   export default {
-    props: [
-      'bsn',
-      'firstName',
-      'namePrefix',
-      'lastName',
-      'email',
-      'telephoneNumber',
-      'birthday',
-      'gender',
-      'city',
-      'zipCode',
-      'street',
-      'houseNumber',
-      'houseNumberExtra'
-    ]
+      props: {
+          bsn: {
+              type: String,
+              required: true
+          },
+          firstName: {
+              type: String,
+              required: true
+          },
+          lastName: {
+              type: String,
+              required: true,
+          },
+          namePrefix: {
+              type: String,
+              required: true
+          }
+      }
   }
 </script>
 

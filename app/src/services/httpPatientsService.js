@@ -14,7 +14,7 @@ class HttpPatientsService {
     }
 
     addPatient(model) {
-        return this.httpService.post('Patient', model);
+        return this.httpService.post('PatientCreate', { patient: model });
     }
 
     editPatient(bsn, model) {

@@ -261,6 +261,7 @@
 
         data () {
             return {
+                bsn: '',
                 patient: {},
                 medicalFile: {},
                 allergyValue: "",
@@ -279,13 +280,14 @@
 
         created: function () {
             this.patient.bsn = this.$route.params.bsn;
+            this.bsn = this.$route.params.bsn;
 
             HttpPatientsService.getPatientbyBsn(this.patient.bsn).then((patient) => {
                 this.patient = patient;
             });
 
             HttpMedicalFileService.getMedicalFile(this.patient.bsn).then(medicalFile => {
-                    this.medicalFile = medicalFile[0];
+                this.medicalFile = medicalFile;
             });
         },
 
@@ -297,14 +299,18 @@
             },
 
             save() {
-                HttpMedicalFileService.saveMedicalFile(this.medicalFile);
+                delete this.medicalFile.bsn;
+
+                HttpMedicalFileService.saveMedicalFile(this.bsn, this.medicalFile);
                 this.$router.push({name: 'patientsOverview'})
             },
 
             addAllergy() {
                 if(this.allergyValue !== "") {
-                    this.medicalFile.allergies.unshift(this.allergyValue);
+                    this.medicalFile.allergies.push(this.allergyValue);
+
                     this.allergyValue = "";
+
                 }
             },
 
@@ -313,7 +319,7 @@
                 if(this.TreatmentInfo.id){
                     var found = false;
                     this.medicalFile.treatments.forEach(function(treatment, index){
-                        if(found) return
+                        if(found) return;
                         if(treatment.id === this.TreatmentInfo.id){
                             // and here we have to update the new values
                             // we can't overwrite the item, otherwise the observer would be gone :')
@@ -376,7 +382,7 @@
             clearTreatmentInfo(){
                 let ti = this.TreatmentInfo;
                 let now = ti.startDate;
-                this.clearObject(ti)
+                this.clearObject(ti);
                 ti.startDate = now; 
             },
 

@@ -15,7 +15,8 @@
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack.renderer.config.js",
-    "rest": "composer-rest-server -n epd -p defaultProfile -i admin -s adminpw -N never -P 3000",
+    "rest": "composer-rest-server -n epd -p defaultProfile -i admin -s adminpw -N never -P 3000 -S true",
+    "restAuthentication": "composer-rest-server -n epd -p defaultProfile -i admin -s adminpw -N never -P 3000 -S true",
     "postinstall": "cd app && npm install"
   },
   "author": "Niek te Grootenhuis <ntegro@hotmail.com>",
@@ -67,6 +68,8 @@
     "concurrently": "^3.1.0",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
+    "passport-facebook": "^2.1.1",
+    "passport-github": "^1.1.0",
     "moment": "^2.18.1",
     "uuid": "^3.0.1",
     "vee-validate": "^2.0.0-rc.3",
