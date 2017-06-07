@@ -2,7 +2,7 @@
   <tr>
    <td>{{ treatment.description }}</td>
    <td>{{ treatment.startDate | formatDate }}  {{treatment.endDate? " - " : "" }}  {{treatment.endDate | formatDate }}</td>
-   <td><span class="glyphicon glyphicon-pencil pull-right" v-on:click="EditTreatment"></span></td>
+   <td><span class="glyphicon glyphicon-pencil " v-on:click="EditTreatment"></span></td>
    <td><a v-on:click="showLogs">view logs</a></td>
    <td><a v-on:click="addLog">add log</a></td>
   </tr>

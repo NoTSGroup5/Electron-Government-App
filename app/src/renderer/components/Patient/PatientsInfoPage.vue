@@ -209,7 +209,6 @@
 
     import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
     import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
-    import AddMentorModal from '../Mentor/MentorsOverview/AddMentorModal'
     import Mentor from './Dossier/Mentor'
 
     import BootstrapModal from '../Shared/Bootstrap/BootstrapModal'
@@ -221,7 +220,6 @@
     export default {
         components: {
             BootstrapTextInput,
-            AddMentorModal,
             BootstrapSelectInput,
             Mentor
 
@@ -315,7 +313,10 @@
             },
 
             findMentor(bsn){
-                HttpPatientsService.getPatientbyBsn(bsn).then(response => {
+
+                if(bsn !== "")
+                {
+                        HttpPatientsService.getPatientbyBsn(bsn).then(response => {
                     
                         this.mentor.bsn = response.bsn;
                         this.mentor.name = response.firstName + " " +  response.lastName;
@@ -323,7 +324,13 @@
                 })
                     .catch(e => {
                     console.log(e);
+                     alert("Mentor niet gevonden ")
                 })
+                }
+                else {
+                    alert("Voer bsn nummer in ")
+                }
+                
             },
 
             validateForm(){

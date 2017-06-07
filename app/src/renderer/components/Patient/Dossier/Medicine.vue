@@ -1,28 +1,26 @@
 <template>
   <tr>
-   <p>WE STILL NEED TO CHANGE THIS!</p>
+        <td>{{ medicine.name }}</td>
+        <td>{{ medicine.startDate | formatDate }}  {{medicine.endDate? " - " : "" }}  {{medicine.endDate | formatDate }}</td>
+        <td><a v-on:click="showDescription">Zie beschrijving</a></td>
+        <td><span class="glyphicon glyphicon-remove pull-right" v-on:click="removeMedicine"></span></td>
   </tr>
 </template>
 
 <script>
   export default {
     props: [
-      'bsn',
-      'firstName',
-      'namePrefix',
-      'lastName',
-      'email',
-      'telephoneNumber',
-      'birthday',
-      'gender',
-      'city',
-      'zipCode',
-      'street',
-      'houseNumber',
-      'houseNumberExtra'
-    ]
+      'medicine'
+    ],
+    methods: {
+        showDescription(){
+              this.$emit('showDescription', this.medicine)
+        },
+        removeMedicine(){
+            this.$emit('removeMedicine', this.medicine)
+        }  
+    }
+    
   }
 </script>
 
-<style scoped>
-</style>

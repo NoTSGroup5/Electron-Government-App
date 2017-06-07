@@ -44,12 +44,15 @@
                         <thead>
                         <tr>
                             <th>Medicijn</th>
-                            <th>Inname op moment</th>
+                            <th>Datum vn -tot</th>
+                            <th>Beschrijving</th>
                             <th><span class="glyphicon glyphicon-plus pull-right"  type="button" data-toggle="modal" data-target="#addMedicine"></span></th>
+                            
                         </tr>
                         </thead>
                         <tbody>
-                        <Medicine v-for="medicine in medicalFile.medication" :medicine="medicine"></Medicine>
+                        <Medicine v-for="medicine in medicalFile.medicine" :medicine="medicine" 
+                                    @showDescription="showDescription" @removeMedicine="removeMedicine"></Medicine>
                         </tbody>
                     </table>
                 </div>
@@ -84,7 +87,53 @@
 
         <!-- Add medicine modal -->
         <div id="addMedicine" class="modal fade" role="dialog">
-            <AddMedicine :bsn="patient.bsn" ></AddMedicine>
+        <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Medicijn toevoegen</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-4 col-form-label" aria-describedby="Naam medicijn" >Naam medicijn</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="name" placeholder="name" v-model="medication.name">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="startDate" class="col-sm-4 col-form-label" aria-describedby="startDate">Startdatum</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" id="startDate" v-model="medication.startDate">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="endDate" class="col-sm-4 col-form-label" aria-describedby="endDate">Einddatum</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" id="endDate" v-model="medication.endDate">
+                            </div>
+                        </div>
+
+                    
+                        <div class="form-group row">
+                            <label for="reason" class="col-sm-4 col-form-label" aria-describedby="Reden">Reden</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="reason" placeholder="reason" v-model="medication.reason">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="dosage" class="col-sm-4 col-form-label" aria-describedby="dosage">dosage</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="dosage" placeholder="dosage" v-model="medication.dosage">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="addMedicine">>Toevoegen
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Doctor visit modal -->
@@ -96,13 +145,26 @@
                         <h4 class="modal-title">Doktersbezoek toevoegen</h4>
                     </div>
                     <div class="modal-body">
-                        <BootstrapTextInput :type="'text'" :name="'Reden'" :value="'reden'"></BootstrapTextInput>
-                        <BootstrapTextInput :type="'text'" :name="'Behandelend arts'"
-                                            :value="'Behandelend arts'"></BootstrapTextInput>
-                        <BootstrapTextInput :type="'text'" :name="'Omschrijving bezoek'"
-                                            :value="'Omschrijving bezoek'"></BootstrapTextInput>
-                        <BootstrapTextInput :type="'text'" :name="'Ondernomen acties'"
-                                            :value="'Ondernomen acties'"></BootstrapTextInput>
+                        
+                        <div class="form-group row">
+                            <label for="reason" class="col-sm-4 col-form-label" aria-describedby="Reden">Organisatie</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="organisation" placeholder="organisatie" v-model="doktersBezoek.organisation">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="dosage" class="col-sm-4 col-form-label" aria-describedby="dosage">Datum</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" id="date" placeholder="datum" v-model="doktersBezoek.date">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="dosage" class="col-sm-4 col-form-label" aria-describedby="dosage">Beschrijving</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="description" placeholder="beschrijving" v-model="doktersBezoek.description">
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -146,7 +208,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Behandelingen toevoegen</h4>
-                        {{TreatmentInfo}}
+                       
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
@@ -171,6 +233,33 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" v-on:click="addTreatment" data-dismiss="modal">Toevoegen
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div id="showDescription" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Medicatie beschrijving</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Reden</th>
+                            <th>Dosering</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <MedDescription :medicine="ActiveMedicine"></MedDescription>
+                        </tbody>
+                    </table>
                     </div>
                 </div>
             </div>
@@ -234,7 +323,7 @@
 
     import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput';
     import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput';
-    import AddMedicine from '../Medication/AddMedication'
+
 
     import HttpPatientsService from '../../../services/httpPatientsService';
     import HttpMedicalFileService from '../../../services/httpMedicalFileService';
@@ -244,6 +333,7 @@
     import Visit from './Dossier/Visit';
     import Medicine from './Dossier/Medicine';
     import Log from './Dossier/Log'
+    import MedDescription from './Dossier/MedicationDescription';
 
     import Uuid from 'uuid/v1';
 
@@ -255,7 +345,7 @@
             Allergy,
             Visit,
             Medicine,
-            AddMedicine,
+            MedDescription,
             Log
         },
 
@@ -270,11 +360,29 @@
                     startDate: new Date().toISOString().slice(0,10),
                     endDate : ""
                 },
+                doktersBezoek: {
+                    organisation: "",
+                    date:  new Date().toISOString().slice(0,10),
+                    description: ""
+                },
                 ActiveTreatment: {
                     description: "",
                     logs: []
                 },
-                logDescription: ""
+                ActiveMedicine: {
+                    name: "",
+                    reason: "",
+                    dosage: ""
+                },
+                
+                logDescription: "",
+                medication: {
+                    name: "",
+                    startDate: new Date().toISOString().slice(0,10),
+                    endDate: new Date().toISOString().slice(0,10),
+                    reason: "",
+                    dosage: ""
+                }
             }
         },
 
@@ -292,6 +400,13 @@
         },
 
         methods: {
+
+            removeMedicine(medicine){
+                this.medicalFile.medicine = this.medicalFile.medicine.filter(function (item) {
+                    return item !== medicine;
+                    console.log(this.medicalFile.medicine);
+                });
+            },
             removeAllergy(allergy) {
                 this.medicalFile.allergies = this.medicalFile.allergies.filter(function (item) {
                     return item !== allergy;
@@ -311,6 +426,17 @@
 
                     this.allergyValue = "";
 
+                }
+            },
+            addMedicine(){
+                if(this.medication.name !== "") {
+                    this.medicalFile.medicine.push({id:Uuid() ,name: this.medication.name, startDate: new Date(this.medication.startDate).getTime(), endDate: new Date(this.medication.endDate).getTime() , reason: this.medication.reason, dosage: this.medication.dosage});
+   
+                    this.medication.name = "";
+                    this.medication.startDate = "";
+                    this.medication.endDate = "";
+                    this.medication.reason = "";
+                    this.medication.dosage = "";
                 }
             },
 
@@ -343,7 +469,7 @@
                         id: Uuid(),
                         description: this.TreatmentInfo.description,
                         startDate: new Date(this.TreatmentInfo.startDate).getTime(),
-                        endDate: this.TreatmentInfo.endDate || "",
+                        endDate: new Date(this.TreatmentInfo.endDate).getTime(),
                         logs: []
                     });
                 }
@@ -371,6 +497,14 @@
                     date: Date.now()
                 });
                 this.logDescription = "";
+            },
+
+            showDescription(medicine){
+                console.log("HIHI");
+                this.ActiveMedicine.name = medicine.name;
+                this.ActiveMedicine.reason = medicine.reason;
+                this.ActiveMedicine.dosage = medicine.dosage;
+                $("#showDescription").modal();
             },
 
             showLogs(treatment){
