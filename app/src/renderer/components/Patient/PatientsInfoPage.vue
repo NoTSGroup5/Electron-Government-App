@@ -333,9 +333,6 @@
 
         created: function () {
             let bsn = this.$route.params.bsn;
-
-            console.log(this.addedPermissions);
-
             HttpPatientsService.getPatientbyBsn(bsn).then(patient => {
                 this.patient = patient;
 
@@ -358,7 +355,7 @@
 
             HttpMedicalFileService.getMedicalFile(bsn).then(medicalFile => {
                 this.medicalFile = medicalFile;
-                this.addedPermissions = medicalFile.permissions;
+               
 
 
                 medicalFile.mentors.forEach((mentor) => {
@@ -370,14 +367,14 @@
                     });
                 });
 
-                // medicalFile.permissions.forEach((permission) => {
-                //     let bsnIndex = permission.indexOf("#");
-                //     let id = permission.substr(bsnIndex + 1, permission.length - bsnIndex + 1);
+                medicalFile.permissions.forEach((permission) => {
+                    let bsnIndex = permission.organisation.indexOf("#");
+                    let id = permission.organisation.substr(bsnIndex + 1, permission.organisation.length - bsnIndex + 1);
 
-                //     HttpOrganisationService.getById(id).then(organisatie => {
-                //         this.organisations.push(organisatie)
-                //     });
-                // });
+                    HttpOrganisationService.getById(id).then(organisatie => {
+                        this.addedPermissions.push(organisatie)
+                    });
+                });
             });
 
         },
@@ -438,8 +435,7 @@
 
             findMentor(bsn){
                 HttpPatientsService.getPatientbyBsn(bsn).then(response => {
-               console.log(this.model.bsn);
-               console.log(response.bsn);
+        
                     if (response.bsn !== this.model.bsn) {
                         this.mentor.bsn = response.bsn;
                         this.mentor.name = response.firstName + " " + response.lastName;
