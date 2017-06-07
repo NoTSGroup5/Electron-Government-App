@@ -2,6 +2,7 @@
     <tr>
         <td>{{ organisatie.name }}</td>
         <td>{{ organisatie.city }}</td>
+        <td></td>
       
     </tr>
 </template>
