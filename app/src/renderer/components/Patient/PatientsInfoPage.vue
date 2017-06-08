@@ -273,7 +273,6 @@
 
     import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
     import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
-    import AddMentorModal from '../Mentor/MentorsOverview/AddMentorModal'
     import Mentor from './Dossier/Mentor'
     import Organisatie from './Dossier/Organisatie'
 
@@ -285,157 +284,162 @@
     import HttpOrganisationService from '../../../services/httpOrganisationService'
 
 
-    export default {
-        components: {
-            BootstrapTextInput,
-            AddMentorModal,
-            BootstrapSelectInput,
-            Mentor,
-            Organisatie
+    
 
-        },
+export default {
+    components: {
+        BootstrapTextInput,
+        BootstrapSelectInput,
+        Mentor,
+        Organisatie
 
-        data ()  {
-            return {
-                patient: {},
-                medicalFile: {},
-                mentor: {
-                    bsn: "",
-                    name: "",
-                },
-                addedPermissions: [],
-                mentors: [],
-                selectedOrganisation: "",
-                organisations: [],
-                userInput: "",
-                organisatieInput: "",
-                model: {
-                    bsn: "",
-                    gender: "",
-                    firstName: "",
-                    namePrefix: "",
-                    lastName: "",
-                    street: "",
-                    houseNumber: "",
-                    houseNumberExtra: "",
-                    zipCode: "",
-                    city: "",
-                    telephoneNumber: "",
-                    email: "",
-                    birthday: {
-                        day: "",
-                        month: "",
-                        year: ""
-                    }
+    },
+
+    data ()  {
+        return {
+            patient: {},
+            medicalFile: {},
+            mentor: {
+                bsn: "",
+                name: "",
+            },
+            addedPermissions: [],
+            mentors: [],
+            selectedOrganisation: "",
+            organisations: [],
+            userInput: "",
+            organisatieInput: "",
+            model: {
+                bsn: "",
+                gender: "",
+                firstName: "",
+                namePrefix: "",
+                lastName: "",
+                street: "",
+                houseNumber: "",
+                houseNumberExtra: "",
+                zipCode: "",
+                city: "",
+                telephoneNumber: "",
+                email: "",
+                birthday: {
+                    day: "",
+                    month: "",
+                    year: ""
                 }
+            }
+        }
+    },
+
+    created: function () {
+        let bsn = this.$route.params.bsn;
+        HttpPatientsService.getPatientbyBsn(bsn).then(patient => {
+            this.patient = patient;
+
+            let birthday = new Date(patient.birthday);
+
+            for (let key in patient) {
+                if (patient.hasOwnProperty(key) && key !== "birthday") {
+                    this.model[key] = patient[key];
+                }
+            }
+
+            this.model.birthday = {
+                day: birthday.getDate(),
+                month: birthday.getMonth(),
+                year: birthday.getFullYear()
+            };
+        }).catch(e => {
+            console.log(e);
+        });
+
+        HttpMedicalFileService.getMedicalFile(bsn).then(medicalFile => {
+            this.medicalFile = medicalFile;
+
+
+            medicalFile.mentors.forEach((mentor) => {
+                let bsnIndex = mentor.indexOf("#");
+                let id = mentor.substr(bsnIndex + 1, mentor.length - bsnIndex + 1);
+
+                HttpPatientsService.getPatientbyBsn(id).then(patient => {
+                    this.mentors.push(patient)
+                });
+            });
+
+            medicalFile.permissions.forEach((permission) => {
+                let bsnIndex = permission.organisation.indexOf("#");
+                let id = permission.organisation.substr(bsnIndex + 1, permission.organisation.length - bsnIndex + 1);
+
+                HttpOrganisationService.getById(id).then(organisatie => {
+                    this.addedPermissions.push(organisatie)
+                });
+            });
+        });
+
+    },
+
+    methods: {
+        addMentor(){
+            if (this.mentor.bsn !== "") {
+                HttpPatientsService.getPatientbyBsn(this.mentor.bsn).then(patient => {
+                    this.medicalFile.mentors.push(patient.bsn);
+                    this.mentors.push(patient);
+                });
+
+                this.mentor.bsn = "";
+                this.mentor.name = "";
             }
         },
 
-        created: function () {
-            let bsn = this.$route.params.bsn;
-            HttpPatientsService.getPatientbyBsn(bsn).then(patient => {
-                this.patient = patient;
+        addOrganisation(organisatie)
+        {
+            if (!this.inArray(organisatie, this.addedPermissions)) {
 
-                let birthday = new Date(patient.birthday);
+                this.addedPermissions.push(organisatie);
+                this.medicalFile.permissions.push({
+                    id: organisatie.id,
+                    organisation: "resource:nl.epd.blockchain.Organisation#" + organisatie.id,
+                    read: true,
+                    write: true,
+                    del: true
+                });
+                this.organisations = null;
+                this.organisatieInput = "";
+            }
+            else {
+                alert('Organisatie is al toegevoegd');
+            }
 
-                for (let key in patient) {
-                    if (patient.hasOwnProperty(key) && key !== "birthday") {
-                        this.model[key] = patient[key];
-                    }
+            $('#organisatietoevoegen').modal('hide')
+
+        },
+
+        inArray(obj, list) {
+            var i;
+            for (i = 0; i < list.length; i++) {
+                if (list[i].id === obj.id) {
+                    return true;
                 }
+            }
 
-                this.model.birthday = {
-                    day: birthday.getDate(),
-                    month: birthday.getMonth(),
-                    year: birthday.getFullYear()
-                };
+            return false;
+        },
+
+        findOrganization(naam)
+        {
+            HttpOrganisationService.findByName(naam).then(response => {
+
+                this.organisations = response;
             }).catch(e => {
                 console.log(e);
             });
 
-            HttpMedicalFileService.getMedicalFile(bsn).then(medicalFile => {
-                this.medicalFile = medicalFile;
-               
-
-
-                medicalFile.mentors.forEach((mentor) => {
-                    let bsnIndex = mentor.indexOf("#");
-                    let id = mentor.substr(bsnIndex + 1, mentor.length - bsnIndex + 1);
-
-                    HttpPatientsService.getPatientbyBsn(id).then(patient => {
-                        this.mentors.push(patient)
-                    });
-                });
-
-                medicalFile.permissions.forEach((permission) => {
-                    let bsnIndex = permission.organisation.indexOf("#");
-                    let id = permission.organisation.substr(bsnIndex + 1, permission.organisation.length - bsnIndex + 1);
-
-                    HttpOrganisationService.getById(id).then(organisatie => {
-                        this.addedPermissions.push(organisatie)
-                    });
-                });
-            });
 
         },
 
-        methods: {
-            addMentor(){
-                if (this.mentor.bsn !== "") {
-                    HttpPatientsService.getPatientbyBsn(this.mentor.bsn).then(patient => {
-                        this.medicalFile.mentors.push(patient.bsn);
-                        this.mentors.push(patient);
-                    });
-
-                    this.mentor.bsn = "";
-                    this.mentor.name = "";
-                }
-            },
-
-            addOrganisation(organisatie)
-            {
-                if(!this.inArray(organisatie, this.addedPermissions))
-                {
-
-                    this.addedPermissions.push(organisatie);
-                    this.medicalFile.permissions.push({id: organisatie.id, organisation : "resource:nl.epd.blockchain.Organisation#" + organisatie.id ,read: true, write: true, del: true});
-                    this.organisations = null;
-                    this.organisatieInput = "";
-                }
-                else {
-                    alert('Organisatie is al toegevoegd');
-                }
-
-                $('#organisatietoevoegen').modal('hide')
-                
-            },
-
-            inArray(obj, list) {
-                var i;
-                for (i = 0; i < list.length; i++) {
-                    if (list[i].id === obj.id) {
-                        return true;
-                    }
-                }
-
-                return false;
-            },
-
-            findOrganization(naam)
-            {
-                HttpOrganisationService.findByName(naam).then(response => {
-
-                    this.organisations = response;
-                }).catch(e => {
-                    console.log(e);
-                });
-
-
-            },
-
-            findMentor(bsn){
+        findMentor(bsn){
+            if (bsn !== "") {
                 HttpPatientsService.getPatientbyBsn(bsn).then(response => {
-        
                     if (response.bsn !== this.model.bsn) {
                         this.mentor.bsn = response.bsn;
                         this.mentor.name = response.firstName + " " + response.lastName;
@@ -443,103 +447,107 @@
                     else {
                         alert('You cant add yourself')
                     }
+                }).catch(e => {
+                    console.log(e);
+                    alert("Mentor niet gevonden ")
                 })
-                    .catch(e => {
-                        console.log(e);
-                    })
-            },
-
-            validateForm(){
-                this.$validator.validateAll().then(() => {
-                    this.model.birthday = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
-
-                    delete this.medicalFile.bsn;
-                    HttpMedicalFileService.saveMedicalFile(this.model.bsn, this.medicalFile);
-                    HttpPatientsService.editPatient(this.model.bsn, this.model).then(() => {
-                        this.$router.push({name: "patientsOverview"})
-                    }).catch(() => {
-                        alert('An error occurred while editing the patient')
-                    })
-                }).catch();
-            },
-            getGenders(){
-                return ['Man', 'Vrouw', 'Apache Helicopter']
-            },
-            getYears(){
-                let years = [];
-                let yearNow = new Date().getFullYear();
-                let yearTo = yearNow - 200;
-
-                for (let year = yearNow; year >= yearTo; year--) {
-                    years.push(year);
-                }
-
-                return years;
-            },
-            getDays: function () {
-                let days = [];
-
-                for (let day = 1; 31 >= day; day++) {
-                    days.push(day);
-                }
-
-                return days;
-            },
-            getMonths(){
-                return [
-                    {
-                        id: 0,
-                        name: 'Januari'
-                    },
-                    {
-                        id: 1,
-                        name: 'Februari'
-                    },
-                    {
-                        id: 2,
-                        name: 'Maart'
-                    },
-                    {
-                        id: 3,
-                        name: 'April'
-                    },
-                    {
-                        id: 4,
-                        name: 'Mei'
-                    },
-                    {
-                        id: 5,
-                        name: 'Juni'
-                    },
-                    {
-                        id: 6,
-                        name: 'Juli'
-                    },
-                    {
-                        id: 7,
-                        name: 'Augustus'
-                    },
-                    {
-                        id: 8,
-                        name: 'September'
-                    },
-                    {
-                        id: 9,
-                        name: 'Oktober'
-                    },
-                    {
-                        id: 10,
-                        name: 'November'
-                    },
-                    {
-                        id: 11,
-                        name: 'December'
-                    }
-                ]
-            },
-            getTimeStamp(day, month, year){
-                return new Date(year, month, day, 0, 0, 0, 0);
             }
+            else {
+                alert("Voer bsn nummer in ")
+            }
+        },
+
+        validateForm(){
+            this.$validator.validateAll().then(() => {
+                this.model.birthday = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
+
+                delete this.medicalFile.bsn;
+                HttpMedicalFileService.saveMedicalFile(this.model.bsn, this.medicalFile);
+                HttpPatientsService.editPatient(this.model.bsn, this.model).then(() => {
+                    this.$router.push({name: "patientsOverview"})
+                }).catch(() => {
+                    alert('An error occurred while editing the patient')
+                })
+            }).catch();
+        },
+        getGenders(){
+            return ['Man', 'Vrouw', 'Apache Helicopter']
+        },
+        getYears(){
+            let years = [];
+            let yearNow = new Date().getFullYear();
+            let yearTo = yearNow - 200;
+
+            for (let year = yearNow; year >= yearTo; year--) {
+                years.push(year);
+            }
+
+            return years;
+        },
+        getDays: function () {
+            let days = [];
+
+            for (let day = 1; 31 >= day; day++) {
+                days.push(day);
+            }
+
+            return days;
+        },
+        getMonths(){
+            return [
+                {
+                    id: 0,
+                    name: 'Januari'
+                },
+                {
+                    id: 1,
+                    name: 'Februari'
+                },
+                {
+                    id: 2,
+                    name: 'Maart'
+                },
+                {
+                    id: 3,
+                    name: 'April'
+                },
+                {
+                    id: 4,
+                    name: 'Mei'
+                },
+                {
+                    id: 5,
+                    name: 'Juni'
+                },
+                {
+                    id: 6,
+                    name: 'Juli'
+                },
+                {
+                    id: 7,
+                    name: 'Augustus'
+                },
+                {
+                    id: 8,
+                    name: 'September'
+                },
+                {
+                    id: 9,
+                    name: 'Oktober'
+                },
+                {
+                    id: 10,
+                    name: 'November'
+                },
+                {
+                    id: 11,
+                    name: 'December'
+                }
+            ]
+        },
+        getTimeStamp(day, month, year){
+            return new Date(year, month, day, 0, 0, 0, 0);
         }
     }
+}
 </script>
