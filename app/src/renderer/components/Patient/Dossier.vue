@@ -9,14 +9,14 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Locatie</th>
-                            <th>Onderwerp</th>
-                            <th>Datum</th>
+                            <th>Organisatie</th>
+                            <th>Datum bezoek</th>
+                            <th>Beschrijving</th>
                             <th><span class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#doctorsVisit"></span></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <Visit v-for="visit in medicalFile.visits" :visit="visit"></Visit>
+                        <Visit v-for="visit in medicalFile.visits" :visit="visit" @removeVisit="removeVisit"></Visit>
                         </tbody>
                     </table>
                 </div>
@@ -149,25 +149,25 @@
                         <div class="form-group row">
                             <label for="reason" class="col-sm-4 col-form-label" aria-describedby="Reden">Organisatie</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="organisation" placeholder="organisatie" v-model="doktersBezoek.organisation">
+                                <input type="text" class="form-control" id="organisation" placeholder="organisatie" v-model="visit.organisation">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="dosage" class="col-sm-4 col-form-label" aria-describedby="dosage">Datum</label>
                             <div class="col-sm-8">
-                                <input type="date" class="form-control" id="date" placeholder="datum" v-model="doktersBezoek.date">
+                                <input type="date" class="form-control" id="date" placeholder="datum" v-model="visit.date">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="dosage" class="col-sm-4 col-form-label" aria-describedby="dosage">Beschrijving</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="description" placeholder="beschrijving" v-model="doktersBezoek.description">
+                                <input type="text" class="form-control" id="description" placeholder="beschrijving" v-model="visit.description">
                             </div>
                         </div>
                         
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="addVisit">
                             Toevoegen
                         </button>
                     </div>
@@ -327,6 +327,7 @@
 
     import HttpPatientsService from '../../../services/httpPatientsService';
     import HttpMedicalFileService from '../../../services/httpMedicalFileService';
+    import HttpOrganisationService from '../../../services/httpOrganisationService';
 
     import Treatment from './Dossier/Treatment';
     import Allergy from './Dossier/Allergy';
@@ -360,15 +361,18 @@
                     startDate: new Date().toISOString().slice(0,10),
                     endDate : ""
                 },
-                doktersBezoek: {
+
+                visit: {
                     organisation: "",
                     date:  new Date().toISOString().slice(0,10),
                     description: ""
                 },
+
                 ActiveTreatment: {
                     description: "",
                     logs: []
                 },
+
                 ActiveMedicine: {
                     name: "",
                     reason: "",
@@ -397,14 +401,30 @@
             HttpMedicalFileService.getMedicalFile(this.patient.bsn).then(medicalFile => {
                 this.medicalFile = medicalFile;
             });
+
+            
         },
 
         methods: {
+            addVisit(){
+                if(this.visit.organisation !== ""){
+                    this.medicalFile.visits.push({id: Uuid(), date: new Date(this.visit.date).getTime(), description: this.visit.description, organisation: this.visit.organisation})
+                    
+                    this.visit.organisation = "";
+                    this.visit.date = "",
+                    this.visit.description = ""
+                }
+            },
+
+            removeVisit(visit){
+                this.medicalFile.visits = this.medicalFile.visits.filter(function(item) {
+                    return item !== visit;
+                });
+            },
 
             removeMedicine(medicine){
                 this.medicalFile.medicine = this.medicalFile.medicine.filter(function (item) {
                     return item !== medicine;
-                    console.log(this.medicalFile.medicine);
                 });
             },
             removeAllergy(allergy) {
