@@ -163,7 +163,7 @@
                     </table>
                 </div>
 
-                <label>organisations</label>
+                <label>Organisaties</label>
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -171,12 +171,12 @@
                         <th>Locatie</th>
                         <th>
                             <span class="glyphicon glyphicon-plus pull-right" type="button" data-toggle="modal"
-                                  data-target="#organisatietoevoegen"> </span>
+                                  data-target="#addOrganisationModal"> </span>
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <Organisatie v-for="organisatie in addedPermissions" :organisatie="organisatie"></Organisatie>
+                    <Organisation v-for="organisation in addedPermissions" :organisation="organisation"></Organisation>
                     </tbody>
                 </table>
             </div>
@@ -193,9 +193,9 @@
                 <div class="modal-body">
                     <div>
                         <div class="input-group">
-                            <input v-model="userInput" type="text" class="form-control" placeholder="Zoek mentor...">
+                            <input v-model="userInputMentorBsn" type="text" class="form-control" placeholder="Voer hier bsn mentor in">
                             <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" v-on:click="findMentor(userInput)">Zoek</button>
+                                    <button class="btn btn-default" type="button" v-on:click="findMentor(userInputMentorBsn)">Zoek</button>
                                 </span>
                         </div>
 
@@ -210,23 +210,20 @@
                             <tr>
                                 <td>{{ mentor.bsn }}</td>
                                 <td>{{ mentor.name }}</td>
-
+                                
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="addMentor()">
-                        Toevoegen
-                    </button>
-                </div>
+                        <td><button type="button" class="btn btn-default pull right" data-dismiss="modal" v-on:click="addMentor()">Toevoegen</button></td>
+                    </div>
             </div>
         </div>
 
 
-        <div id="organisatietoevoegen" class="modal fade" role="dialog">
+        <div id="addOrganisationModal" class="modal fade" role="dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -237,11 +234,11 @@
                 <div class="modal-body">
                     <div>
                         <div class="input-group">
-                            <input v-model="organisatieInput" type="text" class="form-control"
+                            <input v-model="organisationInput" type="text" class="form-control"
                                    placeholder="Zoek organisatie op naam...">
                             <span class="input-group-btn">
                                     <button class="btn btn-default" type="button"
-                                            v-on:click="findOrganization(organisatieInput)">Zoek</button>
+                                            v-on:click="findOrganization(organisationInput)">Zoek</button>
                                 </span>
                         </div>
 
@@ -254,10 +251,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="organisatie in organisations">
-                                    <td> {{organisatie.name}}</td>
-                                    <td> {{organisatie.city}} </td>
-                                    <td><button class="btn btn-default" type="button" data-dismiss="modal" v-on:click="addOrganisation(organisatie)">Toevoegen</button></td>
+                                <tr v-for="organisation in organisations">
+                                    <td> {{organisation.name}}</td>
+                                    <td> {{organisation.city}} </td>
+                                    <td><button class="btn btn-default pull right" type="button" data-dismiss="modal" v-on:click="addOrganisation(organisation)">Toevoegen</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -274,7 +271,7 @@
     import BootstrapTextInput from '../Shared/Bootstrap/BootstrapTextInput'
     import BootstrapSelectInput from '../Shared/Bootstrap/BootstrapSelectInput'
     import Mentor from './Dossier/Mentor'
-    import Organisatie from './Dossier/Organisatie'
+    import Organisation from './Dossier/Organisation'
 
     import BootstrapModal from '../Shared/Bootstrap/BootstrapModal'
 
@@ -291,7 +288,7 @@ export default {
         BootstrapTextInput,
         BootstrapSelectInput,
         Mentor,
-        Organisatie
+        Organisation
 
     },
 
@@ -301,14 +298,14 @@ export default {
             medicalFile: {},
             mentor: {
                 bsn: "",
-                name: "",
+                name: ""
             },
             addedPermissions: [],
             mentors: [],
             selectedOrganisation: "",
             organisations: [],
-            userInput: "",
-            organisatieInput: "",
+            userInputMentorBsn: "",
+            organisationInput: "",
             model: {
                 bsn: "",
                 gender: "",
@@ -370,8 +367,8 @@ export default {
                 let bsnIndex = permission.organisation.indexOf("#");
                 let id = permission.organisation.substr(bsnIndex + 1, permission.organisation.length - bsnIndex + 1);
 
-                HttpOrganisationService.getById(id).then(organisatie => {
-                    this.addedPermissions.push(organisatie)
+                HttpOrganisationService.getById(id).then(organisation => {
+                    this.addedPermissions.push(organisation)
                 });
             });
         });
@@ -382,59 +379,80 @@ export default {
         addMentor(){
             if (this.mentor.bsn !== "") {
                 HttpPatientsService.getPatientbyBsn(this.mentor.bsn).then(patient => {
-                    this.medicalFile.mentors.push(patient.bsn);
-                    this.mentors.push(patient);
+                    if(!this.patientAlreadyExist(patient, this.mentors))
+                    {
+                        this.medicalFile.mentors.push(patient.bsn);
+                        this.mentors.push(patient);
+                    }
+                    else
+                    {
+                        alert("Mentor is al toegevoegd");
+                    }
+                   
                 });
-
+                this.userInputMentorBsn = "";
                 this.mentor.bsn = "";
                 this.mentor.name = "";
             }
         },
 
-        addOrganisation(organisatie)
+        patientAlreadyExist(obj, list)
         {
-            if (!this.inArray(organisatie, this.addedPermissions)) {
+            var i;
+            for (i = 0; i < list.length; i++) {
+                if (list[i].bsn === obj.bsn) {
+                    return true;
+                }
+            }
+              return false;
+        },
 
-                this.addedPermissions.push(organisatie);
+        addOrganisation(organisation)
+        {
+            if (!this.organisationAlreadyExists(organisation, this.addedPermissions)) {
+                this.addedPermissions.push(organisation);
                 this.medicalFile.permissions.push({
-                    id: organisatie.id,
-                    organisation: "resource:nl.epd.blockchain.Organisation#" + organisatie.id,
+                    id: organisation.id,
+                    organisation: "resource:nl.epd.blockchain.Organisation#" + organisation.id,
                     read: true,
                     write: true,
                     del: true
                 });
                 this.organisations = null;
-                this.organisatieInput = "";
+                this.organisationInput = "";
             }
             else {
                 alert('Organisatie is al toegevoegd');
+                this.organisationInput = "";
+                this.organisations = null;
             }
-
-            $('#organisatietoevoegen').modal('hide')
-
+            $('#addOrganisationModal').modal('hide')
         },
 
-        inArray(obj, list) {
+        organisationAlreadyExists(obj, list) {
             var i;
             for (i = 0; i < list.length; i++) {
                 if (list[i].id === obj.id) {
                     return true;
                 }
             }
-
             return false;
         },
 
         findOrganization(naam)
         {
-            HttpOrganisationService.findByName(naam).then(response => {
-
-                this.organisations = response;
-            }).catch(e => {
-                console.log(e);
-            });
-
-
+            if(naam !== ""){
+                HttpOrganisationService.findByName(naam).then(response => {
+                    this.organisations = response.filter(function( obj ) {
+                        return obj.name == naam;
+                        });
+                }).catch(e => {
+                    console.log(e);
+                });
+            }
+            else{
+                alert("Voer naam in");
+            }
         },
 
         findMentor(bsn){
@@ -446,10 +464,11 @@ export default {
                     }
                     else {
                         alert('You cant add yourself')
+                        this.userInputMentorBsn = "";
                     }
                 }).catch(e => {
-                    console.log(e);
                     alert("Mentor niet gevonden ")
+                    this.userInputMentorBsn = "";
                 })
             }
             else {

@@ -1,7 +1,7 @@
 <template>
     <tr>
-        <td>{{ organisatie.name }}</td>
-        <td>{{ organisatie.city }}</td>
+        <td>{{ organisation.name }}</td>
+        <td>{{ organisation.city }}</td>
         <td></td>
       
     </tr>
@@ -11,7 +11,7 @@
    
     export default {
         props: [
-            "organisatie"
+            "organisation"
         ]
     }
 </script>
