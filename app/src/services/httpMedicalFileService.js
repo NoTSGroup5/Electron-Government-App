@@ -7,6 +7,8 @@ class HttpMedicalFileService {
         this.url = 'OrganisationType'
     }
 
+
+
     getMedicalFile(bsn) {
         return this.httpService.getById("MedicalFile", bsn);
     }
