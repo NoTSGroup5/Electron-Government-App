@@ -1,26 +1,22 @@
 <template>
   <tr>
-   <p>WE STILL NEED TO CHANGE THIS!</p>
+      <td>{{visit.organisation}}</td>
+      <td>{{ visit.date | formatDate }} </td>
+      <td>{{visit.description}}</td>
+      <td><span class="glyphicon glyphicon-remove pull-right" v-on:click="removeVisit"></span></td>
   </tr>
 </template>
 
 <script>
   export default {
     props: [
-      'bsn',
-      'firstName',
-      'namePrefix',
-      'lastName',
-      'email',
-      'telephoneNumber',
-      'birthday',
-      'gender',
-      'city',
-      'zipCode',
-      'street',
-      'houseNumber',
-      'houseNumberExtra'
-    ]
+      'visit'
+    ],
+    methods: {
+      removeVisit(){
+          this.$emit('removeVisit', this.visit)
+      }
+    }
   }
 </script>
 
