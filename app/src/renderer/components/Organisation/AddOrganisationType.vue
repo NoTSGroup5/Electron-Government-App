@@ -25,6 +25,8 @@
 import Uuid from 'uuid/v1'
 import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
 
+let httpOrganisationTypeService = new HttpOrganisationTypeService();
+
 export default {
     data: () => {
       return {
@@ -37,7 +39,7 @@ export default {
     methods: {
       validateForm () {
         this.$validator.validateAll().then(() => {
-          HttpOrganisationTypeService.add(Uuid(), this.model.name, this.model.description).then(() => {
+            httpOrganisationTypeService.add(Uuid(), this.model.name, this.model.description).then(() => {
             this.$router.push({path: '/organisation-types'})
           }).catch(() => {
             alert('An error occurred while adding the organisation organisationType')

@@ -9,35 +9,37 @@
                 </tr>
             </thead>
             <tbody>
-            <tr v-show="patients.length === 0">
+            <tr v-show="professionals.length === 0">
                 <td colspan="4">
-                    Geen patienten gevonden.
+                    Geen zorgprofessionals gevonden.
                 </td>
             </tr>
-            <patient v-for="patient in patients" v-bind="patient"></patient>
+            <Professional v-for="professional in professionals" v-bind="professional"></Professional>
             </tbody>
         </table>
     </div>
 </template>
 
 <script>
-    import patient from './Patient';
-    import HttpPatientsService from '../../../../services/httpPatientsService';
+    import Professional from './HealthCareProfessional.vue';
+    import HttpHealthCareProfessionalService from '../../../../services/httpHealthCareProfessionalService';
+
+    let httpHealthCareProfessionalService = new HttpHealthCareProfessionalService();
 
     export default {
         components: {
-            patient
+            Professional
         },
         data: () => {
             return {
-                patients: []
+                professionals: []
             }
         },
         created () {
-            HttpPatientsService.fetch().then((items) => {
-                this.patients = items;
+            httpHealthCareProfessionalService.fetch().then((items) => {
+                this.professionals = items;
             }).catch(() => {
-                alert('Het laden van de patients is mislukt.')
+                alert('Loading health care professionals failed.')
             });
         },
         name: 'patientsList'

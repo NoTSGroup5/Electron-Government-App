@@ -1,6 +1,6 @@
 import HttpService from './httpService'
 
-class HttpOrganisationService {
+export default class HttpOrganisationService {
     constructor () {
         this.httpService = new HttpService();
         this.url = 'Organisation'
@@ -30,5 +30,3 @@ class HttpOrganisationService {
         return this.httpService.del(this.url + '/' + id);
     }
 }
-
-export default new HttpOrganisationService();

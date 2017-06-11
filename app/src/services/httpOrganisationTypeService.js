@@ -1,9 +1,9 @@
 import HttpService from './httpService'
 
-class HttpOrganisationTypeService {
+export default class HttpOrganisationTypeService {
 
   constructor () {
-    this.httpService = new HttpService()
+    this.httpService = new HttpService();
     this.url = 'OrganisationType'
   }
 
@@ -15,5 +15,3 @@ class HttpOrganisationTypeService {
     return this.httpService.post(this.url, {id, name, description})
   }
 }
-
-export default new HttpOrganisationTypeService();

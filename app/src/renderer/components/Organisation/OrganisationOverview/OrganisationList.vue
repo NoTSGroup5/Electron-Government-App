@@ -34,6 +34,8 @@
     import EventHub from '../../../../services/eventHub';
     import _ from 'lodash';
 
+    let httpOrganisationService = new HttpOrganisationService();
+
     export default {
         components: {
             Organisation,
@@ -47,7 +49,7 @@
         },
         methods : {
             removeOrganisation(){
-                HttpOrganisationService.del(this.deleteOrganisationModel.id).then(() => {
+                httpOrganisationService.del(this.deleteOrganisationModel.id).then(() => {
                     let index = _.findIndex(this.organisations, {id : this.deleteOrganisationModel.id});
                     this.organisations.splice(index, 1);
                     this.deleteOrganisationModel = {};
@@ -58,7 +60,7 @@
             EventHub.$on('ShowConfirmDeleteModal', (organisation) => {
                 this.deleteOrganisationModel = organisation;
             });
-            HttpOrganisationService.fetch().then((items) => {
+            httpOrganisationService.fetch().then((items) => {
                 this.organisations = items;
             });
         }

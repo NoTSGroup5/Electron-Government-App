@@ -2,9 +2,11 @@
     <div id="app">
         <Navbar title="EPD">
             <NavbarLink to="/" :active="$route.path === '/'">Home</NavbarLink>
-            <NavbarLink to="/patients" :active="isPatientsPageActive()">Patients</NavbarLink>
+            <NavbarLink to="/patients" :active="isPatientsPageActive()">Patiënten</NavbarLink>
+            <NavbarLink to="/health-care-professionals" :active="isHealthCareProfessionalPageActive()">Zorgprofessionals</NavbarLink>
             <NavbarLink to="/organisations" :active="isOrganisationPageActive()">Organisaties</NavbarLink>
             <NavbarLink to="/organisation-types" :active="isOrganisationTypePageActive()">Organisatie Types</NavbarLink>
+            <NavbarLink to="/settings" :active="$route.path === '/settings'">Instellingen</NavbarLink>
         </Navbar>
 
         <div class="container-fluid">
@@ -39,6 +41,11 @@
             },
             isPatientsPageActive(){
                 let pages = ['patientsOverview', 'patientsCreate', 'patientInfo', 'patientDossier'];
+
+                return pages.indexOf(this.$route.name) > -1;
+            },
+            isHealthCareProfessionalPageActive(){
+                let pages = ['healthCareProfessionalsOverview', 'healthCareProfessionalCreate', 'healthCareProfessionalInfo'];
 
                 return pages.indexOf(this.$route.name) > -1;
             }

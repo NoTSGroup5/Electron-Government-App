@@ -78,6 +78,9 @@
     import Uuid from 'uuid/v1'
     import _ from 'lodash'
 
+    let httpOrganisationService = new HttpOrganisationService();
+    let httpOrganisationTypeService = new HttpOrganisationTypeService();
+
     export default {
         data: () => {
             return {
@@ -95,7 +98,7 @@
             }
         },
         created() {
-            Promise.all([HttpOrganisationTypeService.fetch(), HttpOrganisationService.getById(this.$route.params.id)]).then((results) => {
+            Promise.all([httpOrganisationTypeService.fetch(), httpOrganisationService.getById(this.$route.params.id)]).then((results) => {
                 this.types = results[0];
                 this.setModel(results[1]);
             }).catch(() => {
@@ -107,7 +110,7 @@
                 this.$validator.validateAll().then(() => {
                     this.model.organisationType = this.getTypeFromId(this.model.organisationType);
 
-                    HttpOrganisationService.update(this.model.id, this.model).then(() => {
+                    httpOrganisationService.update(this.model.id, this.model).then(() => {
                         this.$router.push({path: '/organisations'})
                     }).catch(() => {
                         alert('An error occurred while updating the organisation')

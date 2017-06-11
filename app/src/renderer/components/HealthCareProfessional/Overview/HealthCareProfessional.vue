@@ -2,7 +2,7 @@
   <tr>
     <td>{{bsn}}</td>
     <td>{{getFullName()}}</td>
-    <td><router-link class="btn btn-default" :to="{ name: 'patientInfo', params: { bsn: bsn }}">Bewerk</router-link></td>
+    <td><router-link class="btn btn-default" :to="{ name: 'healthCareProfessionalInfo', params: { bsn: bsn }}">Bewerk</router-link></td>
   </tr>
 </template>
 
