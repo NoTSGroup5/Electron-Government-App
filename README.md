@@ -26,18 +26,48 @@ composer identity issue -n 'epd' -i admin -s adminpw -u JOUWBSNHIER -a "nl.epd.b
 
 6. Terminate the npm rest command
 
-7. Start the authorization rest API
+7. Add the following 
+
+8. Update your bash profile with the following information (replace the ID and SECRET with your facebook info)
+```
+export COMPOSER_PROVIDERS='{
+"facebook": {
+    "provider": "facebook",
+    "module": "passport-facebook",
+    "clientID": "ID",
+    "clientSecret": "SECRET",
+    "authPath": "/auth/facebook",
+    "callbackURL": "/auth/facebook/callback",
+    "successRedirect": "http://localhost:9080?done=true"
+    }
+}'
+```
+
+9. Start the authorization rest API
 ```
 npm run restAuthentication
 ```
 
-8. Start the application
+10. Start the application
 ```
 npm run dev
 ```
 
-9. Provide your BSN and secret key
+11. Provide your BSN and secret key
 
-10. You should now be able to performs operations like adding patients to the network.
+12. You should now be able to performs operations like adding patients to the network.
 
 Note: Remember that you have to issue an identity whenever a patient or health care professionals wants to login.
+
+## Identity commands ##
+These are the identity commands to connect a patient to the restful API.
+
+### Patient ###
+```
+composer identity issue -n 'epd' -i admin -s adminpw -u JOUWBSNHIER -a "nl.epd.blockchain.Patient#JOUWBSNHIER"
+```
+
+### Health Care Professional ###
+```
+composer identity issue -n 'epd' -i admin -s adminpw -u JOUWBSNHIER -a "nl.epd.blockchain.HealthCareProfessional#JOUWBSNHIER"
+```
