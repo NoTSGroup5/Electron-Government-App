@@ -1,27 +1,43 @@
-# nots-project
+# Electron Government Application
 
-> An electron-vue project
+> Hyperledger Fabric Composer
 
-## Build Setup
+## Setup
+This project assumes you have started the Hyperledger Fabric network.
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:9080
-npm run dev
-
-# build electron app for production
-npm run build
-
-# lint all JS/Vue component files in `app/src`
-npm run lint
-
-# run webpack in production
-npm run pack
+1. Start the admin API
 ```
-More information can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/en/npm_scripts.html).
+npm run rest
+```
 
----
+2. Navigate to the explorer
+```
+http:/localhost:3000/explorer
+```
 
-This project was generated from [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about this project can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+3. Add a government employee through the explorer
+
+4. Invoke the following command in the terminal (replace the 'JOUWBSNHIER' with the BSN you provided for the employee)
+```
+composer identity issue -n 'epd' -i admin -s adminpw -u JOUWBSNHIER -a "nl.epd.blockchain.GovernmentEmployee#JOUWBSNHIER"
+```
+
+5. Save the secret key somewhere on your harddrive
+
+6. Terminate the npm rest command
+
+7. Start the authorization rest API
+```
+npm run restAuthentication
+```
+
+8. Start the application
+```
+npm run dev
+```
+
+9. Provide your BSN and secret key
+
+10. You should now be able to performs operations like adding patients to the network.
+
+Note: Remember that you have to issue an identity whenever a patient or health care professionals wants to login.
