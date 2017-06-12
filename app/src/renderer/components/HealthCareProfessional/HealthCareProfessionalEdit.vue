@@ -89,10 +89,13 @@
             }
         },
         created(){
-           Promise.all([httpOrganisationService.fetch(), httpHealthCareProfessionalService.getById(this.$route.params.bsn)]).then(result => {
-                this.organisations = result[0];
-                this.model = result[1];
-           }).catch(() => alert('An error occurred while retrieving the organisations and health care professional.'));
+            httpOrganisationService.fetch().then(result => {
+                this.organisations = result;
+            }).catch(() => alert('An error occurred while retrieving the health care professional.'));
+
+            httpHealthCareProfessionalService.getById(this.$route.params.bsn).then(result => {
+                this.model = result;
+            }).catch(() => alert('An error occurred while retrieving the organisations.'));
         },
         methods: {
             getLocation(organisation){
