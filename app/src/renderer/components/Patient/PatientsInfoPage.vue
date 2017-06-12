@@ -214,8 +214,6 @@
                 this.$validator.validateAll().then(() => {
                     this.model.birthday = this.getTimeStamp(this.model.birthday.day, this.model.birthday.month, this.model.birthday.year);
 
-                    delete this.medicalFile.bsn;
-                    HttpMedicalFileService.saveMedicalFile(this.model.bsn, this.medicalFile);
                     HttpPatientsService.editPatient(this.model.bsn, this.model).then(() => {
                         this.$router.push({name: "patientsOverview"})
                     }).catch(() => {
