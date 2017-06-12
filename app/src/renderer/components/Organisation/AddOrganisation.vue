@@ -69,47 +69,50 @@
 </style>
 
 <script>
-import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
-import HttpOrganisationService from '../../../services/httpOrganisationService'
-import Uuid from 'uuid/v1'
-import _ from 'lodash'
+    import HttpOrganisationTypeService from '../../../services/httpOrganisationTypeService'
+    import HttpOrganisationService from '../../../services/httpOrganisationService'
+    import Uuid from 'uuid/v1'
+    import _ from 'lodash'
 
-export default {
-    data: () => {
-      return {
-        types : [],
-        model : {
-            name : "",
-            street: "",
-            houseNumber: "",
-            houseNumberExtra: "",
-            zipCode: "",
-            city: "",
-            organisationType : ""
-        }
-      }
-    },
-    created(){
-        HttpOrganisationTypeService.fetch().then((items) => {
-            this.types = items;
-        }).catch(() => console.log('Retrieving organisation types failed'));
-    },
-    methods : {
-        validateForm(){
-            this.$validator.validateAll().then(() => {
-                this.model.id = Uuid();
-                this.model.organisationType = this.getTypeFromId(this.model.organisationType);
+    let httpOrganisationService = new HttpOrganisationService();
+    let httpOrganisationTypeService = new HttpOrganisationTypeService();
 
-                HttpOrganisationService.add(this.model).then(() => {
-                    this.$router.push({path: '/organisations'})
-                }).catch(() => {
-                    alert('An error occurred while adding the organisation')
-                })
-            }).catch();
+    export default {
+        data: () => {
+            return {
+                types : [],
+                model : {
+                    name : "",
+                    street: "",
+                    houseNumber: "",
+                    houseNumberExtra: "",
+                    zipCode: "",
+                    city: "",
+                    organisationType : ""
+                }
+            }
         },
-        getTypeFromId(id){
-            return _.find(this.types, {id});
+        created(){
+            httpOrganisationTypeService.fetch().then((items) => {
+                this.types = items;
+            }).catch(() => console.log('Retrieving organisation types failed'));
+        },
+        methods : {
+            validateForm(){
+                this.$validator.validateAll().then(() => {
+                    this.model.id = Uuid();
+                    this.model.organisationType = this.getTypeFromId(this.model.organisationType);
+
+                    httpOrganisationService.add(this.model).then(() => {
+                        this.$router.push({path: '/organisations'})
+                    }).catch(() => {
+                        alert('An error occurred while adding the organisation')
+                    })
+                }).catch();
+            },
+            getTypeFromId(id){
+                return _.find(this.types, {id});
+            }
         }
     }
-  }
 </script>

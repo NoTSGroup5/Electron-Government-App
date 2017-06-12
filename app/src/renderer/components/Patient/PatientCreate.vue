@@ -33,7 +33,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-error': errors.has('birthday_day') }">
                         <label for="patientscreate-birthday-day" class="control-label required">Dag</label>
-                        <select id="patientscreate-birthday-day" name="birthday_day" v-validate="'required'"
+                        <select v-model="model.birthday.day" id="patientscreate-birthday-day" name="birthday_day" v-validate="'required'"
                                 class="form-control">
                             <option hidden value="" selected>Kies een dag</option>
                             <option v-for="day in getDays()" :value="day">{{day}}</option>
@@ -44,7 +44,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-error': errors.has('birthday_month') }">
                         <label for="patientscreate-birthday_month" class="control-label required">Maand</label>
-                        <select id="patientscreate-birthday_month" name="birthday_month" v-validate="'required'"
+                        <select v-model="model.birthday.month" id="patientscreate-birthday_month" name="birthday_month" v-validate="'required'"
                                 class="form-control">
                             <option hidden value="" selected>Kies een maand</option>
                             <option v-for="month in getMonths()" :value="month.id">{{month.name}}</option>
@@ -55,7 +55,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-error': errors.has('birthday_year') }">
                         <label for="patientscreate-birthday_year" class="control-label required">Jaar</label>
-                        <select id="patientscreate-birthday_year" name="birthday_year" v-validate="'required'"
+                        <select v-model="model.birthday.year" id="patientscreate-birthday_year" name="birthday_year" v-validate="'required'"
                                 class="form-control">
                             <option hidden value="" selected>Kies een jaar</option>
                             <option v-for="year in getYears()" :value="year">{{year}}</option>
@@ -267,7 +267,7 @@
                 ]
             },
             getTimeStamp(day, month, year){
-                return new Date(year, month, day, 0, 0, 0, 0);
+                return new Date(year, month, day, 0, 0, 0, 0).getTime();
             }
         }
     }
