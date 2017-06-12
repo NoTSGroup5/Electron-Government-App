@@ -58,3 +58,16 @@ npm run dev
 12. You should now be able to performs operations like adding patients to the network.
 
 Note: Remember that you have to issue an identity whenever a patient or health care professionals wants to login.
+
+## Identity commands ##
+These are the identity commands to connect a patient to the restful API.
+
+### Patient ###
+```
+composer identity issue -n 'epd' -i admin -s adminpw -u JOUWBSNHIER -a "nl.epd.blockchain.Patient#JOUWBSNHIER"
+```
+
+### Health Care Professional ###
+```
+composer identity issue -n 'epd' -i admin -s adminpw -u JOUWBSNHIER -a "nl.epd.blockchain.HealthCareProfessional#JOUWBSNHIER"
+```
