@@ -267,7 +267,6 @@
                 ]
             },
             getTimeStamp(day, month, year){
-                console.log(arguments);
                 return new Date(year, month, day, 0, 0, 0, 0).getTime();
             }
         }
